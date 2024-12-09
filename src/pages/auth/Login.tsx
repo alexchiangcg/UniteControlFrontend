@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Form, Input, Button, message } from "antd";
+import Header from "../../components/Header";
 
 const LoginPage = () => {
   const [loading, setLoading] = useState(false);
@@ -27,38 +28,40 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="my-10 mx-auto text-center">
-  <h1 className="text-[40px] font-bold">登入頁面</h1>
-      <Form
-        className="w-[400px] mx-auto mt-[15%]"
-
-        name="login"
-        onFinish={onFinish}
-        layout="vertical"
-      >
-        <Form.Item
-          label="帳號"
-          name="username"
-          rules={[{ required: true, message: "請輸入帳號！" }]}
+    <>
+      <Header></Header>
+      <div className="my-10 mx-auto text-center">
+        <h1 className="text-[40px] font-bold">登入頁面</h1>
+        <Form
+          className="w-[400px] mx-auto mt-[15%]"
+          name="login"
+          onFinish={onFinish}
+          layout="vertical"
         >
-          <Input placeholder="帳號" />
-        </Form.Item>
+          <Form.Item
+            label="帳號"
+            name="username"
+            rules={[{ required: true, message: "請輸入帳號！" }]}
+          >
+            <Input placeholder="帳號" />
+          </Form.Item>
 
-        <Form.Item
-          label="密碼"
-          name="password"
-          rules={[{ required: true, message: "請輸入密碼！" }]}
-        >
-          <Input.Password placeholder="密碼" />
-        </Form.Item>
+          <Form.Item
+            label="密碼"
+            name="password"
+            rules={[{ required: true, message: "請輸入密碼！" }]}
+          >
+            <Input.Password placeholder="密碼" />
+          </Form.Item>
 
-        <Form.Item>
-          <Button type="primary" htmlType="submit" loading={loading} block>
-            登入
-          </Button>
-        </Form.Item>
-      </Form>
-    </div>
+          <Form.Item>
+            <Button type="primary" htmlType="submit" loading={loading} block>
+              登入
+            </Button>
+          </Form.Item>
+        </Form>
+      </div>
+    </>
   );
 };
 
