@@ -27,7 +27,7 @@ const routes: RouteObject[] = [
     path: "/dashboard",
     element: <Dashboard />,
     children: [],
-    // authRequired: true, // 自定義屬性，用於權限控制
+    //authRequired: true, // 自定義屬性，用於權限控制
   },
   {
     path: "*",
