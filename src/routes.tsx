@@ -6,13 +6,14 @@ import Login from "./pages/auth/Login";
 import Dashboard from "./pages/dashboard/Dashboard";
 import NotFound from "./pages/NotFound";
 import Home from "./pages/Home";
+import Register from './pages/auth/Register';
 
 // 定義路由配置
 const routes: RouteObject[] = [
   {
     path: "/",
     element: <Navigate to="/home" />, // 默認重定向
-    children: []
+    children: [],
   },
   {
     path: "/home",
@@ -21,6 +22,11 @@ const routes: RouteObject[] = [
   {
     path: "/login",
     element: <Login />,
+    children: [],
+  },
+    {
+    path: "/register",
+    element: <Register />,
     children: [],
   },
   {
@@ -32,7 +38,7 @@ const routes: RouteObject[] = [
   {
     path: "*",
     element: <NotFound />, // 404 頁面
-    children: []
+    children: [],
   },
 ];
 
