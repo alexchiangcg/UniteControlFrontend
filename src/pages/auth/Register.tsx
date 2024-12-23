@@ -1,10 +1,10 @@
 import React from 'react';
 import { Form, Input, Button, message } from 'antd';
-import { useRegisterUserMutation } from '../../services/registerServices';
+import { useRegisterUserQuery } from '../../services/registerServices';
 
 const Register: React.FC = () => {
   const [form] = Form.useForm();
-  const [registerUser, { isLoading }] = useRegisterUserMutation();
+  const [registerUser, { isLoading }] = useRegisterUserQuery();
 
   const onFinish = async (values: { username: string; password: string; confirmPassword: string }) => {
     if (values.password !== values.confirmPassword) {
