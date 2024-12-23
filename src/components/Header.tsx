@@ -11,6 +11,7 @@ const Header: React.FC = () => {
             <li className="cursor-pointer" onClick={() => go("/")}>Home</li>
             <li className="cursor-pointer" onClick={() => go("/dashboard")}>Dashboard</li>
             <li className="cursor-pointer" onClick={() => go("/login")}>Login</li>
+            <li className="cursor-pointer" onClick={() => go("/register")}>register</li>
           </ul>
         </nav>
       </div>
