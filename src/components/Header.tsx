@@ -10,6 +10,7 @@ const Header: React.FC = () => {
           <ul className="flex space-x-4">
             <li className="cursor-pointer" onClick={() => go("/")}>Home</li>
             <li className="cursor-pointer" onClick={() => go("/dashboard")}>Dashboard</li>
+            <li className="cursor-pointer" onClick={() => go("/user-list")}>UserList</li>
             <li className="cursor-pointer" onClick={() => go("/login")}>Login</li>
             <li className="cursor-pointer" onClick={() => go("/register")}>register</li>
           </ul>

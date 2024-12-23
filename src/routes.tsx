@@ -6,7 +6,8 @@ import Login from "./pages/auth/Login";
 import Dashboard from "./pages/dashboard/Dashboard";
 import NotFound from "./pages/NotFound";
 import Home from "./pages/Home";
-import Register from './pages/auth/Register';
+import Register from "./pages/auth/Register";
+import UserList from "./pages/UserList";
 
 // 定義路由配置
 const routes: RouteObject[] = [
@@ -24,7 +25,7 @@ const routes: RouteObject[] = [
     element: <Login />,
     children: [],
   },
-    {
+  {
     path: "/register",
     element: <Register />,
     children: [],
@@ -34,6 +35,11 @@ const routes: RouteObject[] = [
     element: <Dashboard />,
     children: [],
     //authRequired: true, // 自定義屬性，用於權限控制
+  },
+  {
+    path: "/user-list",
+    element: <UserList />,
+    children: [],
   },
   {
     path: "*",
