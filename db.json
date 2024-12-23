@@ -15,21 +15,25 @@
     {
       "id": "bc3a",
       "username": "test3",
-      "password": "test3"
+      "password": "test3",
+      "email": "user2@example.com"
     },
     {
       "id": "00ba",
       "username": "alexTest",
+      "email": "user2@example.com",
       "password": "alex1234"
     },
     {
       "id": "0064",
       "username": "alex1213",
+      "email": "user2@example.com",
       "password": "alex1234"
     },
     {
       "id": "4e6a",
       "username": "alex1234",
+      "email": "user2@example.com",
       "password": "alex123"
     }
   ]
