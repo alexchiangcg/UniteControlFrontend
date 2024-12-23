@@ -25,5 +25,5 @@ export const registerApi = createApi({
     }),
 });
 
-export const { useRegisterUserQuery } = registerApi;
+export const { useRegisterUserMutation } = registerApi;
 export default registerApi;
