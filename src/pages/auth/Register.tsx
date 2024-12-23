@@ -24,7 +24,7 @@ const Register: React.FC = () => {
       message.success(`註冊成功！歡迎，${response.username}`);
       form.resetFields();
     } catch (error) {
-      message.error("註冊失敗，請再試一次。");
+      message.error("註冊失敗，請再試一次。" + error);
     }
   };
 
