@@ -35,6 +35,24 @@
       "username": "alex1234",
       "email": "user2@example.com",
       "password": "alex123"
+    },
+    {
+      "id": "9257",
+      "username": "alex1225",
+      "password": "alex1234",
+      "email": "alex@gmail.com"
+    },
+    {
+      "id": "582e",
+      "username": "alex1224",
+      "password": "alex1234",
+      "email": "alex@alex.com"
+    },
+    {
+      "id": "8bf3",
+      "username": "alex4321",
+      "password": "Alex1234",
+      "email": ""
     }
   ]
 }

@@ -2,6 +2,7 @@ import React from "react";
 import { Form, Input, Button, message } from "antd";
 import { useRegisterUserMutation } from "../../services/registerServices";
 import Header from "../../components/Header";
+import { validationRules } from "../../utils/validationRules";
 
 const Register: React.FC = () => {
   const [form] = Form.useForm();
@@ -11,16 +12,22 @@ const Register: React.FC = () => {
     username: string;
     password: string;
     confirmPassword: string;
+    email: string;
   }) => {
+    console.log("onFinish values = ", values);
+
     if (values.password !== values.confirmPassword) {
       message.error("密碼與確認密碼不相符！");
       return;
     }
     try {
-      const response = await registerUser({
+      const data = {
         username: values.username,
         password: values.password,
-      }).unwrap();
+        email: values.email,
+      };
+
+      const response = await registerUser(data).unwrap();
       message.success(`註冊成功！歡迎，${response.username}`);
       form.resetFields();
     } catch (error) {
@@ -38,12 +45,20 @@ const Register: React.FC = () => {
           layout="vertical"
           onFinish={onFinish}
           autoComplete="off"
-          initialValues={{ username: "", password: "", confirmPassword: "" }}
+          initialValues={{
+            username: "",
+            password: "",
+            confirmPassword: "",
+            email: "",
+          }}
         >
           <Form.Item
             label="帳號"
             name="username"
-            rules={[{ required: true, message: "請輸入帳號！" }]}
+            rules={[
+              { required: true, message: "請輸入帳號！" },
+              validationRules.username,
+            ]}
           >
             <Input placeholder="請輸入帳號" className="rounded-md" />
           </Form.Item>
@@ -51,7 +66,10 @@ const Register: React.FC = () => {
           <Form.Item
             label="密碼"
             name="password"
-            rules={[{ required: true, message: "請輸入密碼！" }]}
+            rules={[
+              { required: true, message: "請輸入密碼！" },
+              validationRules.password,
+            ]}
           >
             <Input.Password placeholder="請輸入密碼" className="rounded-md" />
           </Form.Item>
@@ -65,6 +83,10 @@ const Register: React.FC = () => {
               placeholder="請再次輸入密碼"
               className="rounded-md"
             />
+          </Form.Item>
+
+          <Form.Item label="email" name="email" rules={[validationRules.email]}>
+            <Input placeholder="請輸入 email" className="rounded-md" />
           </Form.Item>
 
           <Form.Item>

@@ -3,6 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 interface RegisterRequest {
     username: string;
     password: string;
+    email: string;
 }
 
 interface RegisterResponse {
@@ -21,7 +22,8 @@ export const registerApi = createApi({
                 method: 'POST',
                 body,
             }),
-        }),
+        }
+    )
     }),
 });
 
