@@ -1,10 +1,12 @@
 import React from "react";
 import { Form, Input, Button, message } from "antd";
+import { useNavigate } from "react-router-dom";
 import { useRegisterUserMutation } from "../../services/registerServices";
 import Header from "../../components/Header";
 import { validationRules } from "../../utils/validationRules";
 
 const Register: React.FC = () => {
+  const navigate = useNavigate();
   const [form] = Form.useForm();
   const [registerUser, { isLoading }] = useRegisterUserMutation();
 
@@ -25,10 +27,12 @@ const Register: React.FC = () => {
         username: values.username,
         password: values.password,
         email: values.email,
+        group: "user",
       };
 
       const response = await registerUser(data).unwrap();
       message.success(`註冊成功！歡迎，${response.username}`);
+      navigate("/login");
       form.resetFields();
     } catch (error) {
       message.error("註冊失敗，請再試一次。" + error);

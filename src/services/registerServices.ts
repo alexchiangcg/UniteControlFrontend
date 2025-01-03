@@ -4,6 +4,7 @@ interface RegisterRequest {
     username: string;
     password: string;
     email: string;
+    group: string;
 }
 
 interface RegisterResponse {
@@ -14,11 +15,11 @@ interface RegisterResponse {
 
 export const registerApi = createApi({
     reducerPath: 'registerApi',
-    baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3004/' }),
+    baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3004' }),
     endpoints: (builder) => ({
         registerUser: builder.mutation<RegisterResponse, RegisterRequest>({
             query: (body) => ({
-                url: 'users',
+                url: '/users/register',
                 method: 'POST',
                 body,
             }),
