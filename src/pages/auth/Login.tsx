@@ -3,27 +3,42 @@ import { useNavigate } from "react-router-dom";
 import { Form, Input, Button, message } from "antd";
 import Header from "../../components/Header";
 
-const LoginPage = () => {
-  const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
+import { useLoginUserMutation } from "../../services/loginServices";
 
-  const onFinish = async (values) => {
-    setLoading(true);
+const LoginPage: React.FC = () => {
+  const navigate = useNavigate();
+  const [loginUser, { isLoading }] = useLoginUserMutation();
+
+  interface LoginFormValues {
+    username: string;
+    password: string;
+  }
+
+  const onFinish = async (values: LoginFormValues) => {
     try {
       const { username, password } = values;
 
+      const response = await loginUser({ username, password }).unwrap();
+      console.log("response = ", response);
+
+      if (response.token) {
+        localStorage.setItem("authToken", response.token);
+        message.success("登入成功！");
+        navigate("/dashboard");
+      } else {
+        message.error("帳號或密碼錯誤！");
+      }
+
       // 假設進行 API 請求驗證
-      if (username === "alex" && password === "alex1234") {
+      /* if (username === "alex" && password === "alex1234") {
         localStorage.setItem("authToken", "your_token");
         message.success("登入成功！");
         navigate("/dashboard"); // 跳轉到受保護頁面
       } else {
         message.error("帳號或密碼錯誤！");
-      }
+      } */
     } catch (error) {
       message.error("發生錯誤，請稍後再試！");
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -55,7 +70,7 @@ const LoginPage = () => {
           </Form.Item>
 
           <Form.Item>
-            <Button type="primary" htmlType="submit" loading={loading} block>
+            <Button type="primary" htmlType="submit" loading={isLoading} block>
               登入
             </Button>
           </Form.Item>
