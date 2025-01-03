@@ -1,5 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import registerApi from '../services/registerServices';
+import loginApi from "../services/loginServices";
+import logoutApi from "../services/logoutServices";
 import userListApi from '../services/userListServices';
 import userReducer from '../slices/userSlice';
 
@@ -7,10 +9,16 @@ export const store = configureStore({
     reducer: {
         [registerApi.reducerPath]: registerApi.reducer,
         [userListApi.reducerPath]: userListApi.reducer,
+        [loginApi.reducerPath]: loginApi.reducer,
+        [logoutApi.reducerPath]: logoutApi.reducer,
         userReducer: userReducer,
     },
     middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware().concat(registerApi.middleware, userListApi.middleware,userListApi.middleware)
+        getDefaultMiddleware().concat(registerApi.middleware, 
+            userListApi.middleware, 
+            userListApi.middleware, 
+            loginApi.middleware, 
+            logoutApi.middleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;
