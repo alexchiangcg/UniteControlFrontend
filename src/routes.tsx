@@ -8,6 +8,7 @@ import NotFound from "./pages/NotFound";
 import Home from "./pages/Home";
 import Register from "./pages/auth/Register";
 import UserList from "./pages/UserList";
+import DemoApp from "./pages/DemoApp";
 
 // 定義路由配置
 const routes: RouteObject[] = [
@@ -40,6 +41,10 @@ const routes: RouteObject[] = [
     path: "/user-list",
     element: <UserList />,
     children: [],
+  },
+  {
+    path: "/demo-calendar",
+    element: <DemoApp />
   },
   {
     path: "*",

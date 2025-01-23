@@ -11,6 +11,11 @@
     "server": "json-server --watch db.json --port 3004 –delay 1500"
   },
   "dependencies": {
+    "@fullcalendar/core": "^6.1.15",
+    "@fullcalendar/daygrid": "^6.1.15",
+    "@fullcalendar/interaction": "^6.1.15",
+    "@fullcalendar/react": "^6.1.15",
+    "@fullcalendar/timegrid": "^6.1.15",
     "@reduxjs/toolkit": "2.5.0",
     "antd": "5.22.2",
     "dayjs": "1.11.13",
