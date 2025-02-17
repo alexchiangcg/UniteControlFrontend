@@ -1,6 +1,6 @@
 // validationRules.ts
 export const validationRules = {
-    username: {
+    account: {
       pattern: /^[a-zA-Z0-9_]{6,32}$/,
       message: "帳號必須是 6-32 個字元，且只能包含英文、數字和下劃線！",
     },

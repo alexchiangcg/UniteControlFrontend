@@ -11,7 +11,7 @@ const Register: React.FC = () => {
   const [registerUser, { isLoading }] = useRegisterUserMutation();
 
   const onFinish = async (values: {
-    username: string;
+    account: string;
     password: string;
     confirmPassword: string;
     email: string;
@@ -23,15 +23,16 @@ const Register: React.FC = () => {
       return;
     }
     try {
+      // Send a POST request to the server /auth/register payload 如下
       const data = {
-        username: values.username,
+        account: values.account,
         password: values.password,
         email: values.email,
         group: "user",
       };
 
       const response = await registerUser(data).unwrap();
-      message.success(`註冊成功！歡迎，${response.username}`);
+      message.success(`註冊成功！歡迎，${response.account}`);
       navigate("/login");
       form.resetFields();
     } catch (error) {
@@ -50,7 +51,7 @@ const Register: React.FC = () => {
           onFinish={onFinish}
           autoComplete="off"
           initialValues={{
-            username: "",
+            account: "",
             password: "",
             confirmPassword: "",
             email: "",
@@ -58,10 +59,10 @@ const Register: React.FC = () => {
         >
           <Form.Item
             label="帳號"
-            name="username"
+            name="account"
             rules={[
               { required: true, message: "請輸入帳號！" },
-              validationRules.username,
+              validationRules.account,
             ]}
           >
             <Input placeholder="請輸入帳號" className="rounded-md" />
