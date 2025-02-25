@@ -6,9 +6,15 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import { INITIAL_EVENTS, createEventId } from "../utils/event-utils";
 
+interface CalendarEvent {
+  id: string;
+  title: string;
+  start: Date;
+}
+
 export default function DemoApp() {
   const [weekendsVisible, setWeekendsVisible] = useState(true);
-  const [currentEvents, setCurrentEvents] = useState([]);
+  const [currentEvents, setCurrentEvents] = useState<CalendarEvent[]>([]);
 
   function handleWeekendsToggle() {
     setWeekendsVisible(!weekendsVisible);
@@ -110,7 +116,7 @@ function renderEventContent(eventInfo: any) {
 interface SidebarProps {
   readonly weekendsVisible: boolean;
   readonly handleWeekendsToggle: () => void;
-  readonly currentEvents: string[];
+  readonly currentEvents: CalendarEvent[];
 }
 
 function Sidebar({
@@ -141,7 +147,7 @@ function Sidebar({
       <div className="demo-app-sidebar-section">
         <h2>event 列表 ({currentEvents.length})</h2>
         <ul>
-          {currentEvents.map((event) => (
+          {currentEvents.map((event:CalendarEvent) => (
             <SidebarEvent key={event.id} event={event} />
           ))}
         </ul>
@@ -150,13 +156,9 @@ function Sidebar({
   );
 }
 
-interface Event {
-  id: string;
-  title: string;
-  start: Date;
-}
 
-function SidebarEvent({ event }: { readonly event: Event }) {
+
+function SidebarEvent({ event }: { readonly event: CalendarEvent }) {
   return (
     <li key={event.id}>
       <b>
