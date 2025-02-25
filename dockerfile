@@ -18,9 +18,14 @@ COPY package.json pnpm-lock.yaml ./
 # Install dependencies
 RUN pnpm install --frozen-lockfile
 
-# 複製程式碼並執行 build
+# 複製專案所有程式碼並執行 build
 COPY . .
 RUN pnpm run build
+
+# 在 build 階段結束後清理開發依賴
+RUN rm -rf node_modules && \
+    rm -rf $PNPM_HOME && \
+    npm rm -g pnpm
 
 # 2️⃣ 使用 Nginx 作為伺服器
 FROM nginx:alpine
