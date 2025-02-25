@@ -17,9 +17,13 @@ import Header from "../components/Header";
 dayjs.locale("zh-tw");
 
 const TestAntd = () => {
-  const [date, setDate] = useState(null);
+  const [date, setDate] = useState<dayjs.Dayjs | null>(null);
   const [messageApi, contextHolder] = message.useMessage();
-  const handleChange = (value) => {
+  interface HandleChangeParams {
+    value: dayjs.Dayjs | null;
+  }
+
+  const handleChange = (value: HandleChangeParams['value']) => {
     messageApi.info(
       `選擇的日期是: ${value ? value.format("YYYY年MM月DD日") : "未選擇"}`
     );
@@ -46,7 +50,7 @@ const TestAntd = () => {
 };
 
 const Home = () => {
-  const [count, setCount] = useState(0);
+  // const [count, setCount] = useState(0);
 
   return (
     <>
