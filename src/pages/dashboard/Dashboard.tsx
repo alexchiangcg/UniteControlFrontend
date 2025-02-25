@@ -6,6 +6,8 @@ import Header from "../../components/Header";
 const Dashboard = () => {
   const navigate = useNavigate();
   const [isAuthenticated, setIsAuthenticated] = useState(true);
+  console.log(isAuthenticated);
+  
 
   useEffect(() => {
     // 檢查 token 是否存在，若無則跳轉到 login
@@ -15,6 +17,7 @@ const Dashboard = () => {
   }, [navigate]);
 
   const handleLogout = () => {
+    setIsAuthenticated(false);
     localStorage.removeItem("authToken");
     navigate("/login");
   };
