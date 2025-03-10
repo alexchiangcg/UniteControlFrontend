@@ -35,8 +35,26 @@ const Register: React.FC = () => {
       message.success(`註冊成功！歡迎，${response.account}`);
       navigate("/login");
       form.resetFields();
-    } catch (error) {
-      message.error("註冊失敗，請再試一次。" + error);
+    } catch (error:any) {
+  
+
+      console.error("註冊失敗:", error);
+
+      // 根據 error_code 顯示不同的錯誤訊息
+      if (error.status === "CUSTOM_ERROR") {
+        switch (error.error_code) {
+          case "SYS0001":
+            message.error("此帳號已被註冊，請更換帳號！");
+            break;
+          case "SYS0002":
+            message.error("電子郵件格式錯誤，請重新輸入！");
+            break;
+          default:
+            message.error("註冊失敗：" + error.message);
+        }
+      } else {
+        message.error("發生未知錯誤，請稍後再試！");
+      }
     }
   };
 
