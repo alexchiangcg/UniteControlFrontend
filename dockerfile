@@ -22,22 +22,7 @@ RUN pnpm install --frozen-lockfile
 COPY . .
 RUN pnpm run build
 
-# 在 build 階段結束後清理開發依賴
+# 在 build 階段結束後清理開發依賴，減少映像檔大小
 RUN rm -rf node_modules && \
     rm -rf $PNPM_HOME && \
     npm rm -g pnpm
-
-# 2️⃣ 使用 Nginx 作為伺服器
-FROM nginx:alpine
-
-# 複製編譯好的 React 靜態檔案到 Nginx
-COPY --from=builder /app/dist /usr/share/nginx/html
-
-# 📌 複製專案內的 nginx.conf 到 Nginx 容器
-COPY nginx/nginx.conf /etc/nginx/conf.d/default.conf
-
-# Expose 80 port
-EXPOSE 80
-
-# 啟動 Nginx
-CMD ["nginx", "-g", "daemon off;"]

@@ -1,10 +1,23 @@
 services:
   react-app:
-    container_name: uniteSlave-frontend
+    container_name: uniteSlave-frontend-builder
     build:
       context: .
       dockerfile: Dockerfile
-    image: uniteslave-frontend
+    image: uniteslave-frontend-builder
+    volumes:
+      - react_build:/app/dist  # 把 build 出來的靜態檔案放到 volume
+
+
+  nginx:
+    container_name: uniteSlave-nginx
+    image: nginx:alpine
     ports:
       - "8080:80"
     restart: unless-stopped
+    volumes:
+      - react_build:/usr/share/nginx/html:ro  # 掛載 React build 出來的檔案 :ro 代表 唯讀模式 (read-only)
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro  # 掛載 Nginx 設定
+
+volumes:
+  react_build:
