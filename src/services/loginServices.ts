@@ -1,4 +1,5 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi } from "@reduxjs/toolkit/query/react";
+import baseQueryWithErrorHandler from "./baseQueryWithErrorHandler";
 
 interface LoginRequest {
     username: string;
@@ -12,11 +13,12 @@ interface LoginResponse {
 
 export const loginApi = createApi({
     reducerPath: 'loginApi',
-    baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3004' }),
+    // baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3004' }),
+    baseQuery: baseQueryWithErrorHandler,
     endpoints: (builder) => ({
         loginUser: builder.mutation<LoginResponse, LoginRequest>({
             query: (body) => ({
-                url: '/users/login',
+                url: '/auth/login',
                 method: 'POST',
                 body,
             }),
