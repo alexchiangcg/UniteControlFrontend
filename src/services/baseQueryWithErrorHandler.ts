@@ -1,5 +1,7 @@
 import { fetchBaseQuery, FetchBaseQueryError } from "@reduxjs/toolkit/query/react";
 import { message } from "antd";
+import { getErrorMessage } from '../utils/errorHandler';
+
 
 
 interface ApiResponse<T = any> {
@@ -32,14 +34,10 @@ const baseQueryWithErrorHandler = async (args: any, api: any, extraOptions: any)
   const res = result.data as ApiResponse;
 
   if (res.error_code && res.error_code !== "00000") {
-    const errorMessage = res.error_message || "未知錯誤";
-
-    // 顯示 API 回傳的錯誤訊息
+    const errorMessage = getErrorMessage(res.error_code, res.error_message);
     message.error(`錯誤碼 ${res.error_code}：${errorMessage}`);
 
-
     // 回傳錯誤，讓 caller (`Register.tsx`) 可以根據錯誤做額外處理
-
     const customError: FetchBaseQueryError = {
       status: "CUSTOM_ERROR" as any, // 強制轉型，但仍符合 FetchBaseQueryError 結構
       data: { error_code: res.error_code, message: errorMessage },
