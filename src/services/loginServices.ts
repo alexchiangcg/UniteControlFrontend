@@ -2,7 +2,7 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 import baseQueryWithErrorHandler from "./baseQueryWithErrorHandler";
 
 interface LoginRequest {
-    username: string;
+    account: string;
     password: string;
 }
 

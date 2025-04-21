@@ -9,15 +9,15 @@ const LoginPage: React.FC = () => {
   const [loginUser, { isLoading }] = useLoginUserMutation();
 
   interface LoginFormValues {
-    username: string;
+    account: string;
     password: string;
   }
 
   const onFinish = async (values: LoginFormValues) => {
     try {
-      const { username, password } = values;
+      const { account, password } = values;
 
-      const response = await loginUser({ username, password }).unwrap();
+      const response = await loginUser({ account, password }).unwrap();
       console.log("response = ", response);
 
       if (response.token) {
@@ -29,7 +29,7 @@ const LoginPage: React.FC = () => {
       }
 
       // 假設進行 API 請求驗證
-      /* if (username === "alex" && password === "alex1234") {
+      /* if (account === "alex" && password === "alex1234") {
         localStorage.setItem("authToken", "your_token");
         message.success("登入成功！");
         navigate("/dashboard"); // 跳轉到受保護頁面
@@ -54,7 +54,7 @@ const LoginPage: React.FC = () => {
         >
           <Form.Item
             label="帳號"
-            name="username"
+            name="account"
             rules={[{ required: true, message: "請輸入帳號！" }]}
           >
             <Input placeholder="帳號" />
