@@ -8,7 +8,7 @@ import NotFound from "./pages/NotFound";
 import Home from "./pages/Home";
 import Register from "./pages/auth/Register";
 import UserList from "./pages/UserList";
-import DemoApp from "./pages/DemoApp";
+import CalendarApp from "./pages/Calendar";
 
 // 定義路由配置
 const routes: RouteObject[] = [
@@ -44,7 +44,7 @@ const routes: RouteObject[] = [
   },
   {
     path: "/demo-calendar",
-    element: <DemoApp />
+    element: <CalendarApp />
   },
   {
     path: "*",

@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* src/pages/DemoApp.tsx 使用 */
+/* src/pages/CalendarApp.tsx 使用 */
 html,
 body,
 body > div { /* the react root */
