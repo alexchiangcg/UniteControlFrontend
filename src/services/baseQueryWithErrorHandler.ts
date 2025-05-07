@@ -12,7 +12,7 @@ interface ApiResponse<T = any> {
 
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: "http://localhost:3000/",
+  baseUrl: import.meta.env.VITE_API_URL,
   prepareHeaders: (headers) => {
     const token = localStorage.getItem("token");
     if (token) {

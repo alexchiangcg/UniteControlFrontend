@@ -3,13 +3,15 @@
   "private": true,
   "version": "0.1.0",
   "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
-    "lint": "eslint .",
-    "preview": "vite preview",
-    "server": "json-server --watch db.json --port 3004 –delay 1500"
-  },
+ "scripts": {
+  "dev": "vite --mode development",
+  "build:dev": "vite build --mode development",
+  "build:prod": "vite build --mode production",
+  "lint": "eslint .",
+  "preview": "vite preview",
+  "server": "json-server --watch db.json --port 3004 --delay 1500"
+},
+
   "dependencies": {
     "@fullcalendar/core": "^6.1.15",
     "@fullcalendar/daygrid": "^6.1.15",
