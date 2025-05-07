@@ -52,6 +52,13 @@ const TestAntd = () => {
 const Home = () => {
   // const [count, setCount] = useState(0);
 
+  if (import.meta.env.MODE === 'development') {
+    console.log('目前是開發環境');
+  }
+  
+
+
+
   return (
     <>
     <Header></Header>
