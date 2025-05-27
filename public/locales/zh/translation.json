@@ -1,0 +1,12 @@
+{
+    "welcome": "歡迎！",
+    "description": "這是一個 {{n}} 網站。",
+    "nav": {
+        "home": "首頁",
+        "dashboard": "儀表板",
+        "userList": "用戶列表",
+        "login": "登入",
+        "register": "註冊",
+        "calendar": "日曆"
+    }
+} 

@@ -1,0 +1,12 @@
+{
+    "welcome": "Welcome!",
+    "description": "This is a {{n}} app.",
+    "nav": {
+        "home": "Home",
+        "dashboard": "Dashboard",
+        "userList": "User List",
+        "login": "Login",
+        "register": "Register",
+        "calendar": "Calendar"
+    }
+}

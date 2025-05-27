@@ -13,6 +13,7 @@ import zhTW from "antd/locale/zh_TW";
 import "dayjs/locale/zh-tw";
 import dayjs from "dayjs";
 import Header from "../components/Header";
+import { useTranslation } from "react-i18next";
 
 dayjs.locale("zh-tw");
 
@@ -51,6 +52,7 @@ const TestAntd = () => {
 
 const Home = () => {
   // const [count, setCount] = useState(0);
+  const { t } = useTranslation();
 
   if (import.meta.env.MODE === 'development') {
     console.log('目前是開發環境');
@@ -63,7 +65,7 @@ const Home = () => {
     <>
     <Header></Header>
       <div className="mx-auto w-screen flex flex-col justify-center items-center">
-        <h1 className="text-9xl text-red-700 font-black">Home tailwind</h1>
+        <h1 className="text-9xl text-red-700 font-black">{t("description", { n: 'Unite Slave' })}</h1>
 
         <hr />
         <h1>antd version: {version}</h1>
