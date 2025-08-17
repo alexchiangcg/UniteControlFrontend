@@ -1,81 +1,109 @@
-import { useNavigate } from "react-router-dom";
-import { Form, Input, Button, message } from "antd";
-import Header from "../../components/Header";
-
+// src/pages/auth/Login.tsx
+import React from "react";
+import { useNavigate, Link } from "react-router-dom";
+import { Card, Form, Input, Button, Typography, message } from "antd";
 import { useLoginUserMutation } from "../../services/loginServices";
+
+const { Title, Text } = Typography;
+
+interface LoginFormValues {
+  account: string;
+  password: string;
+}
 
 const LoginPage: React.FC = () => {
   const navigate = useNavigate();
   const [loginUser, { isLoading }] = useLoginUserMutation();
 
-  interface LoginFormValues {
-    account: string;
-    password: string;
-  }
-
   const onFinish = async (values: LoginFormValues) => {
     try {
       const { account, password } = values;
-
       const response = await loginUser({ account, password }).unwrap();
-      console.log("response = ", response);
 
-      if (response.token) {
+      if (response?.token) {
         localStorage.setItem("authToken", response.token);
-        message.success("登入成功！");
+        message.success("Login successful");
         navigate("/dashboard");
       } else {
-        message.error("帳號或密碼錯誤！");
+        message.error("Invalid account or password");
       }
-
-      // 假設進行 API 請求驗證
-      /* if (account === "alex" && password === "alex1234") {
-        localStorage.setItem("authToken", "your_token");
-        message.success("登入成功！");
-        navigate("/dashboard"); // 跳轉到受保護頁面
-      } else {
-        message.error("帳號或密碼錯誤！");
-      } */
-    } catch (error) {
-      message.error("發生錯誤，請稍後再試！");
+    } catch (e) {
+      message.error("Something went wrong. Please try again.");
     }
   };
 
   return (
-    <>
-      <Header></Header>
-      <div className="my-10 mx-auto text-center">
-        <h1 className="text-[40px] font-bold">登入頁面</h1>
-        <Form
-          className="w-[400px] mx-auto mt-[15%]"
-          name="login"
-          onFinish={onFinish}
-          layout="vertical"
-        >
-          <Form.Item
-            label="帳號"
-            name="account"
-            rules={[{ required: true, message: "請輸入帳號！" }]}
-          >
-            <Input placeholder="帳號" />
-          </Form.Item>
-
-          <Form.Item
-            label="密碼"
-            name="password"
-            rules={[{ required: true, message: "請輸入密碼！" }]}
-          >
-            <Input.Password placeholder="密碼" />
-          </Form.Item>
-
-          <Form.Item>
-            <Button type="primary" htmlType="submit" loading={isLoading} block>
-              登入
-            </Button>
-          </Form.Item>
-        </Form>
+    <div className="flex min-h-screen bg-[#f5f7fb] w-full">
+      {/* 左側滿版圖片 (md 以上顯示) */}
+      <div className="hidden md:block md:w-1/2 h-full">
+        <img
+          src="/src/assets/images/background/login-side.png"
+          alt="login visual"
+          className="w-full h-full object-cover"
+        />
       </div>
-    </>
+      {/* 右側登入卡片置中 */}
+      <div className="w-full md:w-1/2 flex flex-col items-center justify-center px-4 py-8">
+        <Card className="w-full max-w-md shadow-lg p-8" bordered>
+          <div className="mb-6 text-center">
+            <Title level={2} style={{ margin: 0 }}>
+              Unite Slave
+            </Title>
+          </div>
+          <Form<LoginFormValues>
+            layout="vertical"
+            name="login"
+            onFinish={onFinish}
+            requiredMark={false}
+          >
+            <Form.Item
+              label="Account"
+              name="account"
+              rules={[{ required: true, message: "Please enter your account" }]}
+            >
+              <Input
+                size="large"
+                placeholder="Enter your account"
+                autoComplete="username"
+              />
+            </Form.Item>
+            <Form.Item
+              label="Password"
+              name="password"
+              rules={[
+                { required: true, message: "Please enter your password" },
+              ]}
+            >
+              <Input.Password
+                size="large"
+                placeholder="Enter your password"
+                autoComplete="current-password"
+              />
+            </Form.Item>
+            <div className="mb-4 -mt-2">
+              <Link to="/forgot-password">
+                <Text type="secondary">Forget your password?</Text>
+              </Link>
+            </div>
+            <Form.Item style={{ marginBottom: 8 }}>
+              <Button
+                type="primary"
+                htmlType="submit"
+                size="large"
+                block
+                loading={isLoading}
+              >
+                Login
+              </Button>
+            </Form.Item>
+          </Form>
+        </Card>
+        {/* 卡片下方 */}
+        <div className="text-center mt-4">
+          <Text type="secondary">copyright © uniteslave</Text>
+        </div>
+      </div>
+    </div>
   );
 };
 
