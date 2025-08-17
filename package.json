@@ -12,6 +12,7 @@
     "server": "json-server --watch db.json --port 3004 --delay 1500"
   },
   "dependencies": {
+    "@ant-design/icons": "^6.0.0",
     "@fullcalendar/core": "^6.1.15",
     "@fullcalendar/daygrid": "^6.1.15",
     "@fullcalendar/interaction": "^6.1.15",
@@ -43,6 +44,7 @@
     "eslint-plugin-react-refresh": "0.4.14",
     "globals": "15.11.0",
     "postcss": "8.4.49",
+    "prettier": "^3.6.2",
     "tailwindcss": "3.4.15",
     "typescript": "5.6.2",
     "typescript-eslint": "8.11.0",
