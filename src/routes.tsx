@@ -14,7 +14,7 @@ import CalendarApp from "./pages/Calendar";
 const routes: RouteObject[] = [
   {
     path: "/",
-    element: <Navigate to="/home" />, // 默認重定向
+    element: <Navigate to="/login" />, // 默認重定向到登入頁
     children: [],
   },
   {
@@ -44,7 +44,7 @@ const routes: RouteObject[] = [
   },
   {
     path: "/demo-calendar",
-    element: <CalendarApp />
+    element: <CalendarApp />,
   },
   {
     path: "*",
