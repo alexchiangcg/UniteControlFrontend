@@ -7,6 +7,7 @@ import Dashboard from "./pages/dashboard/Dashboard";
 import NotFound from "./pages/NotFound";
 import Home from "./pages/Home";
 import Register from "./pages/auth/Register";
+import ForgotPassword from "./pages/auth/ForgotPassword";
 import UserList from "./pages/UserList";
 import CalendarApp from "./pages/Calendar";
 
@@ -29,6 +30,11 @@ const routes: RouteObject[] = [
   {
     path: "/register",
     element: <Register />,
+    children: [],
+  },
+  {
+    path: "/forgot-password",
+    element: <ForgotPassword />,
     children: [],
   },
   {
