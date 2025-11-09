@@ -8,6 +8,7 @@ import NotFound from "./pages/NotFound";
 import Home from "./pages/Home";
 import Register from "./pages/auth/Register";
 import ForgotPassword from "./pages/auth/ForgotPassword";
+import ResetPassword from "./pages/auth/ResetPassword";
 import UserList from "./pages/UserList";
 import CalendarApp from "./pages/Calendar";
 
@@ -35,6 +36,11 @@ const routes: RouteObject[] = [
   {
     path: "/forgot-password",
     element: <ForgotPassword />,
+    children: [],
+  },
+  {
+    path: "/reset-password",
+    element: <ResetPassword />,
     children: [],
   },
   {
