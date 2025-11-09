@@ -1,0 +1,42 @@
+/**
+ * Ant Design 全局樣式覆寫
+ * 
+ * 此檔案專門用於覆寫 Ant Design 的預設樣式
+ * 避免污染主要的 index.css
+ */
+
+/* ============================================================================
+   Form.Item 樣式修正
+   ============================================================================ */
+
+/* 修正 Form.Item 錯誤訊息導致的佈局偏移 */
+.ant-form-item {
+  margin-bottom: 24px;
+}
+
+/* 為錯誤訊息預留固定高度空間 */
+.ant-form-item-explain {
+  min-height: 24px;
+}
+
+.ant-form-item-explain-error {
+  position: absolute;
+  min-height: 24px;
+}
+
+/* 針對 BookingCreate 頁面的特殊 Form.Item（mb-0 的項目） */
+.ant-form-item.mb-0 {
+  margin-bottom: 0 !important;
+}
+
+/* Time Slot 等特殊佈局的容器，預留錯誤訊息空間 */
+.ant-form-item.mb-0 .ant-form-item-explain {
+  position: relative;
+  min-height: 24px;
+}
+
+/* ============================================================================
+   其他 Ant Design 元件樣式覆寫
+   ============================================================================ */
+
+/* 未來可以在此區塊加入更多覆寫樣式 */
