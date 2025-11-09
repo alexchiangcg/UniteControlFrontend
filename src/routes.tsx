@@ -11,6 +11,7 @@ import ForgotPassword from "./pages/auth/ForgotPassword";
 import ResetPassword from "./pages/auth/ResetPassword";
 import UserList from "./pages/UserList";
 import CalendarApp from "./pages/Calendar";
+import BookingCreate from "./pages/booking/BookingCreate";
 
 // 定義路由配置
 const routes: RouteObject[] = [
@@ -57,6 +58,11 @@ const routes: RouteObject[] = [
   {
     path: "/demo-calendar",
     element: <CalendarApp />,
+  },
+  {
+    path: "/booking/create",
+    element: <BookingCreate />,
+    children: [],
   },
   {
     path: "*",
