@@ -2,7 +2,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Card, Form, Input, Button, Typography, message } from "antd";
-import AuthLayout from "../../components/AuthLayout";
+import AuthLayout from "../../layouts/AuthLayout";
 
 const { Title, Text } = Typography;
 

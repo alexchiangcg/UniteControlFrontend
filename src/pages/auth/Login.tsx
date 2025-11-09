@@ -3,7 +3,7 @@ import React from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { Card, Form, Input, Button, Typography, message } from "antd";
 import { useLoginUserMutation } from "../../services/loginServices";
-import AuthLayout from "../../components/AuthLayout";
+import AuthLayout from "../../layouts/AuthLayout";
 
 const { Title, Text } = Typography;
 

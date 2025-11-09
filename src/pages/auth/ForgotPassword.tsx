@@ -1,7 +1,7 @@
 // src/pages/auth/ForgotPassword.tsx
 import React from "react";
 import { Card, Form, Input, Button, Typography, message } from "antd";
-import AuthLayout from "../../components/AuthLayout";
+import AuthLayout from "../../layouts/AuthLayout";
 
 const { Title, Text } = Typography;
 
