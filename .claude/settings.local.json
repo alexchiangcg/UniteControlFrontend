@@ -4,7 +4,13 @@
       "Read(//Users/alex/Library/Application Support/Code/User/**)",
       "Bash(curl -s http://127.0.0.1:3845/mcp -X POST -H \"Content-Type: application/json\" -d '{\"\"jsonrpc\"\": \"\"2.0\"\", \"\"id\"\": 1, \"\"method\"\": \"\"initialize\"\", \"\"params\"\": {\"\"protocolVersion\"\": \"\"2024-11-05\"\", \"\"capabilities\"\": {}, \"\"clientInfo\"\": {\"\"name\"\": \"\"claude-code\"\", \"\"version\"\": \"\"1.0.0\"\"}}}')",
       "Bash(curl:*)",
-      "Bash(xargs ls:*)"
+      "Bash(xargs ls:*)",
+      "Bash(npm run build:*)",
+      "Bash(npm run:*)",
+      "Bash(npx tsc:*)",
+      "Bash(npm install:*)",
+      "Bash(pnpm add:*)",
+      "Bash(pnpm run dev)"
     ],
     "deny": [],
     "ask": []

@@ -12,7 +12,7 @@
 
 import React from "react";
 import { Button, Input, Select, Radio, Checkbox, Form, DatePicker } from "antd";
-import SidebarLayout from "../../layouts/SidebarLayout";
+import SidebarLayout from "@shared/layouts/SidebarLayout";
 
 const { TextArea } = Input;
 const { Option } = Select;

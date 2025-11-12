@@ -1,31 +1,36 @@
-// src/pages/auth/ForgotPassword.tsx
+// src/features/auth/components/Login.tsx
 import React from "react";
+import { useNavigate, Link } from "react-router-dom";
 import { Card, Form, Input, Button, Typography, message } from "antd";
-import AuthLayout from "../../layouts/AuthLayout";
+import { useLoginUserMutation } from "../services/loginServices";
+import AuthLayout from "../layouts/AuthLayout";
 
 const { Title, Text } = Typography;
 
-interface ForgotPasswordFormValues {
+interface LoginFormValues {
   account: string;
-  email: string;
+  password: string;
 }
 
-const ForgotPasswordPage: React.FC = () => {
-  const [form] = Form.useForm();
+const LoginPage: React.FC = () => {
+  const navigate = useNavigate();
+  const [loginUser, { isLoading }] = useLoginUserMutation();
 
-  const onFinish = async (values: ForgotPasswordFormValues) => {
+  const onFinish = async (values: LoginFormValues) => {
     try {
-      const { account, email } = values;
+      const { account, password } = values;
+      const response = await loginUser({ account, password }).unwrap();
 
-      // TODO: 實作忘記密碼 API 呼叫
-      console.log("Forgot password values:", { account, email });
-
-      message.success("Verification code has been sent to your email");
-
-      // 可以導向到驗證碼輸入頁面
-      // navigate("/verify-code");
+      if (response?.token) {
+        localStorage.setItem("token", response.token);
+        message.success("Login successful");
+        navigate("/dashboard");
+      } else {
+        message.error("Invalid account or password");
+      }
     } catch (e) {
-      message.error("Something went wrong. Please try again.");
+      // 錯誤訊息已由 baseQueryWithErrorHandler 處理
+      console.error("Login error:", e);
     }
   };
 
@@ -41,15 +46,14 @@ const ForgotPasswordPage: React.FC = () => {
             level={2}
             className="!m-0 !text-[38px] !font-bold !leading-[38px] !text-[#2e2e2e]"
           >
-            Forget Password
+            Unite Slave
           </Title>
         </div>
 
-        {/* 忘記密碼表單 */}
-        <Form<ForgotPasswordFormValues>
-          form={form}
+        {/* 登入表單 */}
+        <Form<LoginFormValues>
           layout="vertical"
-          name="forgot-password"
+          name="login"
           onFinish={onFinish}
           requiredMark={(label, { required }) => (
             <>
@@ -73,32 +77,40 @@ const ForgotPasswordPage: React.FC = () => {
           </Form.Item>
 
           <Form.Item
-            label={<span className="text-base text-[#2e2e2e]">Email</span>}
-            name="email"
-            rules={[
-              { required: true, message: "Please enter your email" },
-              { type: "email", message: "Please enter a valid email" },
-            ]}
+            label={<span className="text-base text-[#2e2e2e]">Password</span>}
+            name="password"
+            rules={[{ required: true, message: "Please enter your password" }]}
             className="mb-6"
           >
-            <Input
+            <Input.Password
               size="large"
-              placeholder="Enter your Email Address"
-              autoComplete="email"
+              placeholder="Enter your password"
+              autoComplete="current-password"
               className="text-base py-4 px-3 border-[#ced4da] rounded"
             />
           </Form.Item>
 
-          {/* 送出按鈕 */}
+          {/* 忘記密碼連結 */}
+          <div className="mb-6">
+            <Link
+              to="/forgot-password"
+              className="text-base font-medium text-[#2f6f9f] no-underline hover:text-[#2f6f9f]"
+            >
+              Forget your password?
+            </Link>
+          </div>
+
+          {/* 登入按鈕 */}
           <Form.Item className="mb-0">
             <Button
               type="primary"
               htmlType="submit"
               size="large"
               block
+              loading={isLoading}
               className="bg-[#2f6f9f] border-[#2f6f9f] hover:bg-[#2f6f9f] hover:border-[#2f6f9f] text-base font-medium h-[50px] rounded"
             >
-              Get Verification Code
+              Login
             </Button>
           </Form.Item>
         </Form>
@@ -112,4 +124,4 @@ const ForgotPasswordPage: React.FC = () => {
   );
 };
 
-export default ForgotPasswordPage;
+export default LoginPage;

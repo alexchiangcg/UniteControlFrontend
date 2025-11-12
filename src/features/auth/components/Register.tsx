@@ -1,9 +1,8 @@
 import React from "react";
 import { Form, Input, Button, message } from "antd";
 import { useNavigate } from "react-router-dom";
-import { useRegisterUserMutation } from "../../services/registerServices";
-import Header from "../../components/Header";
-import { validationRules } from "../../utils/validationRules";
+import { useRegisterUserMutation } from "../services/registerServices";
+import { validationRules } from "../utils/validationRules";
 
 const Register: React.FC = () => {
   const navigate = useNavigate();
@@ -59,7 +58,6 @@ const Register: React.FC = () => {
 
   return (
     <>
-      <Header></Header>
       <div className="max-w-md mx-auto mt-12 p-6 border border-gray-300 rounded-lg shadow-sm">
         <h2 className="text-center text-2xl font-semibold mb-4">註冊</h2>
         <Form

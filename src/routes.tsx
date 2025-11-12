@@ -1,13 +1,10 @@
 import type { RouteObject } from "react-router-dom";
 import { Navigate } from "react-router-dom";
 
-// 引入頁面組件
-import Login from "./pages/auth/Login";
-import NotFound from "./pages/NotFound";
-import Register from "./pages/auth/Register";
-import ForgotPassword from "./pages/auth/ForgotPassword";
-import ResetPassword from "./pages/auth/ResetPassword";
-import BookingCreate from "./pages/booking/BookingCreate";
+// 引入頁面組件 - 使用新的 feature-based 結構
+import { Login, Register, ForgotPassword, ResetPassword } from "@features/auth";
+import { BookingCreate } from "@features/booking";
+import NotFound from "@shared/pages/NotFound";
 
 // 定義路由配置
 const routes: RouteObject[] = [

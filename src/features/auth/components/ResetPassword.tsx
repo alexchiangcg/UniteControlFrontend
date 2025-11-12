@@ -1,8 +1,8 @@
-// src/pages/auth/ResetPassword.tsx
+// src/features/auth/components/ResetPassword.tsx
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Card, Form, Input, Button, Typography, message } from "antd";
-import AuthLayout from "../../layouts/AuthLayout";
+import AuthLayout from "../layouts/AuthLayout";
 
 const { Title, Text } = Typography;
 
