@@ -2,7 +2,7 @@ import React from "react";
 import { Form, Input, Button, message } from "antd";
 import { useNavigate } from "react-router-dom";
 import { useRegisterUserMutation } from "../services/registerServices";
-import { validationRules } from "../../../utils/validationRules";
+import { validationRules } from "../utils/validationRules";
 
 const Register: React.FC = () => {
   const navigate = useNavigate();
