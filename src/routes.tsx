@@ -3,8 +3,8 @@ import { Navigate } from "react-router-dom";
 
 // 引入頁面組件 - 使用新的 feature-based 結構
 import { Login, Register, ForgotPassword, ResetPassword } from "@features/auth";
+import { BookingCreate } from "@features/booking";
 import NotFound from "./pages/NotFound";
-import BookingCreate from "./pages/booking/BookingCreate";
 
 // 定義路由配置
 const routes: RouteObject[] = [
