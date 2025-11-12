@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { registerApi, loginApi, logoutApi } from '@features/auth';
-import userListApi from '../services/userListServices';
+import userListApi from '@shared/services/userListServices';
 import userReducer from '../slices/userSlice';
 
 export const store = configureStore({

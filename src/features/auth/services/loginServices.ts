@@ -1,5 +1,5 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
-import baseQueryWithErrorHandler from "../../../services/baseQueryWithErrorHandler";
+import baseQueryWithErrorHandler from "@shared/services/baseQueryWithErrorHandler";
 
 interface LoginRequest {
     account: string;
