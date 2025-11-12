@@ -27,7 +27,16 @@ const baseQueryWithErrorHandler = async (args: any, api: any, extraOptions: any)
 
   if (result.error) {
     console.error("API Error:", result.error);
-    message.error("發生錯誤，請稍後再試！");
+
+    // 檢查錯誤回應中是否包含 error_code 和 error_message
+    const errorData = result.error.data as ApiResponse;
+    if (errorData?.error_code) {
+      const errorMessage = getErrorMessage(errorData.error_code, errorData.error_message);
+      message.error(`錯誤碼 ${errorData.error_code}：${errorMessage}`);
+    } else {
+      message.error("發生錯誤，請稍後再試！");
+    }
+
     return result; // 讓 caller 可以捕捉錯誤
   }
 
