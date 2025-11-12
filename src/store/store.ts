@@ -1,7 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import registerApi from '../services/registerServices';
-import loginApi from "../services/loginServices";
-import logoutApi from "../services/logoutServices";
+import { registerApi, loginApi, logoutApi } from '@features/auth';
 import userListApi from '../services/userListServices';
 import userReducer from '../slices/userSlice';
 
