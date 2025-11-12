@@ -22,14 +22,15 @@ const LoginPage: React.FC = () => {
       const response = await loginUser({ account, password }).unwrap();
 
       if (response?.token) {
-        localStorage.setItem("authToken", response.token);
+        localStorage.setItem("token", response.token);
         message.success("Login successful");
         navigate("/dashboard");
       } else {
         message.error("Invalid account or password");
       }
     } catch (e) {
-      message.error("Something went wrong. Please try again.");
+      // 錯誤訊息已由 baseQueryWithErrorHandler 處理
+      console.error("Login error:", e);
     }
   };
 
