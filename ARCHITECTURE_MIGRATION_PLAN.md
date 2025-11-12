@@ -6,8 +6,8 @@
 |------|------|
 | **專案名稱** | UniteControlFrontend |
 | **當前架構** | 混合型 (Layer-based + Feature-based) |
-| **總文件數** | 31 個 TypeScript/JavaScript 文件 |
-| **代碼量** | ~91.2 KB (src 目錄) |
+| **總文件數** | 26 個 TypeScript/JavaScript 文件 |
+| **代碼量** | ~1.0 MB (src 目錄，包含資源檔) |
 | **技術棧** | React 18.3.1 + TypeScript + Redux Toolkit + Ant Design |
 | **構建工具** | Vite 5.4.10 |
 
@@ -15,15 +15,19 @@
 
 ```
 src/
-├── pages/          (11 頁面) - 認證、預約、儀表板、首頁等
+├── pages/          (6 頁面)
+│   ├── auth/      (4 頁面) - Login, Register, ForgotPassword, ResetPassword
+│   ├── booking/   (1 頁面) - BookingCreate
+│   └── NotFound.tsx
 ├── components/     (2 元件) - Header、Sidebar
 ├── layouts/        (2 佈局) - AuthLayout、SidebarLayout
-├── services/       (5 服務) - 登入、註冊、API 錯誤處理
+├── services/       (5 服務) - loginServices, registerServices, logoutServices, userListServices, baseQueryWithErrorHandler
 ├── store/          (Redux 配置)
 ├── slices/         (Redux 狀態)
 ├── utils/          (工具函數)
 ├── i18n/           (國際化)
-└── styles/         (全局樣式)
+├── styles/         (全局樣式)
+└── assets/         (圖片資源)
 ```
 
 ### 架構特點
@@ -35,22 +39,24 @@ src/
 - store/ → 狀態層
 
 **Feature-based 雛形**：
-- pages/auth/ (認證功能)
-- pages/booking/ (預約功能)
-- pages/dashboard/ (儀表板功能)
+- pages/auth/ (認證功能 - 4 個頁面)
+- pages/booking/ (預約功能 - 1 個頁面)
 
-## 難度評估：🟡 中等難度
+## 難度評估：🟢 中低難度（專案精簡後更容易）
 
 ### 需要遷移的檔案統計
 
 ```
 📁 需要重組的檔案
-├── pages/          11 個頁面
-├── components/     2 個元件
+├── pages/          6 個頁面
+│   ├── auth/      4 個頁面 (Login, Register, ForgotPassword, ResetPassword)
+│   ├── booking/   1 個頁面 (BookingCreate)
+│   └── NotFound   1 個頁面
+├── components/     2 個元件 (Header, Sidebar)
 ├── services/       5 個 API 服務
-├── layouts/        2 個佈局
+├── layouts/        2 個佈局 (AuthLayout, SidebarLayout)
 └── utils/          工具函數
-總計：約 20-30 個檔案需要重新組織
+總計：約 15-20 個檔案需要重新組織
 ```
 
 ## 目標架構設計
@@ -68,20 +74,11 @@ src/
 │   │   ├── types/                # auth 相關類型定義
 │   │   └── index.ts              # 統一導出
 │   │
-│   ├── booking/                   # 預約功能
-│   │   ├── components/           # BookingCreate, BookingList, BookingDetail
-│   │   ├── services/             # bookingServices.ts
-│   │   ├── hooks/                # useBooking
-│   │   ├── types/                # booking types
-│   │   └── index.ts
-│   │
-│   ├── dashboard/                 # 儀表板
-│   │   ├── components/           # DashboardPage
-│   │   ├── services/
-│   │   └── index.ts
-│   │
-│   └── home/                      # 首頁
-│       ├── components/           # HomePage
+│   └── booking/                   # 預約功能
+│       ├── components/           # BookingCreate (未來可擴展 BookingList, BookingDetail)
+│       ├── services/             # bookingServices.ts
+│       ├── hooks/                # useBooking
+│       ├── types/                # booking types
 │       └── index.ts
 │
 ├── shared/                        # 共享資源
@@ -108,17 +105,20 @@ src/
 ### ✅ 容易的部分（1-2 天）
 
 #### 1. Auth 功能模組化
-- **現有結構**：Login.tsx、Register.tsx、ForgotPassword.tsx 已在 `pages/auth/`
+
+- **現有結構**：Login.tsx、Register.tsx、ForgotPassword.tsx、ResetPassword.tsx 已在 `pages/auth/`
 - **需要做的**：
-  - 移動 loginServices.ts、registerServices.ts 到 `features/auth/services/`
+  - 移動 loginServices.ts、registerServices.ts、logoutServices.ts 到 `features/auth/services/`
   - 移動 AuthLayout 到 `features/auth/layouts/`
   - 創建 `features/auth/index.ts` 統一導出
+  - Auth 功能完整，是最適合首先遷移的模組
 
 #### 2. Booking 功能模組化
-- **現有結構**：BookingCreate.tsx、BookingList.tsx 已在 `pages/booking/`
+
+- **現有結構**：BookingCreate.tsx 在 `pages/booking/`
 - **需要做的**：
   - 創建對應的 services、types
-  - 結構相對獨立，遷移簡單
+  - 目前只有一個頁面，結構簡單，遷移容易
 
 ### 🟡 中等難度（2-3 天）
 
@@ -129,6 +129,7 @@ src/
   - 如果只有部分功能用 → 放對應 `feature/components/`
 
 #### 2. Services 層重組
+
 - **baseQueryWithErrorHandler**：
   - 這是全局的 API 配置，應放 `shared/services/`
   - 需確保所有 feature services 都能正確引用
@@ -136,7 +137,8 @@ src/
 - **各功能 services**：
   - loginServices.ts → `features/auth/services/`
   - registerServices.ts → `features/auth/services/`
-  - 其他 services 按功能分配
+  - logoutServices.ts → `features/auth/services/`
+  - userListServices.ts → 決定放 `shared/services/` 或創建新的 feature
 
 #### 3. 路由配置調整
 - **routes.tsx 需要更新**：
@@ -206,28 +208,24 @@ src/
 
 ### 方案一：漸進式遷移（推薦）⭐
 
-**時間：2-3 週**
+**時間：1-2 週**（專案精簡後時間縮短）
 
-#### Week 1: Auth 功能完整遷移
-1. 創建 `features/auth/` 目錄結構
-2. 遷移所有 auth 相關檔案
-3. 更新 routes.tsx 中的 auth 路由
-4. 測試登入、註冊、忘記密碼流程
-5. **驗證可行性**
+#### Week 1: Auth 功能完整遷移 + Booking 遷移
 
-#### Week 2: Booking 功能遷移
-1. 創建 `features/booking/` 目錄結構
-2. 遷移 booking 相關檔案
-3. 更新路由配置
-4. 測試預約功能
-5. **完善遷移模式**
+1. Day 1-2: 創建 `features/auth/` 目錄結構
+2. Day 2-3: 遷移所有 auth 相關檔案（4 頁面 + 3 services + 1 layout）
+3. Day 3-4: 更新 routes.tsx 中的 auth 路由
+4. Day 4: 測試登入、註冊、忘記密碼、重設密碼流程
+5. Day 5: 創建 `features/booking/` 並遷移 BookingCreate
+6. **驗證可行性**
 
-#### Week 3: 其他功能遷移 + 清理
-1. 遷移 Dashboard、Home 等功能
-2. 整理 `shared/` 目錄
-3. 刪除舊的 `pages/`、`services/` 目錄
-4. 全面測試
-5. 更新文檔
+#### Week 2: Shared 資源整理 + 清理
+
+1. Day 1-2: 整理 `shared/` 目錄（components, layouts, services）
+2. Day 2-3: 處理 NotFound 頁面和其他零散檔案
+3. Day 3: 刪除舊的 `pages/`、部分 `services/` 目錄
+4. Day 4: 全面測試所有功能
+5. Day 5: 更新文檔和 Code Review
 
 **優點**：
 - ✅ 風險低，可隨時回退
@@ -544,19 +542,25 @@ Week 3: 2024-XX-XX ~ 2024-XX-XX
 
 ### 理由
 
-1. **專案規模適中**（~31 個檔案）
-   - 不會太大導致無法控制
-   - 也不會太小沒有意義
+1. **專案規模精簡**（~26 個檔案，較原本減少）
+   - 檔案數量減少，遷移更容易控制
+   - 結構更清晰，便於重組
 
 2. **已有 Feature-based 雛形**
-   - pages/auth/、pages/booking/ 已按功能分組
+   - pages/auth/（4 個頁面）已按功能完整分組
+   - pages/booking/（1 個頁面）結構簡單
    - 不是從零開始，有基礎可以延續
 
-3. **處於成長階段**
+3. **Auth 功能模組完整**
+   - 4 個頁面 + 3 個 services + 1 個 layout
+   - 是理想的首個遷移範例
+   - 成功後可複製模式到其他功能
+
+4. **處於成長階段**
    - 現在改比未來功能更多時改要容易
    - 投資回報率高
 
-4. **風險可控**
+5. **風險可控**
    - 漸進式遷移可隨時回退
    - TypeScript 提供類型安全保障
    - Vite 的快速 HMR 便於測試
