@@ -7,6 +7,7 @@
  */
 
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Drawer } from "antd";
 import {
   CalendarOutlined,
@@ -29,7 +30,7 @@ const sampleSidebarItems: SidebarItem[] = [
     id: "booking",
     label: "Booking",
     icon: <CalendarOutlined />,
-    href: "/booking",
+    href: "/booking/create",
   },
   {
     id: "history",
@@ -102,10 +103,29 @@ export default function SidebarLayout({
   sidebarItems = sampleSidebarItems,
   activeId,
 }: SidebarLayoutProps): JSX.Element {
+  const navigate = useNavigate();
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   const handleSelect = (id: string) => {
-    console.log("選擇的選單項目:", id);
+    // 找到被選中的選單項目
+    const findItem = (items: SidebarItem[]): SidebarItem | null => {
+      for (const item of items) {
+        if (item.id === id) return item;
+        if (item.children) {
+          const found = findItem(item.children);
+          if (found) return found;
+        }
+      }
+      return null;
+    };
+
+    const selectedItem = findItem(sidebarItems);
+
+    // 如果有 href，則進行路由跳轉
+    if (selectedItem?.href) {
+      navigate(selectedItem.href);
+    }
+
     // 手機版選擇後自動關閉抽屜
     setDrawerOpen(false);
   };
