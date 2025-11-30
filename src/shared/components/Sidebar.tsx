@@ -21,7 +21,11 @@
  */
 
 import { useState, useEffect, KeyboardEvent } from "react";
-import { RightOutlined, CloseOutlined } from "@ant-design/icons";
+import {
+  RightOutlined,
+  CloseOutlined,
+  AppstoreOutlined,
+} from "@ant-design/icons";
 
 // ============================================================================
 // 型別定義
@@ -202,20 +206,7 @@ export default function Sidebar(props: SidebarProps): JSX.Element {
 
       {/* Logo 區域 */}
       <header className="flex items-center gap-2.5 px-6 pt-9 pb-7 shrink-0">
-        <div className="w-6 h-6 shrink-0">
-          <svg
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M4 4H10V10H4V4ZM14 4H20V10H14V4ZM4 14H10V20H4V14ZM14 14H20V20H14V14Z"
-              fill="white"
-            />
-          </svg>
-        </div>
+        <AppstoreOutlined className="text-white text-2xl" />
         <h1 className="text-white text-2xl font-bold leading-6">Unite Slave</h1>
       </header>
 

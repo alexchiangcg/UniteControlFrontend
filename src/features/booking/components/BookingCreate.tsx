@@ -10,96 +10,19 @@
  * 3. 磁碟區設定：磁碟區群組和路徑對應
  */
 
-import React from "react";
 import { Button, Input, Select, Radio, Checkbox, Form, DatePicker } from "antd";
+import {
+  ArrowLeftOutlined,
+  CalendarOutlined,
+  ExclamationCircleOutlined,
+  PlusCircleOutlined,
+  UserOutlined,
+  DownOutlined,
+} from "@ant-design/icons";
 import SidebarLayout from "@shared/layouts/SidebarLayout";
 
 const { TextArea } = Input;
 const { Option } = Select;
-
-// ============================================================================
-// 圖示元件
-// ============================================================================
-
-const ArrowBackIcon: React.FC<{ className?: string }> = ({ className }) => (
-  <svg
-    className={className}
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <path
-      d="M20 11H7.83L13.42 5.41L12 4L4 12L12 20L13.41 18.59L7.83 13H20V11Z"
-      fill="currentColor"
-    />
-  </svg>
-);
-
-const CalendarIcon: React.FC<{ className?: string }> = ({ className }) => (
-  <svg
-    className={className}
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <path
-      d="M19 4H18V2H16V4H8V2H6V4H5C3.89 4 3.01 4.9 3.01 6L3 20C3 21.1 3.89 22 5 22H19C20.1 22 21 21.1 21 20V6C21 4.9 20.1 4 19 4ZM19 20H5V10H19V20ZM19 8H5V6H19V8Z"
-      fill="currentColor"
-    />
-  </svg>
-);
-
-const ErrorOutlineIcon: React.FC<{ className?: string }> = ({ className }) => (
-  <svg
-    className={className}
-    width="16"
-    height="16"
-    viewBox="0 0 16 16"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <path
-      d="M7.99999 1.33334C4.31999 1.33334 1.33333 4.32001 1.33333 8.00001C1.33333 11.68 4.31999 14.6667 7.99999 14.6667C11.68 14.6667 14.6667 11.68 14.6667 8.00001C14.6667 4.32001 11.68 1.33334 7.99999 1.33334ZM8.66666 11.3333H7.33333V10H8.66666V11.3333ZM8.66666 8.66668H7.33333V4.66668H8.66666V8.66668Z"
-      fill="currentColor"
-    />
-  </svg>
-);
-
-const AddCircleIcon: React.FC<{ className?: string }> = ({ className }) => (
-  <svg
-    className={className}
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <path
-      d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM17 13H13V17H11V13H7V11H11V7H13V11H17V13Z"
-      fill="currentColor"
-    />
-  </svg>
-);
-
-const AccountCircleIcon: React.FC<{ className?: string }> = ({ className }) => (
-  <svg
-    className={className}
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <path
-      d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 5C13.66 5 15 6.34 15 8C15 9.66 13.66 11 12 11C10.34 11 9 9.66 9 8C9 6.34 10.34 5 12 5ZM12 19.2C9.5 19.2 7.29 17.92 6 15.98C6.03 13.99 10 12.9 12 12.9C13.99 12.9 17.97 13.99 18 15.98C16.71 17.92 14.5 19.2 12 19.2Z"
-      fill="currentColor"
-    />
-  </svg>
-);
 
 // ============================================================================
 // BookingCreate 元件
@@ -174,7 +97,7 @@ export default function BookingCreate(): JSX.Element {
             Booking / Create Booking
           </p>
           <div className="flex items-center gap-2">
-            <AccountCircleIcon className="w-6 h-6 text-gray-500" />
+            <UserOutlined className="text-xl text-gray-500" />
             <p className="text-base font-medium text-gray-500 leading-4">
               Admin
             </p>
@@ -187,7 +110,7 @@ export default function BookingCreate(): JSX.Element {
             className="w-6 h-6 flex items-center justify-center text-gray-500 hover:text-blue-400 transition-colors"
             aria-label="返回"
           >
-            <ArrowBackIcon className="w-6 h-6" />
+            <ArrowLeftOutlined className="text-xl" />
           </button>
           <h1 className="text-2xl font-bold text-gray-500 leading-6">
             Create Booking
@@ -217,18 +140,7 @@ export default function BookingCreate(): JSX.Element {
                 <Select
                   placeholder="Select Server"
                   className="w-full"
-                  suffixIcon={
-                    <svg
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="fill-gray-500"
-                    >
-                      <path d="M7 10L12 15L17 10H7Z" />
-                    </svg>
-                  }
+                  suffixIcon={<DownOutlined className="text-gray-500" />}
                 >
                   <Option value="server1">Server 1</Option>
                   <Option value="server2">Server 2</Option>
@@ -254,7 +166,7 @@ export default function BookingCreate(): JSX.Element {
                       className="w-full"
                       disabledDate={disabledDate}
                       suffixIcon={
-                        <CalendarIcon className="w-6 h-6 text-gray-500" />
+                        <CalendarOutlined className="text-gray-500" />
                       }
                     />
                   </Form.Item>
@@ -272,7 +184,7 @@ export default function BookingCreate(): JSX.Element {
                       disabledDate={disabledEndDate}
                       disabledTime={disabledEndTime}
                       suffixIcon={
-                        <CalendarIcon className="w-6 h-6 text-gray-500" />
+                        <CalendarOutlined className="text-gray-500" />
                       }
                     />
                   </Form.Item>
@@ -295,18 +207,7 @@ export default function BookingCreate(): JSX.Element {
                   >
                     <Select
                       placeholder="Select Group Config"
-                      suffixIcon={
-                        <svg
-                          width="24"
-                          height="24"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="fill-gray-500"
-                        >
-                          <path d="M7 10L12 15L17 10H7Z" />
-                        </svg>
-                      }
+                      suffixIcon={<DownOutlined className="text-gray-500" />}
                     >
                       <Option value="config1">Config 1</Option>
                     </Select>
@@ -360,18 +261,7 @@ export default function BookingCreate(): JSX.Element {
               >
                 <Select
                   placeholder="Select Image"
-                  suffixIcon={
-                    <svg
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="fill-gray-500"
-                    >
-                      <path d="M7 10L12 15L17 10H7Z" />
-                    </svg>
-                  }
+                  suffixIcon={<DownOutlined className="text-gray-500" />}
                 >
                   <Option value="image1">Image 1</Option>
                 </Select>
@@ -382,7 +272,7 @@ export default function BookingCreate(): JSX.Element {
                 label={
                   <span className="flex items-center gap-1">
                     Allow overlap ?
-                    <ErrorOutlineIcon className="w-4 h-4 text-error ml-1" />
+                    <ExclamationCircleOutlined className="text-error ml-1" />
                   </span>
                 }
                 name="allowOverlap"
@@ -431,7 +321,7 @@ export default function BookingCreate(): JSX.Element {
                   className="w-6 h-6 flex items-center justify-center text-blue-400 hover:text-blue-500"
                   aria-label="新增埠對應"
                 >
-                  <AddCircleIcon className="w-6 h-6" />
+                  <PlusCircleOutlined className="text-xl" />
                 </button>
               </div>
             </div>
@@ -450,18 +340,7 @@ export default function BookingCreate(): JSX.Element {
                 <Select
                   placeholder="Group"
                   className="w-40"
-                  suffixIcon={
-                    <svg
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="fill-gray-500"
-                    >
-                      <path d="M7 10L12 15L17 10H7Z" />
-                    </svg>
-                  }
+                  suffixIcon={<DownOutlined className="text-gray-500" />}
                 >
                   <Option value="group1">Group 1</Option>
                 </Select>
@@ -474,7 +353,7 @@ export default function BookingCreate(): JSX.Element {
                   className="w-6 h-6 flex items-center justify-center text-blue-400 hover:text-blue-500"
                   aria-label="新增磁碟區對應"
                 >
-                  <AddCircleIcon className="w-6 h-6" />
+                  <PlusCircleOutlined className="text-xl" />
                 </button>
               </div>
             </div>
