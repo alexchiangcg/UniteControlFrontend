@@ -131,7 +131,7 @@ export default function SidebarLayout({
   };
 
   return (
-    <div className="flex h-screen w-full bg-[#f5f7f9]">
+    <div className="flex h-screen w-full bg-gray-100">
       {/* 桌面版側邊欄 - 固定，僅在 md+ 顯示 */}
       <div className="hidden md:block">
         <Sidebar
@@ -145,15 +145,15 @@ export default function SidebarLayout({
       {/* 主內容區域 */}
       <div className="flex flex-col flex-grow min-w-0">
         {/* 手機版標題列（漢堡選單） - 僅在 md 以下顯示 */}
-        <header className="md:hidden bg-white border-b border-[#ced4da] px-4 py-3 flex items-center">
+        <header className="md:hidden bg-white border-b border-gray-200 px-4 py-3 flex items-center">
           <button
             className="p-2 hover:bg-gray-100 rounded"
             onClick={() => setDrawerOpen(true)}
             aria-label="開啟選單"
           >
-            <MenuOutlined className="text-[#2e2e2e] text-xl" />
+            <MenuOutlined className="text-gray-500 text-xl" />
           </button>
-          <h1 className="ml-4 text-xl font-bold text-[#2e2e2e]">Unite Slave</h1>
+          <h1 className="ml-4 text-xl font-bold text-gray-500">Unite Slave</h1>
         </header>
 
         {/* 主內容 - 桌面版無左側 padding（側邊欄已分離） */}
