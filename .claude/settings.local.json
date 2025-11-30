@@ -10,9 +10,41 @@
       "Bash(npx tsc:*)",
       "Bash(npm install:*)",
       "Bash(pnpm add:*)",
-      "Bash(pnpm run dev)"
+      "Bash(pnpm run dev)",
+      "Bash(tree:*)",
+      "mcp__figma-dev-mode__get_variable_defs",
+      "mcp__figma-dev-mode__get_design_context",
+      "mcp__figma-dev-mode__get_screenshot",
+      "mcp__spec-workflow__spec-workflow-guide",
+      "Bash(mkdir:*)",
+      "mcp__spec-workflow__approvals",
+      "mcp__spec-workflow__spec-status",
+      "mcp__spec-workflow__log-implementation",
+      "Bash(brew upgrade:*)",
+      "Bash(pkill:*)",
+      "mcp__playwright__browser_navigate",
+      "mcp__playwright__browser_take_screenshot",
+      "mcp__playwright__browser_click",
+      "mcp__playwright__browser_type",
+      "mcp__playwright__browser_navigate_back",
+      "mcp__playwright__browser_snapshot",
+      "mcp__playwright__browser_close",
+      "Bash(npx msw init:*)",
+      "mcp__playwright__browser_wait_for",
+      "mcp__figma-dev-mode__get_metadata",
+      "mcp__playwright__browser_resize",
+      "Bash(lsof:*)",
+      "mcp__playwright__browser_evaluate"
     ],
     "deny": [],
     "ask": []
-  }
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "context7",
+    "deepwiki",
+    "figma-dev-mode",
+    "playwright",
+    "spec-workflow"
+  ]
 }

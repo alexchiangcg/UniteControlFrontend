@@ -1,6 +1,6 @@
 ---
 description: '依文件實作（Agent）：取證→最小改檔→補測→輸出 PR 說明'
-tools: ['codebase', 'editFiles', 'search', 'problems', 'changes', 'GitKraken (bundled with GitLens)', 'context7', 'deepwiki', 'FigmaMCP']
+tools: ['edit/editFiles', 'search', 'GitKraken/*', 'Copilot Container Tools/*', 'context7/*', 'deepwiki/*', 'figma-dev-mode/*', 'spec-workflow/*', 'FigmaMCP/*', 'playwright/*', 'problems', 'changes']
 ---
 
 ## 角色定義
