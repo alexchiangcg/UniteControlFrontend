@@ -36,6 +36,54 @@
 }
 
 /* ============================================================================
+   Table 樣式覆寫
+   ============================================================================ */
+
+/* Pagination 置中對齊 */
+.ant-table-pagination {
+  justify-content: center !important;
+}
+
+/* Table Row 交替背景色 */
+.ant-table-tbody > tr:nth-child(odd) > td {
+  background-color: var(--color-white) !important;
+}
+
+.ant-table-tbody > tr:nth-child(even) > td {
+  background-color: var(--color-blue-50) !important;
+}
+
+/* Hover 狀態保留 */
+.ant-table-tbody > tr:hover > td {
+  background-color: var(--color-blue-100) !important;
+}
+
+/* ============================================================================
+   Tabs 樣式覆寫
+   ============================================================================ */
+
+/* Tabs 白色背景與內邊距 */
+.ant-tabs {
+  background-color: var(--color-white);
+  padding: 16px 24px;
+}
+
+.ant-tabs-nav {
+  background-color: var(--color-white) !important;
+  margin-bottom: 16px !important;
+}
+
+/* 選中的 Tab 文字顏色 */
+.ant-tabs-tab-active .ant-tabs-tab-btn {
+  color: var(--color-blue-400) !important;
+}
+
+/* Tab 底線顏色 */
+.ant-tabs-ink-bar {
+  background-color: var(--color-blue-400) !important;
+}
+
+/* ============================================================================
    其他 Ant Design 元件樣式覆寫
    ============================================================================ */
 

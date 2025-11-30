@@ -2,9 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Ant Design 樣式覆寫 */
-@import './styles/antd-overrides.css';
-
 /* src/pages/CalendarApp.tsx 使用 */
 html,
 body,

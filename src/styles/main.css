@@ -1,0 +1,168 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* ==================== 顏色系統 / Colors ==================== */
+
+    /* 主要灰階色 / Primary Gray Scale */
+    --color-black: #000000; /* 黑色 / color.black / #000000 */
+    --color-white: #ffffff; /* 白色 / color.white / #ffffff */
+    --color-gray-500: #2e2e2e; /* 主要深灰 / color.primary-gray-500 / #2e2e2e */
+    --color-gray-400: #6b7280; /* 次要深灰 / color.primary-gray-400 / #6b7280 */
+    --color-gray-300: #b2b7c0; /* 中灰 / color.primary-gray-300 / #b2b7c0 */
+    --color-gray-200: #ced4da; /* 淺灰 / color.primary-gray-200 / #ced4da */
+    --color-gray-100: #f5f7f9; /* 極淺灰背景 / color.primary-gray-100 / #f5f7f9 */
+
+    /* 主要藍色系 / Primary Blue Scale */
+    --color-blue-600: #204f74; /* 主藍最深 / color.primary-blue-600 / #204f74 */
+    --color-blue-500: #265d88; /* 主藍深 / color.primary-blue-500 / #265d88 */
+    --color-blue-400: #2f6f9f; /* 主藍標準 / color.primary-blue-400 / #2f6f9f */
+    --color-blue-300: #7fa9cb; /* 主藍中淺 / color.primary-blue-300 / #7fa9cb */
+    --color-blue-200: #afcbe1; /* 主藍淺 / color.primary-blue-200 / #afcbe1 */
+    --color-blue-100: #d8e7f2; /* 主藍極淺 / color.primary-blue-100 / #d8e7f2 */
+    --color-blue-50: #f3f8fb; /* 主藍背景色 / color.primary-blue-50 / #f3f8fb */
+
+    /* 次要藍色 / Secondary Blue */
+    --color-second-blue-400: #5a7684; /* 次要藍色 / color.second-blue-400 / #5a7684 */
+
+    /* 狀態顏色 / Status Colors */
+    --color-success: #3fa796; /* 成功狀態 / color.success / #3fa796 */
+    --color-success-light: #e0f4ef; /* 成功淺色 / color.success-light / #e0f4ef */
+    --color-warning: #f6c344; /* 警告狀態 / color.warning / #f6c344 */
+    --color-warning-light: #fff6da; /* 警告淺色 / color.warning-light / #fff6da */
+    --color-notice: #f4a259; /* 提醒狀態 / color.notice / #f4a259 */
+    --color-notice-light: #fff1e5; /* 提醒淺色 / color.notice-light / #fff1e5 */
+    --color-error: #e85d75; /* 錯誤狀態 / color.error / #e85d75 */
+    --color-error-light: #fde7eb; /* 錯誤淺色 / color.error-light / #fde7eb */
+
+    /* ==================== 字體系統 / Typography ==================== */
+
+    /* 字體家族 / Font Family */
+    --font-sans: "Inter", system-ui, -apple-system, sans-serif; /* 主要字體 / font.sans / Inter */
+    --font-heading: "Inter", system-ui, -apple-system, sans-serif; /* 標題字體 / font.heading / Inter */
+
+    /* 字體尺寸與行高 / Font Size & Line Height */
+    /* Regular 字重 */
+    --text-3xl: 38px; /* 超大文字 / text.regular.3xl / 38px */
+    --text-3xl-line-height: 38px; /* 超大文字行高 / text.regular.3xl.lineHeight / 38px */
+    --text-2xl: 30px; /* 特大文字 / text.regular.2xl / 30px */
+    --text-2xl-line-height: 30px; /* 特大文字行高 / text.regular.2xl.lineHeight / 30px */
+    --text-xl: 24px; /* 大文字 / text.regular.xl / 24px */
+    --text-xl-line-height: 24px; /* 大文字行高 / text.regular.xl.lineHeight / 24px */
+    --text-lg: 20px; /* 較大文字 / text.regular.lg / 20px */
+    --text-lg-line-height: 20px; /* 較大文字行高 / text.regular.lg.lineHeight / 20px */
+    --text-md: 18px; /* 中等文字 / text.regular.md / 18px */
+    --text-md-line-height: 18px; /* 中等文字行高 / text.regular.md.lineHeight / 18px */
+    --text-sm: 16px; /* 小文字 / text.regular.sm / 16px */
+    --text-sm-line-height: 16px; /* 小文字行高 / text.regular.sm.lineHeight / 16px */
+    --text-xs: 14px; /* 極小文字 / text.regular.xs / 14px */
+    --text-xs-line-height: 14px; /* 極小文字行高 / text.regular.xs.lineHeight / 14px */
+    --text-xxs: 12px; /* 最小文字 / text.regular.xxs / 12px */
+    --text-xxs-line-height: 12px; /* 最小文字行高 / text.regular.xxs.lineHeight / 12px */
+  }
+}
+
+@layer utilities {
+  /* ==================== 文字樣式工具類 / Text Style Utilities ==================== */
+
+  /* Regular 文字樣式 */
+  .text-regular-3xl {
+    @apply text-[38px] leading-[38px] font-normal;
+  }
+
+  .text-regular-2xl {
+    @apply text-[30px] leading-[30px] font-normal;
+  }
+
+  .text-regular-xl {
+    @apply text-[24px] leading-[24px] font-normal;
+  }
+
+  .text-regular-lg {
+    @apply text-[20px] leading-[20px] font-normal;
+  }
+
+  .text-regular-md {
+    @apply text-[18px] leading-[18px] font-normal;
+  }
+
+  .text-regular-sm {
+    @apply text-[16px] leading-[16px] font-normal;
+  }
+
+  .text-regular-xs {
+    @apply text-[14px] leading-[14px] font-normal;
+  }
+
+  .text-regular-xxs {
+    @apply text-[12px] leading-[12px] font-normal;
+  }
+
+  /* Medium 文字樣式 */
+  .text-medium-3xl {
+    @apply text-[38px] leading-[38px] font-medium;
+  }
+
+  .text-medium-2xl {
+    @apply text-[30px] leading-[30px] font-medium;
+  }
+
+  .text-medium-xl {
+    @apply text-[24px] leading-[24px] font-medium;
+  }
+
+  .text-medium-lg {
+    @apply text-[20px] leading-[20px] font-medium;
+  }
+
+  .text-medium-md {
+    @apply text-[18px] leading-[18px] font-medium;
+  }
+
+  .text-medium-sm {
+    @apply text-[16px] leading-[16px] font-medium;
+  }
+
+  .text-medium-xs {
+    @apply text-[14px] leading-[14px] font-medium;
+  }
+
+  .text-medium-xxs {
+    @apply text-[12px] leading-[12px] font-medium;
+  }
+
+  /* Bold 文字樣式 */
+  .text-bold-3xl {
+    @apply text-[38px] leading-[38px] font-bold;
+  }
+
+  .text-bold-2xl {
+    @apply text-[30px] leading-[30px] font-bold;
+  }
+
+  .text-bold-xl {
+    @apply text-[24px] leading-[24px] font-bold;
+  }
+
+  .text-bold-lg {
+    @apply text-[20px] leading-[20px] font-bold;
+  }
+
+  .text-bold-md {
+    @apply text-[18px] leading-[18px] font-bold;
+  }
+
+  .text-bold-sm {
+    @apply text-[16px] leading-[16px] font-bold;
+  }
+
+  .text-bold-xs {
+    @apply text-[14px] leading-[14px] font-bold;
+  }
+
+  .text-bold-xxs {
+    @apply text-[12px] leading-[12px] font-bold;
+  }
+}
