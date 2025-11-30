@@ -4,6 +4,7 @@ import { Navigate } from "react-router-dom";
 // 引入頁面組件 - 使用新的 feature-based 結構
 import { Login, Register, ForgotPassword, ResetPassword } from "@features/auth";
 import { BookingCreate } from "@features/booking";
+import { UserManagement, CreateUser } from "@features/maintainer-manager";
 import NotFound from "@shared/pages/NotFound";
 
 // 定義路由配置
@@ -36,6 +37,16 @@ const routes: RouteObject[] = [
   {
     path: "/booking/create",
     element: <BookingCreate />,
+    children: [],
+  },
+  {
+    path: "/maintainer/users",
+    element: <UserManagement />,
+    children: [],
+  },
+  {
+    path: "/maintainer/users/create",
+    element: <CreateUser />,
     children: [],
   },
   {
