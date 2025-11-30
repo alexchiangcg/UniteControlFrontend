@@ -1,0 +1,27 @@
+{
+  "id": "approval_1763211833966_uzin64bh3",
+  "title": "User Management - Tasks Document",
+  "filePath": ".spec-workflow/specs/user-management/tasks.md",
+  "type": "document",
+  "status": "needs-revision",
+  "createdAt": "2025-11-15T13:03:53.966Z",
+  "category": "spec",
+  "categoryName": "user-management",
+  "response": "Feedback Summary (1 comments):\n\nSpecific Text Comments:\n1. \"Playwright\": 是使用 Playwright mcp 來測試\n",
+  "annotations": "{\n  \"decision\": \"needs-revision\",\n  \"comments\": [\n    {\n      \"type\": \"selection\",\n      \"comment\": \"是使用 Playwright mcp 來測試\",\n      \"timestamp\": \"2025-11-15T13:06:33.279Z\",\n      \"selectedText\": \"Playwright\",\n      \"highlightColor\": {\n        \"bg\": \"rgba(255, 235, 59, 0.3)\",\n        \"border\": \"#FFEB3B\",\n        \"name\": \"#ffeb3b\"\n      },\n      \"id\": \"comment_1763211993279_0z3nclsck\"\n    }\n  ],\n  \"summary\": \"Feedback Summary (1 comments):\\n\\nSpecific Text Comments:\\n1. \\\"Playwright\\\": 是使用 Playwright mcp 來測試\\n\",\n  \"timestamp\": \"2025-11-15T13:06:52.667Z\"\n}",
+  "respondedAt": "2025-11-15T13:06:52.685Z",
+  "comments": [
+    {
+      "type": "selection",
+      "comment": "是使用 Playwright mcp 來測試",
+      "timestamp": "2025-11-15T13:06:33.279Z",
+      "selectedText": "Playwright",
+      "highlightColor": {
+        "bg": "rgba(255, 235, 59, 0.3)",
+        "border": "#FFEB3B",
+        "name": "#ffeb3b"
+      },
+      "id": "comment_1763211993279_0z3nclsck"
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "filePath": ".spec-workflow/specs/maintainer-group-management-ui-fix/design.md",
+  "currentVersion": 3,
+  "snapshots": [
+    {
+      "version": 1,
+      "filename": "snapshot-001.json",
+      "timestamp": "2025-11-30T06:04:27.329Z",
+      "trigger": "initial",
+      "approvalId": "approval_1764482667321_9dek1klg4",
+      "approvalTitle": "Design Document - UI Fix & Playwright MCP Testing Strategy"
+    },
+    {
+      "version": 2,
+      "filename": "snapshot-002.json",
+      "timestamp": "2025-11-30T06:06:27.471Z",
+      "trigger": "revision_requested",
+      "approvalId": "approval_1764482667321_9dek1klg4",
+      "approvalTitle": "Design Document - UI Fix & Playwright MCP Testing Strategy"
+    },
+    {
+      "version": 3,
+      "filename": "snapshot-003.json",
+      "timestamp": "2025-11-30T06:08:41.093Z",
+      "trigger": "approved",
+      "approvalId": "approval_1764482877625_cqg847chq",
+      "approvalTitle": "Design Document - 自適應寬度 UI Fix & Playwright MCP Testing (修訂版)"
+    }
+  ]
+}

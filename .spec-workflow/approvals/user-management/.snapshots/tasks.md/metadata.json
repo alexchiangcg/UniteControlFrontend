@@ -1,0 +1,30 @@
+{
+  "filePath": ".spec-workflow/specs/user-management/tasks.md",
+  "currentVersion": 3,
+  "snapshots": [
+    {
+      "version": 1,
+      "filename": "snapshot-001.json",
+      "timestamp": "2025-11-15T13:03:53.968Z",
+      "trigger": "initial",
+      "approvalId": "approval_1763211833966_uzin64bh3",
+      "approvalTitle": "User Management - Tasks Document"
+    },
+    {
+      "version": 2,
+      "filename": "snapshot-002.json",
+      "timestamp": "2025-11-15T13:06:52.684Z",
+      "trigger": "revision_requested",
+      "approvalId": "approval_1763211833966_uzin64bh3",
+      "approvalTitle": "User Management - Tasks Document"
+    },
+    {
+      "version": 3,
+      "filename": "snapshot-003.json",
+      "timestamp": "2025-11-15T13:08:56.061Z",
+      "trigger": "approved",
+      "approvalId": "approval_1763212075485_vadu9hqcr",
+      "approvalTitle": "User Management - Tasks Document (Revised)"
+    }
+  ]
+}

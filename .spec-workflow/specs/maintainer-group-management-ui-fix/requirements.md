@@ -1,0 +1,103 @@
+# Requirements Document
+
+## Introduction
+
+本規格旨在修復 Maintainer Manager 中 Group Management 列表頁面的 UI 佈局問題，並透過 **Playwright MCP (Model Context Protocol)** 建立完整的回歸測試。目前該頁面的 UserTable 在 action 欄位存在跑版問題，導致開關（Switch）、Edit 和 Archive 按鈕顯示不正確。此外，為確保未來的變更不會破壞現有功能，需要建立自動化的 E2E 測試。
+
+**重要說明：** 本規格使用 Playwright MCP 工具進行測試開發，透過 MCP 協議與 Playwright 瀏覽器自動化工具整合，無需直接在專案中安裝 Playwright 依賴套件。這種方式提供更靈活的測試開發體驗，並能直接透過 Claude Code 進行測試腳本的撰寫和執行。
+
+這項工作將提升使用者體驗，確保管理介面的專業性和可用性，同時透過自動化測試降低回歸風險。
+
+## Alignment with Product Vision
+
+此功能與 product.md 的以下目標一致：
+
+1. **提升使用者體驗和操作效率**：修復 UI 佈局問題直接改善管理員的操作體驗
+2. **程式碼品質**：透過 Playwright MCP 測試提升測試覆蓋率，符合「關鍵業務邏輯覆蓋率 > 80%」的目標
+3. **可維護性**：建立自動化測試確保程式碼變更的安全性
+4. **模組化優先**：修復應遵循現有的 feature-based 架構模式
+
+此規格也解決了 tech.md 中提到的 Known Limitation：「測試覆蓋率不足」，透過引入 Playwright MCP 工具進行 E2E 測試。
+
+## Requirements
+
+### Requirement 1: 修復 UserTable Action 欄位佈局問題
+
+**User Story:** 作為系統管理員，我希望 Group Management 列表頁面的 action 欄位正確顯示所有操作按鈕，以便我能夠順利管理群組。
+
+#### Acceptance Criteria
+
+1. WHEN 系統管理員查看 Group Management 列表頁面 THEN 系統 SHALL 在 action 欄位中正確對齊並顯示 Switch 開關、Edit 按鈕和 Archive 按鈕
+2. WHEN action 欄位包含多個控制元件 THEN 系統 SHALL 確保所有元件在同一行顯示且不重疊
+3. WHEN 使用者調整瀏覽器視窗大小 THEN 系統 SHALL 保持 action 欄位的佈局穩定性
+4. WHEN 頁面載入完成 THEN 系統 SHALL 確保 action 欄位的寬度足以容納所有操作元件
+5. WHEN 列表包含多筆資料 THEN 系統 SHALL 確保每一列的 action 欄位佈局一致
+
+### Requirement 2: 使用 Playwright MCP 建立 E2E 回歸測試套件
+
+**User Story:** 作為開發人員，我希望透過 Playwright MCP 工具建立完整的 E2E 測試，覆蓋 Group Management 頁面的核心功能，以便在未來的程式碼變更時能快速發現回歸問題。
+
+#### Acceptance Criteria
+
+1. WHEN 使用 Playwright MCP 執行測試 THEN 系統 SHALL 驗證頁面標題「Group Management」正確顯示
+2. WHEN 測試執行 THEN 系統 SHALL 驗證表格表頭包含所有必要欄位（Group Name, Max Members, Create Time, Updated Time, Notes, Status, Action）
+3. WHEN 測試驗證表格資料 THEN 系統 SHALL 確認至少有一筆測試資料存在
+4. WHEN 測試驗證 action 欄位 THEN 系統 SHALL 確認每一列包含 Switch、Edit 按鈕和 Archive 按鈕
+5. WHEN 測試執行 THEN 系統 SHALL 驗證 Switch 開關可以正常切換
+6. WHEN 測試執行 THEN 系統 SHALL 驗證點擊 Edit 按鈕會觸發正確的操作
+7. WHEN 測試執行 THEN 系統 SHALL 驗證點擊 Archive 按鈕會顯示確認對話框
+8. WHEN 測試執行 THEN 系統 SHALL 驗證分頁器（Pagination）正常運作
+
+### Requirement 3: 使用 Playwright MCP 建立 Action 欄位佈局的視覺回歸測試
+
+**User Story:** 作為 QA 工程師，我希望透過 Playwright MCP 工具能夠自動化檢測 UI 佈局變化，以便快速發現視覺上的回歸問題。
+
+#### Acceptance Criteria
+
+1. WHEN 使用 Playwright MCP 執行視覺測試 THEN 系統 SHALL 對 action 欄位進行螢幕截圖比對
+2. WHEN 佈局變更發生 THEN 系統 SHALL 標記測試為失敗並提供差異報告
+3. WHEN 測試執行 THEN 系統 SHALL 驗證 action 欄位內的元件間距符合設計規範
+4. WHEN 測試執行 THEN 系統 SHALL 驗證所有操作按鈕的對齊方式一致
+
+### Requirement 4: 整合 Playwright MCP 至開發工作流程
+
+**User Story:** 作為開發團隊成員，我希望透過 Playwright MCP 開發的測試能夠輕鬆整合至 CI/CD 流程，以便在每次程式碼提交時自動執行測試。
+
+#### Acceptance Criteria
+
+1. WHEN 開發者執行測試命令 THEN 系統 SHALL 提供清晰的測試報告
+2. WHEN 測試失敗 THEN 系統 SHALL 自動生成螢幕截圖和錯誤日誌
+3. WHEN 測試在 CI 環境執行 THEN 系統 SHALL 支援 headless 模式
+4. WHEN 測試配置完成 THEN 系統 SHALL 提供測試腳本和執行說明文件
+
+## Non-Functional Requirements
+
+### Code Architecture and Modularity
+
+- **Single Responsibility Principle**: UI 修復應限制在 UserTable 組件內，不影響其他組件
+- **Modular Design**: 使用 Playwright MCP 開發的測試應組織為清晰的測試場景，遵循最佳實踐模式
+- **MCP Tool Usage**: 透過 Playwright MCP 工具進行瀏覽器操作，無需在專案中安裝額外的測試依賴
+- **Clear Interfaces**: 測試腳本應提供清晰的操作步驟和驗證邏輯
+
+### Performance
+
+- **UI 渲染效能**: action 欄位的修復不應影響頁面整體載入時間
+- **測試執行時間**: 使用 Playwright MCP 執行的完整測試套件應在合理時間內完成
+- **測試效率**: 透過 MCP 工具的互動式測試開發，提升測試撰寫和除錯效率
+
+### Security
+
+- **測試資料隔離**: 測試應使用獨立的測試資料，不影響生產環境
+- **敏感資訊保護**: 測試配置中的 API endpoints 和認證資訊應透過環境變數管理
+
+### Reliability
+
+- **測試穩定性**: 使用 Playwright MCP 的測試應具備適當的等待機制，減少因非同步操作導致的測試不穩定
+- **錯誤恢復**: 測試失敗時應提供清晰的錯誤資訊和螢幕截圖以便快速定位問題
+- **瀏覽器支援**: Playwright MCP 支援主流瀏覽器（Chromium、Firefox、WebKit）的測試執行
+
+### Usability
+
+- **開發體驗**: 透過 Playwright MCP 工具提供互動式的測試開發體驗，支援即時測試執行和除錯
+- **測試報告**: Playwright MCP 提供清晰的執行結果反饋，包含螢幕截圖和錯誤資訊
+- **測試文件**: 提供測試場景文件，說明如何使用 Playwright MCP 工具執行和維護測試

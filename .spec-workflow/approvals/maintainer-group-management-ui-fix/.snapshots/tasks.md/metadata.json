@@ -1,0 +1,22 @@
+{
+  "filePath": ".spec-workflow/specs/maintainer-group-management-ui-fix/tasks.md",
+  "currentVersion": 2,
+  "snapshots": [
+    {
+      "version": 1,
+      "filename": "snapshot-001.json",
+      "timestamp": "2025-11-30T06:11:52.936Z",
+      "trigger": "initial",
+      "approvalId": "approval_1764483112933_8jfba9tu9",
+      "approvalTitle": "Tasks Document - UI Fix & Playwright MCP Testing Tasks"
+    },
+    {
+      "version": 2,
+      "filename": "snapshot-002.json",
+      "timestamp": "2025-11-30T06:12:59.943Z",
+      "trigger": "approved",
+      "approvalId": "approval_1764483112933_8jfba9tu9",
+      "approvalTitle": "Tasks Document - UI Fix & Playwright MCP Testing Tasks"
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "id": "approval_1764482375823_bft64iqxd",
+  "title": "Requirements Document - Group Management UI Fix & E2E Testing",
+  "filePath": ".spec-workflow/specs/maintainer-group-management-ui-fix/requirements.md",
+  "type": "document",
+  "status": "needs-revision",
+  "createdAt": "2025-11-30T05:59:35.823Z",
+  "category": "spec",
+  "categoryName": "maintainer-group-management-ui-fix",
+  "response": "Feedback Summary (1 comments):\n\nSpecific Text Comments:\n1. \"Playwright\": 是使用 Playwright mcp\n",
+  "annotations": "{\n  \"decision\": \"needs-revision\",\n  \"comments\": [\n    {\n      \"type\": \"selection\",\n      \"comment\": \"是使用 Playwright mcp\",\n      \"timestamp\": \"2025-11-30T06:00:08.312Z\",\n      \"selectedText\": \"Playwright\",\n      \"highlightColor\": {\n        \"bg\": \"rgba(255, 235, 59, 0.3)\",\n        \"border\": \"#FFEB3B\",\n        \"name\": \"#ffeb3b\"\n      },\n      \"id\": \"comment_1764482408312_k8ndxzmth\"\n    }\n  ],\n  \"summary\": \"Feedback Summary (1 comments):\\n\\nSpecific Text Comments:\\n1. \\\"Playwright\\\": 是使用 Playwright mcp\\n\",\n  \"timestamp\": \"2025-11-30T06:00:19.435Z\"\n}",
+  "respondedAt": "2025-11-30T06:00:19.462Z",
+  "comments": [
+    {
+      "type": "selection",
+      "comment": "是使用 Playwright mcp",
+      "timestamp": "2025-11-30T06:00:08.312Z",
+      "selectedText": "Playwright",
+      "highlightColor": {
+        "bg": "rgba(255, 235, 59, 0.3)",
+        "border": "#FFEB3B",
+        "name": "#ffeb3b"
+      },
+      "id": "comment_1764482408312_k8ndxzmth"
+    }
+  ]
+}

@@ -1,0 +1,186 @@
+# Requirements Document - User Management
+
+## Introduction
+
+User Management 頁面是 Unite Slave 系統中 Maintainer Manager 功能的核心管理介面，用於管理系統使用者帳號、權限設定及狀態控制。此功能讓系統管理員能夠集中檢視、搜尋、建立、編輯及歸檔使用者資訊，提供完整的使用者生命週期管理能力。
+
+此頁面的核心價值包括：
+- 提供統一的使用者管理介面，降低管理複雜度
+- 支援批次匯入與單筆新增，提升作業效率
+- 即時狀態切換與歸檔機制，確保使用者資料的有效性
+- 完整的搜尋與篩選功能，快速定位目標使用者
+
+## Alignment with Product Vision
+
+此功能符合 Product Overview 中定義的以下目標：
+
+1. **系統管理員需求**：提供完整的使用者帳號、權限和系統設定管理能力
+2. **模組化架構**：採用 feature-based 組織結構（`src/features/maintainer-manager`），便於功能擴展
+3. **使用者體驗至上**：基於 Ant Design 規範設計，保持介面一致性和易用性
+4. **類型安全**：使用 TypeScript 嚴格模式，確保編譯期捕獲錯誤
+
+此功能也為未來的擴展奠定基礎，如 Real-time Collaboration（多管理員同時操作）、Advanced Analytics（使用者行為分析）等。
+
+## Requirements
+
+### Requirement 1: 使用者列表檢視
+
+**User Story:** As a 系統管理員, I want 檢視所有使用者的列表資訊, so that 我能夠快速了解系統中所有使用者的狀態與基本資訊
+
+#### Acceptance Criteria
+
+1. WHEN 管理員進入 User Management 頁面 THEN 系統 SHALL 顯示使用者列表表格，包含以下欄位：User Name、Create Time、Updated Time、Notes、Status、Action
+2. WHEN 列表資料載入中 THEN 系統 SHALL 顯示載入指示器（loading state）
+3. WHEN 列表資料載入失敗 THEN 系統 SHALL 顯示錯誤訊息並提供重試選項
+4. IF 使用者狀態為 "Active" THEN 系統 SHALL 顯示綠色 "Active" badge
+5. IF 使用者狀態為 "Inactive" THEN 系統 SHALL 顯示紅色 "Inactive" badge
+6. IF 使用者狀態為 "Archived" THEN 系統 SHALL 顯示灰色 "Archived" badge，且不顯示 Edit 和 Archive 按鈕
+7. WHEN 列表包含超過一頁的資料 THEN 系統 SHALL 在底部顯示分頁控制器，顯示 "Total XX items"
+8. WHEN 表格欄位過長 THEN 系統 SHALL 自動截斷並顯示省略符號（tooltip 顯示完整內容）
+
+### Requirement 2: 使用者搜尋
+
+**User Story:** As a 系統管理員, I want 透過使用者名稱搜尋特定使用者, so that 我能夠快速定位目標使用者
+
+#### Acceptance Criteria
+
+1. WHEN 管理員在搜尋框輸入關鍵字 THEN 系統 SHALL 即時過濾列表，僅顯示符合條件的使用者
+2. IF 搜尋框為空 THEN 系統 SHALL 顯示所有使用者（受狀態篩選器影響）
+3. WHEN 搜尋無結果 THEN 系統 SHALL 顯示 "No data" 提示訊息
+4. WHEN 管理員點擊搜尋框內的清除按鈕 THEN 系統 SHALL 清空搜尋條件並重新載入完整列表
+
+### Requirement 3: 狀態篩選
+
+**User Story:** As a 系統管理員, I want 依據使用者狀態篩選列表, so that 我能夠專注於特定狀態的使用者群組
+
+#### Acceptance Criteria
+
+1. WHEN 管理員點擊 "All Status" 下拉選單 THEN 系統 SHALL 顯示可選狀態選項：All Status、Active、Inactive、Archived
+2. WHEN 管理員選擇特定狀態 THEN 系統 SHALL 僅顯示符合該狀態的使用者
+3. IF 選擇 "All Status" THEN 系統 SHALL 顯示所有狀態的使用者
+4. WHEN 狀態篩選器與搜尋條件同時存在 THEN 系統 SHALL 同時套用兩種過濾條件（AND 邏輯）
+
+### Requirement 4: 建立新使用者
+
+**User Story:** As a 系統管理員, I want 建立新的使用者帳號, so that 新成員能夠存取系統
+
+#### Acceptance Criteria
+
+1. WHEN 管理員點擊 "Create User" 按鈕 THEN 系統 SHALL 開啟建立使用者的對話框或頁面
+2. WHEN 表單欄位驗證失敗 THEN 系統 SHALL 顯示即時錯誤訊息，阻止提交
+3. WHEN 管理員成功提交表單 THEN 系統 SHALL 建立新使用者並顯示成功訊息
+4. WHEN 建立成功後 THEN 系統 SHALL 重新載入使用者列表，新使用者應出現在列表頂部
+5. IF 建立失敗（例如：使用者名稱重複） THEN 系統 SHALL 顯示錯誤訊息並保留表單資料
+
+### Requirement 5: 批次匯入使用者
+
+**User Story:** As a 系統管理員, I want 批次匯入多個使用者帳號, so that 我能夠快速完成大量使用者的建立作業
+
+#### Acceptance Criteria
+
+1. WHEN 管理員點擊 "Import Files" 按鈕 THEN 系統 SHALL 開啟檔案上傳對話框
+2. WHEN 管理員上傳檔案 THEN 系統 SHALL 驗證檔案格式（支援 CSV、XLSX）
+3. IF 檔案格式不正確 THEN 系統 SHALL 顯示錯誤訊息並拒絕上傳
+4. WHEN 檔案上傳並驗證通過 THEN 系統 SHALL 解析檔案內容並預覽待匯入的使用者清單
+5. WHEN 管理員確認匯入 THEN 系統 SHALL 批次建立使用者並顯示匯入結果（成功數量、失敗數量、錯誤詳情）
+6. IF 部分使用者匯入失敗 THEN 系統 SHALL 提供匯出失敗清單的功能
+
+### Requirement 6: 編輯使用者資訊
+
+**User Story:** As a 系統管理員, I want 編輯現有使用者的資訊, so that 我能夠更新使用者的個人資料或權限設定
+
+#### Acceptance Criteria
+
+1. WHEN 管理員點擊使用者列的 "Edit" 按鈕 THEN 系統 SHALL 開啟編輯使用者的對話框或頁面，並預填現有資料
+2. WHEN 管理員修改欄位並提交 THEN 系統 SHALL 更新使用者資訊並顯示成功訊息
+3. WHEN 更新成功後 THEN 系統 SHALL 更新列表中該使用者的顯示資訊
+4. IF 更新失敗 THEN 系統 SHALL 顯示錯誤訊息並保留表單資料
+5. IF 使用者狀態為 "Archived" THEN 系統 SHALL 隱藏 "Edit" 按鈕
+
+### Requirement 7: 使用者狀態切換
+
+**User Story:** As a 系統管理員, I want 切換使用者的啟用/停用狀態, so that 我能夠控制使用者的系統存取權限
+
+#### Acceptance Criteria
+
+1. WHEN 管理員點擊 Active/Inactive toggle 開關 THEN 系統 SHALL 顯示確認對話框
+2. WHEN 管理員確認切換 THEN 系統 SHALL 更新使用者狀態（Active ↔ Inactive）
+3. WHEN 狀態切換成功 THEN 系統 SHALL 即時更新列表中的 badge 顯示
+4. IF 狀態切換失敗 THEN 系統 SHALL 顯示錯誤訊息並恢復原始狀態
+5. IF 使用者狀態為 "Archived" THEN 系統 SHALL 隱藏 toggle 開關
+
+### Requirement 8: 歸檔使用者
+
+**User Story:** As a 系統管理員, I want 歸檔不再使用的使用者帳號, so that 我能夠保持使用者列表的整潔，同時保留歷史記錄
+
+#### Acceptance Criteria
+
+1. WHEN 管理員點擊 "Archive" 按鈕 THEN 系統 SHALL 顯示確認對話框，警告此操作的影響
+2. WHEN 管理員確認歸檔 THEN 系統 SHALL 將使用者狀態更新為 "Archived"
+3. WHEN 歸檔成功後 THEN 系統 SHALL 更新列表，該使用者顯示 "Archived" badge，且隱藏 Edit 和 Archive 按鈕
+4. IF 預設狀態篩選器為 "Active" 或 "Inactive" THEN 歸檔後該使用者應從當前列表中移除
+5. IF 歸檔失敗 THEN 系統 SHALL 顯示錯誤訊息
+
+### Requirement 9: 分頁瀏覽
+
+**User Story:** As a 系統管理員, I want 分頁瀏覽使用者列表, so that 我能夠有效處理大量使用者資料
+
+#### Acceptance Criteria
+
+1. WHEN 列表資料超過單頁顯示上限 THEN 系統 SHALL 顯示分頁控制器
+2. WHEN 管理員點擊頁碼 THEN 系統 SHALL 跳轉至對應頁面並載入資料
+3. WHEN 管理員點擊 "Go to" 功能 THEN 系統 SHALL 提供快速跳轉至指定頁面的輸入框
+4. WHEN 管理員選擇每頁顯示數量 THEN 系統 SHALL 更新列表顯示並重置至第一頁
+5. WHEN 分頁資料載入中 THEN 系統 SHALL 顯示載入指示器
+
+### Requirement 10: Tab 切換（General Settings / Capability Settings）
+
+**User Story:** As a 系統管理員, I want 在不同設定分頁間切換, so that 我能夠管理使用者的一般資訊與權限設定
+
+#### Acceptance Criteria
+
+1. WHEN 頁面載入時 THEN 系統 SHALL 預設顯示 "General Settings" tab
+2. WHEN 管理員點擊 "Capability Settings" tab THEN 系統 SHALL 切換至權限設定檢視
+3. WHEN tab 切換時 THEN 系統 SHALL 保留當前的搜尋與篩選條件
+4. IF "Capability Settings" tab 內容尚未開發 THEN 系統 SHALL 顯示 "Coming soon" 或空狀態提示
+
+## Non-Functional Requirements
+
+### Code Architecture and Modularity
+- **Single Responsibility Principle**: 每個元件和函數應有單一明確職責
+  - `UserManagementPage.tsx`: 主頁面元件，負責整合各子元件
+  - `UserTable.tsx`: 使用者列表表格元件
+  - `UserSearchBar.tsx`: 搜尋與篩選元件
+  - `UserFormModal.tsx`: 建立/編輯使用者表單對話框
+  - `ImportUsersModal.tsx`: 批次匯入對話框
+- **Modular Design**: 採用 feature-based 架構，所有相關程式碼放置於 `src/features/maintainer-manager/` 目錄
+- **Dependency Management**: 使用 RTK Query 管理 API 呼叫，避免元件直接依賴 API 實作
+- **Clear Interfaces**: 使用 TypeScript 定義清晰的型別介面（`User`, `UserStatus`, `UserFormValues` 等）
+
+### Performance
+- **列表渲染效能**: 使用 Ant Design Table 的虛擬捲動（如資料量 > 1000）
+- **搜尋防抖**: 搜尋框輸入應使用 debounce（300ms），避免過度頻繁的 API 呼叫
+- **快取策略**: 使用 RTK Query 的自動快取機制，避免重複載入相同資料
+- **分頁載入**: 每頁最多顯示 50 筆資料，預設 10 筆
+- **Bundle Size**: 元件應支援 code-splitting，避免影響首次載入時間
+
+### Security
+- **權限驗證**: 使用者管理功能僅對具備管理員權限的使用者開放
+- **CSRF 防護**: 所有 API 呼叫應包含 CSRF token（如使用 cookie-based auth）
+- **XSS 防護**: 使用 React 自動跳脫機制，避免在 Notes 欄位注入惡意腳本
+- **敏感資料**: 密碼欄位應加密傳輸（HTTPS），不應在前端明文顯示或儲存
+- **操作確認**: 關鍵操作（歸檔、狀態切換）應要求二次確認
+
+### Reliability
+- **錯誤處理**: 使用集中式錯誤處理（`baseQueryWithErrorHandler`），統一處理 API 錯誤
+- **網路錯誤**: 當網路斷線或 API 無回應時，應顯示友善的錯誤訊息並提供重試選項
+- **資料一致性**: 操作失敗時應恢復原始狀態，避免 UI 與後端資料不一致
+- **樂觀更新**: 狀態切換等操作可採用樂觀更新策略，提升使用者體驗（失敗時自動回滾）
+
+### Usability
+- **響應式設計**: 支援桌面瀏覽器（優先），表格在小螢幕應可水平捲動
+- **載入狀態**: 所有非同步操作應提供明確的載入指示器
+- **空狀態**: 當列表無資料時，應顯示友善的空狀態提示與操作引導
+- **無障礙性**: 遵循 WCAG 2.1 Level AA 標準，提供鍵盤導航支援
+- **國際化**: 所有介面文字應支援 i18next 多語言切換
+- **錯誤訊息**: 錯誤提示應具體明確，幫助使用者理解問題並提供解決方向
