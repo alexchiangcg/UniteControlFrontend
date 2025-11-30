@@ -1,3 +1,4 @@
+/// <reference types="vitest" />
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { fileURLToPath } from 'url'
@@ -17,6 +18,25 @@ export default defineConfig({
       '@styles': resolve(__dirname, './src/styles'),
       '@i18n': resolve(__dirname, './src/i18n'),
       '@utils': resolve(__dirname, './src/utils'),
+      '@test': resolve(__dirname, './src/test'),
+    },
+  },
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: './src/test/setup.ts',
+    css: true,
+    coverage: {
+      provider: 'v8',
+      reporter: ['text', 'json', 'html'],
+      exclude: [
+        'node_modules/',
+        'src/test/',
+        '**/*.d.ts',
+        '**/*.config.*',
+        '**/mockData/',
+        'dist/',
+      ],
     },
   },
 })

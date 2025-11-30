@@ -23,7 +23,8 @@
       "@store/*": ["./src/store/*"],
       "@styles/*": ["./src/styles/*"],
       "@i18n/*": ["./src/i18n/*"],
-      "@utils/*": ["./src/utils/*"]
+      "@utils/*": ["./src/utils/*"],
+      "@test/*": ["./src/test/*"]
     },
 
     /* Linting */
@@ -31,7 +32,10 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "noUncheckedSideEffectImports": true,
+
+    /* Testing */
+    "types": ["vitest/globals"]
   },
   "include": ["src"]
 }
