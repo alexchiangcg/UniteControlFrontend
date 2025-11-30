@@ -126,8 +126,8 @@ export default function Sidebar(props: SidebarProps): JSX.Element {
           className={`
             w-full flex items-center gap-2.5 h-10 pr-6 ${paddingLeft}
             transition-colors duration-200
-            ${isActive ? "bg-[#2f6f9f] border-r-[3px] border-white" : "bg-[#2e2e2e]"}
-            ${item.disabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer hover:bg-[#3a3a3a]"}
+            ${isActive ? "bg-blue-400 border-r-[3px] border-white" : "bg-gray-500"}
+            ${item.disabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer hover:bg-gray-500/80"}
           `}
           onClick={() => handleItemClick(item)}
           onKeyDown={(e) => handleKeyDown(e, item)}
@@ -151,7 +151,7 @@ export default function Sidebar(props: SidebarProps): JSX.Element {
 
           {/* 徽章 */}
           {item.badge && (
-            <span className="bg-[#e85d75] text-white text-xs px-2 py-0.5 rounded-full">
+            <span className="bg-error text-white text-xs px-2 py-0.5 rounded-full">
               {item.badge}
             </span>
           )}
@@ -168,7 +168,7 @@ export default function Sidebar(props: SidebarProps): JSX.Element {
 
         {/* 子選單 */}
         {hasChildren && isExpanded && (
-          <ul className="bg-[#2e2e2e] flex flex-col gap-2 w-full mt-1">
+          <ul className="bg-gray-500 flex flex-col gap-2 w-full mt-1">
             {item.children!.map((child) => renderMenuItem(child, level + 1))}
           </ul>
         )}
@@ -179,7 +179,7 @@ export default function Sidebar(props: SidebarProps): JSX.Element {
   return (
     <aside
       className={`
-        bg-[#2e2e2e] h-full flex flex-col relative
+        bg-gray-500 h-full flex flex-col relative
         ${defaultWidth}
         ${className}
       `}
@@ -188,10 +188,10 @@ export default function Sidebar(props: SidebarProps): JSX.Element {
     >
       {/* 手機版頂部標題（僅在 Drawer 內顯示） */}
       {showMobileHeader && (
-        <div className="flex items-center justify-between px-4 py-3 border-b border-[#3a3a3a]">
+        <div className="flex items-center justify-between px-4 py-3 border-b border-gray-500/50">
           <h1 className="text-white text-xl font-bold">Unite Slave</h1>
           <button
-            className="p-2 hover:bg-[#3a3a3a] rounded transition-colors"
+            className="p-2 hover:bg-gray-500/80 rounded transition-colors"
             onClick={onClose}
             aria-label="關閉選單"
           >
@@ -227,7 +227,7 @@ export default function Sidebar(props: SidebarProps): JSX.Element {
       </nav>
 
       {/* 頁尾區域 */}
-      <footer className="px-6 py-4 text-[#ced4da] text-xs leading-3 text-center shrink-0">
+      <footer className="px-6 py-4 text-gray-200 text-xs leading-3 text-center shrink-0">
         copyright © uniteslave
       </footer>
     </aside>

@@ -167,15 +167,15 @@ export default function BookingCreate(): JSX.Element {
 
   return (
     <SidebarLayout activeId="booking">
-      <div className="w-full min-h-screen bg-[#f5f7f9]">
+      <div className="w-full min-h-screen bg-gray-100">
         {/* 頂部列 - 麵包屑和使用者資訊 */}
         <div className="flex items-center justify-between px-6 pt-6 md:px-8 md:pt-8">
-          <p className="text-sm font-medium text-[#6b7280] leading-[14px]">
+          <p className="text-sm font-medium text-gray-400 leading-[14px]">
             Booking / Create Booking
           </p>
           <div className="flex items-center gap-2">
-            <AccountCircleIcon className="w-6 h-6 text-[#2e2e2e]" />
-            <p className="text-base font-medium text-[#2e2e2e] leading-4">
+            <AccountCircleIcon className="w-6 h-6 text-gray-500" />
+            <p className="text-base font-medium text-gray-500 leading-4">
               Admin
             </p>
           </div>
@@ -184,12 +184,12 @@ export default function BookingCreate(): JSX.Element {
         {/* 頁面標題與返回按鈕 */}
         <div className="flex items-center gap-7 px-6 pt-6 md:px-8">
           <button
-            className="w-6 h-6 flex items-center justify-center text-[#2e2e2e] hover:text-[#2f6f9f] transition-colors"
+            className="w-6 h-6 flex items-center justify-center text-gray-500 hover:text-blue-400 transition-colors"
             aria-label="返回"
           >
             <ArrowBackIcon className="w-6 h-6" />
           </button>
-          <h1 className="text-2xl font-bold text-[#2e2e2e] leading-6">
+          <h1 className="text-2xl font-bold text-gray-500 leading-6">
             Create Booking
           </h1>
         </div>
@@ -203,7 +203,7 @@ export default function BookingCreate(): JSX.Element {
         >
           {/* 基本設定卡片 */}
           <section className="bg-white rounded-lg p-6 mb-6">
-            <h2 className="text-xl font-medium text-[#5a7684] leading-5 mb-6">
+            <h2 className="text-xl font-medium text-second-blue-400 leading-5 mb-6">
               Basic Settings
             </h2>
 
@@ -224,8 +224,9 @@ export default function BookingCreate(): JSX.Element {
                       viewBox="0 0 24 24"
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
+                      className="fill-gray-500"
                     >
-                      <path d="M7 10L12 15L17 10H7Z" fill="#2e2e2e" />
+                      <path d="M7 10L12 15L17 10H7Z" />
                     </svg>
                   }
                 >
@@ -236,8 +237,8 @@ export default function BookingCreate(): JSX.Element {
 
               {/* 時間區段 */}
               <div className="flex flex-col min-h-[98px]">
-                <label className="text-base text-[#2e2e2e] mb-2">
-                  <span className="text-[#ff4d4f] mr-1">*</span>
+                <label className="text-base text-gray-500 mb-2">
+                  <span className="text-error mr-1">*</span>
                   Time Slot
                 </label>
                 <div className="flex items-start gap-2">
@@ -253,11 +254,11 @@ export default function BookingCreate(): JSX.Element {
                       className="w-full"
                       disabledDate={disabledDate}
                       suffixIcon={
-                        <CalendarIcon className="w-6 h-6 text-[#2e2e2e]" />
+                        <CalendarIcon className="w-6 h-6 text-gray-500" />
                       }
                     />
                   </Form.Item>
-                  <span className="text-base text-[#2e2e2e] leading-8">-</span>
+                  <span className="text-base text-gray-500 leading-8">-</span>
                   <Form.Item
                     name="endTime"
                     rules={[{ required: true, message: "請選擇結束時間" }]}
@@ -271,7 +272,7 @@ export default function BookingCreate(): JSX.Element {
                       disabledDate={disabledEndDate}
                       disabledTime={disabledEndTime}
                       suffixIcon={
-                        <CalendarIcon className="w-6 h-6 text-[#2e2e2e]" />
+                        <CalendarIcon className="w-6 h-6 text-gray-500" />
                       }
                     />
                   </Form.Item>
@@ -280,8 +281,8 @@ export default function BookingCreate(): JSX.Element {
 
               {/* 群組設定 */}
               <div className="flex flex-col min-h-[98px]">
-                <label className="text-base text-[#2e2e2e] mb-2">
-                  <span className="text-[#ff4d4f] mr-1">*</span>
+                <label className="text-base text-gray-500 mb-2">
+                  <span className="text-error mr-1">*</span>
                   Group Config
                 </label>
                 <div className="flex items-start gap-2">
@@ -301,15 +302,16 @@ export default function BookingCreate(): JSX.Element {
                           viewBox="0 0 24 24"
                           fill="none"
                           xmlns="http://www.w3.org/2000/svg"
+                          className="fill-gray-500"
                         >
-                          <path d="M7 10L12 15L17 10H7Z" fill="#2e2e2e" />
+                          <path d="M7 10L12 15L17 10H7Z" />
                         </svg>
                       }
                     >
                       <Option value="config1">Config 1</Option>
                     </Select>
                   </Form.Item>
-                  <Button className="bg-[#2f6f9f] text-white border-[#2f6f9f] hover:bg-[#25597f] shrink-0">
+                  <Button className="bg-blue-400 text-white border-blue-400 hover:bg-blue-500 shrink-0">
                     Own config
                   </Button>
                 </div>
@@ -365,8 +367,9 @@ export default function BookingCreate(): JSX.Element {
                       viewBox="0 0 24 24"
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
+                      className="fill-gray-500"
                     >
-                      <path d="M7 10L12 15L17 10H7Z" fill="#2e2e2e" />
+                      <path d="M7 10L12 15L17 10H7Z" />
                     </svg>
                   }
                 >
@@ -379,7 +382,7 @@ export default function BookingCreate(): JSX.Element {
                 label={
                   <span className="flex items-center gap-1">
                     Allow overlap ?
-                    <ErrorOutlineIcon className="w-4 h-4 text-[#e85d75] ml-1" />
+                    <ErrorOutlineIcon className="w-4 h-4 text-error ml-1" />
                   </span>
                 }
                 name="allowOverlap"
@@ -406,26 +409,26 @@ export default function BookingCreate(): JSX.Element {
 
           {/* 轉發埠設定卡片 */}
           <section className="bg-white rounded-lg p-6 mb-6">
-            <h2 className="text-xl font-medium text-[#5a7684] leading-5 mb-6">
+            <h2 className="text-xl font-medium text-second-blue-400 leading-5 mb-6">
               Forward Ports Settings
             </h2>
 
             <div className="flex flex-col gap-4">
-              <label className="text-base text-[#2e2e2e]">
-                <span className="text-[#ff4d4f] mr-1">*</span>
+              <label className="text-base text-gray-500">
+                <span className="text-error mr-1">*</span>
                 Forwardports
               </label>
 
               <div className="flex items-center gap-2">
                 <Input placeholder="Host" className="w-44" />
-                <span className="text-base text-[#2e2e2e]">:</span>
+                <span className="text-base text-gray-500">:</span>
                 <Input
                   placeholder="Container"
                   className="flex-1 max-w-[296px]"
                 />
                 <button
                   type="button"
-                  className="w-6 h-6 flex items-center justify-center text-[#2f6f9f] hover:text-[#25597f]"
+                  className="w-6 h-6 flex items-center justify-center text-blue-400 hover:text-blue-500"
                   aria-label="新增埠對應"
                 >
                   <AddCircleIcon className="w-6 h-6" />
@@ -436,12 +439,12 @@ export default function BookingCreate(): JSX.Element {
 
           {/* 磁碟區設定卡片 */}
           <section className="bg-white rounded-lg p-6 mb-6">
-            <h2 className="text-xl font-medium text-[#5a7684] leading-5 mb-6">
+            <h2 className="text-xl font-medium text-second-blue-400 leading-5 mb-6">
               Volumes Settings
             </h2>
 
             <div className="flex flex-col gap-4">
-              <label className="text-base text-[#2e2e2e]">Volumes</label>
+              <label className="text-base text-gray-500">Volumes</label>
 
               <div className="flex items-center gap-2">
                 <Select
@@ -454,8 +457,9 @@ export default function BookingCreate(): JSX.Element {
                       viewBox="0 0 24 24"
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
+                      className="fill-gray-500"
                     >
-                      <path d="M7 10L12 15L17 10H7Z" fill="#2e2e2e" />
+                      <path d="M7 10L12 15L17 10H7Z" />
                     </svg>
                   }
                 >
@@ -467,7 +471,7 @@ export default function BookingCreate(): JSX.Element {
                 />
                 <button
                   type="button"
-                  className="w-6 h-6 flex items-center justify-center text-[#2f6f9f] hover:text-[#25597f]"
+                  className="w-6 h-6 flex items-center justify-center text-blue-400 hover:text-blue-500"
                   aria-label="新增磁碟區對應"
                 >
                   <AddCircleIcon className="w-6 h-6" />
@@ -488,7 +492,7 @@ export default function BookingCreate(): JSX.Element {
 
             <Button
               onClick={handleCancel}
-              className="w-full md:w-44 h-12 bg-[#d8e7f2] text-[#2f6f9f] border-[#afcbe1] hover:bg-[#c5dce9]"
+              className="w-full md:w-44 h-12 bg-blue-100 text-blue-400 border-blue-200 hover:bg-blue-200"
             >
               Cancel
             </Button>
@@ -496,7 +500,7 @@ export default function BookingCreate(): JSX.Element {
             <Button
               type="primary"
               htmlType="submit"
-              className="w-full md:w-44 h-12 bg-[#2f6f9f] text-white border-[#2f6f9f] hover:bg-[#25597f]"
+              className="w-full md:w-44 h-12 bg-blue-400 text-white border-blue-400 hover:bg-blue-500"
             >
               Confirm & Book
             </Button>

@@ -68,7 +68,7 @@ const ResetPasswordPage: React.FC = () => {
         <div className="mb-12 text-center">
           <Title
             level={2}
-            className="!m-0 !text-[38px] !font-bold !leading-[38px] !text-[#2e2e2e]"
+            className="!m-0 !text-[38px] !font-bold !leading-[38px] !text-gray-500"
           >
             Reset Password
           </Title>
@@ -82,18 +82,18 @@ const ResetPasswordPage: React.FC = () => {
           onFinish={onFinish}
           requiredMark={(label, { required }) => (
             <>
-              {required && <span className="text-[#e85d75] mr-1">*</span>}
+              {required && <span className="text-error mr-1">*</span>}
               {label}
             </>
           )}
         >
           <Form.Item
-            label={<span className="text-base text-[#2e2e2e]">Password</span>}
+            label={<span className="text-base text-gray-500">Password</span>}
             name="password"
             rules={[{ validator: validatePassword }]}
             className="mb-2"
             help={
-              <span className="text-sm text-[#6b7280]">
+              <span className="text-sm text-gray-400">
                 Password must be 12 to 64 characters long and contain only
                 letters and numbers.
               </span>
@@ -103,20 +103,20 @@ const ResetPasswordPage: React.FC = () => {
               size="large"
               placeholder="••••••••"
               autoComplete="new-password"
-              className="text-base py-4 px-3 border-[#ced4da] rounded"
+              className="text-base py-4 px-3 border-gray-200 rounded"
             />
           </Form.Item>
 
           <Form.Item
             label={
-              <span className="text-base text-[#2e2e2e]">Confirm Password</span>
+              <span className="text-base text-gray-500">Confirm Password</span>
             }
             name="confirmPassword"
             dependencies={["password"]}
             rules={[{ validator: validateConfirmPassword }]}
             className="mb-6"
             help={
-              <span className="text-sm text-[#6b7280]">
+              <span className="text-sm text-gray-400">
                 Passwords must match.
               </span>
             }
@@ -125,7 +125,7 @@ const ResetPasswordPage: React.FC = () => {
               size="large"
               placeholder="••••••••"
               autoComplete="new-password"
-              className="text-base py-4 px-3 border-[#ced4da] rounded"
+              className="text-base py-4 px-3 border-gray-200 rounded"
             />
           </Form.Item>
 
@@ -136,7 +136,7 @@ const ResetPasswordPage: React.FC = () => {
               htmlType="submit"
               size="large"
               block
-              className="bg-[#2f6f9f] border-[#2f6f9f] hover:bg-[#2f6f9f] hover:border-[#2f6f9f] text-base font-medium h-[50px] rounded"
+              className="bg-blue-400 border-blue-400 hover:bg-blue-500 hover:border-blue-500 text-base font-medium h-[50px] rounded"
             >
               Reset Password
             </Button>
@@ -146,7 +146,9 @@ const ResetPasswordPage: React.FC = () => {
 
       {/* 版權資訊 */}
       <div className="text-center mt-6">
-        <Text className="text-xs text-[#5a7684]">copyright © uniteslave</Text>
+        <Text className="text-xs text-second-blue-400">
+          copyright © uniteslave
+        </Text>
       </div>
     </AuthLayout>
   );
