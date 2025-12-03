@@ -30,8 +30,8 @@ const Register: React.FC = () => {
         group: "user",
       };
 
-      const response = await registerUser(data).unwrap();
-      message.success(`註冊成功！歡迎，${response.account}`);
+      await registerUser(data).unwrap();
+      message.success(`註冊成功！歡迎，${values.account}`);
       navigate("/login");
       form.resetFields();
     } catch (error: any) {
