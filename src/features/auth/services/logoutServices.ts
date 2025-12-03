@@ -1,25 +1,19 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi } from "@reduxjs/toolkit/query/react";
+import baseQueryWithErrorHandler from "@shared/services/baseQueryWithErrorHandler";
 
-interface LogoutRequest {
-    user_id: string;
-}
-
-interface LogoutResponse {
- 
-}
+type LogoutResponse = Record<string, never>;
 
 export const logoutApi = createApi({
-    reducerPath: 'logoutApi',
-    baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3004' }),
-    endpoints: (builder) => ({
-        logoutUser: builder.mutation<LogoutResponse, LogoutRequest>({
-            query: (body) => ({
-                url: `/users/${body.user_id}/logout`,
-                method: 'POST'
-            }),
-        }
-    )
+  reducerPath: "logoutApi",
+  baseQuery: baseQueryWithErrorHandler,
+  endpoints: (builder) => ({
+    logoutUser: builder.mutation<LogoutResponse, void>({
+      query: () => ({
+        url: "/auth/logout",
+        method: "POST",
+      }),
     }),
+  }),
 });
 
 export const { useLogoutUserMutation } = logoutApi;
