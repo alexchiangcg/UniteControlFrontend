@@ -1,6 +1,7 @@
 // src/features/auth/components/ForgotPassword.tsx
 import React from "react";
 import { Card, Form, Input, Button, Typography, message } from "antd";
+import { useSendPasswordEmailMutation } from "../services/passwordEmailServices";
 import AuthLayout from "../layouts/AuthLayout";
 
 const { Title, Text } = Typography;
@@ -12,20 +13,17 @@ interface ForgotPasswordFormValues {
 
 const ForgotPasswordPage: React.FC = () => {
   const [form] = Form.useForm();
+  const [sendPasswordEmail, { isLoading }] = useSendPasswordEmailMutation();
 
   const onFinish = async (values: ForgotPasswordFormValues) => {
     try {
-      const { account, email } = values;
-
-      // TODO: 實作忘記密碼 API 呼叫
-      console.log("Forgot password values:", { account, email });
-
-      message.success("Verification code has been sent to your email");
+      await sendPasswordEmail(values).unwrap();
+      message.success("驗證碼已寄送至您的電子郵件");
 
       // 可以導向到驗證碼輸入頁面
       // navigate("/verify-code");
     } catch (e) {
-      message.error("Something went wrong. Please try again.");
+      console.error("忘記密碼寄信失敗:", e);
     }
   };
 
@@ -61,7 +59,7 @@ const ForgotPasswordPage: React.FC = () => {
           <Form.Item
             label={<span className="text-base text-gray-500">Account</span>}
             name="account"
-            rules={[{ required: true, message: "Please enter your account" }]}
+            rules={[{ required: true, message: "請輸入帳號" }]}
             className="mb-6"
           >
             <Input
@@ -76,8 +74,8 @@ const ForgotPasswordPage: React.FC = () => {
             label={<span className="text-base text-gray-500">Email</span>}
             name="email"
             rules={[
-              { required: true, message: "Please enter your email" },
-              { type: "email", message: "Please enter a valid email" },
+              { required: true, message: "請輸入電子郵件" },
+              { type: "email", message: "請輸入有效的電子郵件" },
             ]}
             className="mb-6"
           >
@@ -92,12 +90,13 @@ const ForgotPasswordPage: React.FC = () => {
           {/* 送出按鈕 */}
           <Form.Item className="mb-0">
             <Button
-              type="primary"
-              htmlType="submit"
-              size="large"
-              block
-              className="bg-blue-400 border-blue-400 hover:bg-blue-500 hover:border-blue-500 text-base font-medium h-[50px] rounded"
-            >
+            type="primary"
+            htmlType="submit"
+            size="large"
+            block
+            loading={isLoading}
+            className="bg-blue-400 border-blue-400 hover:bg-blue-500 hover:border-blue-500 text-base font-medium h-[50px] rounded"
+          >
               Get Verification Code
             </Button>
           </Form.Item>

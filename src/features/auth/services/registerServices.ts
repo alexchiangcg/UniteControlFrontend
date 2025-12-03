@@ -8,11 +8,7 @@ interface RegisterRequest {
     group: string;
 }
 
-interface RegisterResponse {
-    id: string;
-    account: string;
-    email: string;
-}
+type RegisterResponse = Record<string, never>;
 
 export const registerApi = createApi({
     reducerPath: 'registerApi',
