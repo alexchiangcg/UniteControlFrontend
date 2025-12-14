@@ -41,13 +41,8 @@ const routes: RouteObject[] = [
     children: [],
   },
   {
-    path: "/booking/calendar",
+    path: "/booking",
     element: <BookingCalendar />,
-    children: [],
-  },
-  {
-    path: "/test/booking-list-item",
-    element: <BookingListItemTestPage />,
     children: [],
   },
   {
@@ -60,6 +55,14 @@ const routes: RouteObject[] = [
     element: <CreateUser />,
     children: [],
   },
+
+  // 測試頁面路由
+  {
+    path: "/test/booking-list-item",
+    element: <BookingListItemTestPage />,
+    children: [],
+  },
+
   {
     path: "*",
     element: <NotFound />, // 404 頁面
