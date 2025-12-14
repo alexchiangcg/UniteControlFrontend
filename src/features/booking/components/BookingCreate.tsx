@@ -10,6 +10,7 @@
  * 3. 磁碟區設定：磁碟區群組和路徑對應
  */
 
+import { useNavigate } from "react-router-dom";
 import { Button, Input, Select, Radio, Checkbox, Form, DatePicker } from "antd";
 import {
   ArrowLeftOutlined,
@@ -29,6 +30,7 @@ const { Option } = Select;
 // ============================================================================
 
 export default function BookingCreate(): JSX.Element {
+  const navigate = useNavigate();
   const [form] = Form.useForm();
 
   const handleSubmit = (values: any) => {
@@ -109,6 +111,7 @@ export default function BookingCreate(): JSX.Element {
           <button
             className="w-6 h-6 flex items-center justify-center text-gray-500 hover:text-blue-400 transition-colors"
             aria-label="返回"
+            onClick={() => navigate(-1)}
           >
             <ArrowLeftOutlined className="text-xl" />
           </button>
