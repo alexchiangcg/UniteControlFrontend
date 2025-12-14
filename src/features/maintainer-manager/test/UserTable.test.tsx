@@ -216,7 +216,7 @@ describe("UserTable", () => {
     const { http, HttpResponse } = await import("msw");
 
     server.use(
-      http.get("http://localhost:3000/api/users", () => {
+      http.get("http://localhost:30000/api/users", () => {
         return HttpResponse.json({
           error_code: '00000',
           data: {
