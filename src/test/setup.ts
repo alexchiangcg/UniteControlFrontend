@@ -4,7 +4,7 @@ import { afterEach, beforeAll, afterAll, vi } from 'vitest'
 import { server } from './server'
 
 // Mock environment variables using Vitest
-vi.stubEnv('VITE_API_URL', 'http://localhost:3000')
+vi.stubEnv('VITE_API_URL', 'http://localhost:30000')
 
 // Start MSW server before all tests
 beforeAll(() => server.listen({ onUnhandledRequest: 'warn' }))

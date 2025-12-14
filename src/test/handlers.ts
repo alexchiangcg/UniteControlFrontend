@@ -7,7 +7,7 @@ import { mockUsersResponse } from '@features/maintainer-manager/test/mockData'
 
 export const handlers = [
   // GET /api/users - 取得使用者列表
-  http.get('http://140.118.49.22:3000/api/users', () => {
+  http.get('http://140.118.49.22:30000/api/users', () => {
     return HttpResponse.json({
       error_code: '00000',
       data: mockUsersResponse
@@ -15,7 +15,7 @@ export const handlers = [
   }),
 
   // PATCH /api/users/:id/status - 更新使用者狀態
-  http.patch('http://140.118.49.22:3000/api/users/:id/status', async ({ params, request }) => {
+  http.patch('http://140.118.49.22:30000/api/users/:id/status', async ({ params, request }) => {
     const { id } = params
     const body = await request.json() as { status: string }
 
