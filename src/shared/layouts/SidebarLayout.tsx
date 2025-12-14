@@ -168,8 +168,10 @@ export default function SidebarLayout({
         className="md:hidden"
         width={302}
         closeIcon={null}
-        headerStyle={{ display: "none" }}
-        bodyStyle={{ padding: 0 }}
+        styles={{
+          header: { display: "none" }, // 取代 headerStyle
+          body: { padding: 0 }, // 取代 bodyStyle
+        }}
       >
         <Sidebar
           items={sidebarItems}
