@@ -1,0 +1,27 @@
+{
+  "id": "approval_1765689379105_x8dtr2dcd",
+  "title": "Booking Calendar Tasks",
+  "filePath": ".spec-workflow/specs/booking-calendar/tasks.md",
+  "type": "document",
+  "status": "needs-revision",
+  "createdAt": "2025-12-14T05:16:19.105Z",
+  "category": "spec",
+  "categoryName": "booking-calendar",
+  "response": "Feedback Summary (1 comments):\n\nSpecific Text Comments:\n1. \"Playwright E2E 測試\": 所有的測試都要使用 Playwright mcp 下去測試\n",
+  "annotations": "{\n  \"decision\": \"needs-revision\",\n  \"comments\": [\n    {\n      \"type\": \"selection\",\n      \"comment\": \"所有的測試都要使用 Playwright mcp 下去測試\",\n      \"timestamp\": \"2025-12-14T05:20:09.736Z\",\n      \"selectedText\": \"Playwright E2E 測試\",\n      \"highlightColor\": {\n        \"bg\": \"rgba(255, 235, 59, 0.3)\",\n        \"border\": \"#FFEB3B\",\n        \"name\": \"#ffeb3b\"\n      },\n      \"id\": \"comment_1765689609736_pyizdfxec\"\n    }\n  ],\n  \"summary\": \"Feedback Summary (1 comments):\\n\\nSpecific Text Comments:\\n1. \\\"Playwright E2E 測試\\\": 所有的測試都要使用 Playwright mcp 下去測試\\n\",\n  \"timestamp\": \"2025-12-14T05:20:13.505Z\"\n}",
+  "respondedAt": "2025-12-14T05:20:13.517Z",
+  "comments": [
+    {
+      "type": "selection",
+      "comment": "所有的測試都要使用 Playwright mcp 下去測試",
+      "timestamp": "2025-12-14T05:20:09.736Z",
+      "selectedText": "Playwright E2E 測試",
+      "highlightColor": {
+        "bg": "rgba(255, 235, 59, 0.3)",
+        "border": "#FFEB3B",
+        "name": "#ffeb3b"
+      },
+      "id": "comment_1765689609736_pyizdfxec"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "filePath": ".spec-workflow/specs/booking-calendar/requirements.md",
+  "currentVersion": 2,
+  "snapshots": [
+    {
+      "version": 1,
+      "filename": "snapshot-001.json",
+      "timestamp": "2025-12-14T05:07:34.472Z",
+      "trigger": "initial",
+      "approvalId": "approval_1765688854461_34gammarv",
+      "approvalTitle": "Booking Calendar Requirements"
+    },
+    {
+      "version": 2,
+      "filename": "snapshot-002.json",
+      "timestamp": "2025-12-14T05:08:14.523Z",
+      "trigger": "approved",
+      "approvalId": "approval_1765688854461_34gammarv",
+      "approvalTitle": "Booking Calendar Requirements"
+    }
+  ]
+}

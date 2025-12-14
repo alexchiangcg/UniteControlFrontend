@@ -1,0 +1,22 @@
+{
+  "filePath": ".spec-workflow/specs/booking-calendar/design.md",
+  "currentVersion": 2,
+  "snapshots": [
+    {
+      "version": 1,
+      "filename": "snapshot-001.json",
+      "timestamp": "2025-12-14T05:10:54.005Z",
+      "trigger": "initial",
+      "approvalId": "approval_1765689053997_dzuyhrtre",
+      "approvalTitle": "Booking Calendar Design"
+    },
+    {
+      "version": 2,
+      "filename": "snapshot-002.json",
+      "timestamp": "2025-12-14T05:12:11.048Z",
+      "trigger": "approved",
+      "approvalId": "approval_1765689053997_dzuyhrtre",
+      "approvalTitle": "Booking Calendar Design"
+    }
+  ]
+}
