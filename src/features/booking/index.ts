@@ -3,6 +3,7 @@
 
 // Components
 export { default as BookingCreate } from './components/BookingCreate';
+export { BookingCalendar } from './components/BookingCalendar';
 
 // Services - 未來可擴展
 // export * from './services/bookingServices';

@@ -3,7 +3,8 @@ import { Navigate } from "react-router-dom";
 
 // 引入頁面組件 - 使用新的 feature-based 結構
 import { Login, Register, ForgotPassword, ResetPassword } from "@features/auth";
-import { BookingCreate } from "@features/booking";
+import { BookingCreate, BookingCalendar } from "@features/booking";
+import BookingListItemTestPage from "@features/booking/test/BookingListItem.test-page";
 import { UserManagement, CreateUser } from "@features/maintainer-manager";
 import NotFound from "@shared/pages/NotFound";
 
@@ -37,6 +38,16 @@ const routes: RouteObject[] = [
   {
     path: "/booking/create",
     element: <BookingCreate />,
+    children: [],
+  },
+  {
+    path: "/booking/calendar",
+    element: <BookingCalendar />,
+    children: [],
+  },
+  {
+    path: "/test/booking-list-item",
+    element: <BookingListItemTestPage />,
     children: [],
   },
   {
