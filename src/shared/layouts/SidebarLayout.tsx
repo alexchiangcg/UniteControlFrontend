@@ -8,7 +8,8 @@
 
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Drawer } from "antd";
+import { Drawer, Breadcrumb } from "antd";
+import type { BreadcrumbProps } from "antd";
 import {
   CalendarOutlined,
   HistoryOutlined,
@@ -92,6 +93,8 @@ interface SidebarLayoutProps {
   children: React.ReactNode;
   sidebarItems?: SidebarItem[];
   activeId?: string;
+  /** 麵包屑導航項目（可選） */
+  breadcrumbItems?: BreadcrumbProps["items"];
 }
 
 // ============================================================================
@@ -102,6 +105,7 @@ export default function SidebarLayout({
   children,
   sidebarItems = sampleSidebarItems,
   activeId,
+  breadcrumbItems,
 }: SidebarLayoutProps): JSX.Element {
   const navigate = useNavigate();
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -155,6 +159,13 @@ export default function SidebarLayout({
           </button>
           <h1 className="ml-4 text-xl font-bold text-gray-500">Unite Slave</h1>
         </header>
+
+        {/* 麵包屑導航 - 桌面版和手機版都顯示 */}
+        {breadcrumbItems && breadcrumbItems.length > 0 && (
+          <div className="bg-white px-6 py-4 border-b border-gray-200">
+            <Breadcrumb items={breadcrumbItems} />
+          </div>
+        )}
 
         {/* 主內容 - 桌面版無左側 padding（側邊欄已分離） */}
         <main className="flex-grow overflow-auto md:pl-0">{children}</main>

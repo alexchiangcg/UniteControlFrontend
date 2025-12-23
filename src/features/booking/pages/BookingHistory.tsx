@@ -16,8 +16,6 @@ import {
   Select,
   Input,
   Button,
-  Breadcrumb,
-  Space,
   Card,
   Empty,
   message,
@@ -34,7 +32,6 @@ import SidebarLayout from "@shared/layouts/SidebarLayout";
 import type {
   BookingHistoryRecord,
   BookingHistoryFilterParams,
-  BookingHistoryStatus,
   SelectOption,
 } from "../types/booking-history.types";
 import { useGetBookingHistoryQuery } from "../api/bookingHistoryApi";
@@ -292,21 +289,31 @@ const BookingHistory: React.FC = () => {
   // ============================================================================
 
   return (
-    <SidebarLayout activeId="history">
+    <SidebarLayout
+      activeId="history"
+      breadcrumbItems={[
+        {
+          href: "/",
+          title: (
+            <>
+              <HomeOutlined />
+            </>
+          ),
+        },
+        {
+          title: (
+            <>
+              <CalendarOutlined />
+              <span>Booking</span>
+            </>
+          ),
+        },
+        {
+          title: "Booking history",
+        },
+      ]}
+    >
       <div className="min-h-screen bg-gray-100 p-6">
-        {/* 麵包屑導航 */}
-        <Breadcrumb className="mb-4">
-          <Breadcrumb.Item href="/">
-            <HomeOutlined />
-            <span>首頁</span>
-          </Breadcrumb.Item>
-          <Breadcrumb.Item>
-            <CalendarOutlined />
-            <span>Booking</span>
-          </Breadcrumb.Item>
-          <Breadcrumb.Item>Booking history</Breadcrumb.Item>
-        </Breadcrumb>
-
         {/* 頁面標題 */}
         <h1 className="text-2xl font-bold text-gray-800 mb-6">
           Booking history

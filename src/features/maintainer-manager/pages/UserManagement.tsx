@@ -6,7 +6,7 @@
 
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Breadcrumb, Tabs } from "antd";
+import { Tabs } from "antd";
 import { HomeOutlined, SafetyOutlined } from "@ant-design/icons";
 import SidebarLayout from "@shared/layouts/SidebarLayout";
 import UserSearchBar from "../components/UserSearchBar";
@@ -90,33 +90,29 @@ const UserManagement: React.FC = () => {
   };
 
   return (
-    <SidebarLayout activeId="users">
+    <SidebarLayout
+      activeId="users"
+      breadcrumbItems={[
+        {
+          href: "/",
+          title: <HomeOutlined />,
+        },
+        {
+          href: "/maintainer",
+          title: (
+            <>
+              <SafetyOutlined />
+              <span>Maintainer Manager</span>
+            </>
+          ),
+        },
+        {
+          title: "User Management",
+        },
+      ]}
+    >
       {/* 頁面內容區域 */}
       <div className="flex flex-col h-full bg-gray-100">
-        {/* 麵包屑導航 */}
-        <div className="bg-white px-6 py-4 border-b border-gray-200">
-          <Breadcrumb
-            items={[
-              {
-                href: "/",
-                title: <HomeOutlined />,
-              },
-              {
-                href: "/maintainer",
-                title: (
-                  <>
-                    <SafetyOutlined />
-                    <span>Maintainer Manager</span>
-                  </>
-                ),
-              },
-              {
-                title: "User Management",
-              },
-            ]}
-          />
-        </div>
-
         {/* 主內容區域 */}
         <div className="flex-grow overflow-auto p-6">
           <div className="mx-auto">

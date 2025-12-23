@@ -17,7 +17,7 @@ import {
   CalendarOutlined,
   ExclamationCircleOutlined,
   PlusCircleOutlined,
-  UserOutlined,
+  HomeOutlined,
   DownOutlined,
 } from "@ant-design/icons";
 import SidebarLayout from "@shared/layouts/SidebarLayout";
@@ -91,21 +91,31 @@ export default function BookingCreate(): JSX.Element {
   };
 
   return (
-    <SidebarLayout activeId="booking">
+    <SidebarLayout
+      activeId="booking"
+      breadcrumbItems={[
+        {
+          href: "/",
+          title: (
+            <>
+              <HomeOutlined />
+            </>
+          ),
+        },
+        {
+          title: (
+            <>
+              <CalendarOutlined />
+              <span>Booking</span>
+            </>
+          ),
+        },
+        {
+          title: "Create Booking",
+        },
+      ]}
+    >
       <div className="w-full min-h-screen bg-gray-100">
-        {/* 頂部列 - 麵包屑和使用者資訊 */}
-        <div className="flex items-center justify-between px-6 pt-6 md:px-8 md:pt-8">
-          <p className="text-sm font-medium text-gray-400 leading-[14px]">
-            Booking / Create Booking
-          </p>
-          <div className="flex items-center gap-2">
-            <UserOutlined className="text-xl text-gray-500" />
-            <p className="text-base font-medium text-gray-500 leading-4">
-              Admin
-            </p>
-          </div>
-        </div>
-
         {/* 頁面標題與返回按鈕 */}
         <div className="flex items-center gap-7 px-6 pt-6 md:px-8">
           <button
