@@ -1,0 +1,30 @@
+{
+  "filePath": ".spec-workflow/specs/booking-history/design.md",
+  "currentVersion": 3,
+  "snapshots": [
+    {
+      "version": 1,
+      "filename": "snapshot-001.json",
+      "timestamp": "2025-12-21T09:35:46.330Z",
+      "trigger": "initial",
+      "approvalId": "approval_1766309746326_ejg0tgxm2",
+      "approvalTitle": "預訂歷史頁面設計文件"
+    },
+    {
+      "version": 2,
+      "filename": "snapshot-002.json",
+      "timestamp": "2025-12-21T09:39:38.007Z",
+      "trigger": "revision_requested",
+      "approvalId": "approval_1766309746326_ejg0tgxm2",
+      "approvalTitle": "預訂歷史頁面設計文件"
+    },
+    {
+      "version": 3,
+      "filename": "snapshot-003.json",
+      "timestamp": "2025-12-21T09:43:54.317Z",
+      "trigger": "approved",
+      "approvalId": "approval_1766310148852_izhm7rmr3",
+      "approvalTitle": "預訂歷史頁面設計文件（已修正）"
+    }
+  ]
+}

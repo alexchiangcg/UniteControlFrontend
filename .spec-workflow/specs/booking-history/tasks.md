@@ -1,0 +1,97 @@
+# Tasks Document
+
+## Implementation Tasks for booking-history
+
+- [ ] 1. 建立 TypeScript 型別定義
+  - File: src/features/booking/types/booking-history.types.ts
+  - 定義 BookingHistoryRecord, BookingHistoryFilterParams, BookingHistoryResponse 等介面
+  - 定義 BookingHistoryStatus 與 OverlapStatus 列舉型別
+  - Purpose: 建立型別安全的資料結構，確保前端與後端 API 資料格式一致
+  - _Leverage: src/features/booking/types/booking.types.ts (參考既有預訂型別設計模式)_
+  - _Requirements: Requirements 1.1, 2.1, 6.1_
+  - _Prompt: Implement the task for spec booking-history, first run spec-workflow-guide to get the workflow guide then implement the task: Role: TypeScript 專家，專精於型別系統設計與介面定義 | Task: 建立完整的 TypeScript 型別定義檔 src/features/booking/types/booking-history.types.ts，包含 BookingHistoryRecord（9 個欄位）、BookingHistoryFilterParams（8 個參數）、BookingHistoryResponse（分頁資料）、SelectOption、以及 BookingHistoryStatus 與 OverlapStatus 列舉，參考 requirements.md 中的資料結構定義與 src/features/booking/types/booking.types.ts 的設計模式 | Restrictions: 必須使用 TypeScript 嚴格模式，所有欄位必須明確定義型別，禁止使用 any，遵循專案既有的命名慣例（camelCase for variables, PascalCase for types），所有註解使用台灣繁體中文 | _Leverage: src/features/booking/types/booking.types.ts_ | _Requirements: Requirements 1.1, 2.1, 6.1_ | Success: 所有介面編譯無錯誤，型別覆蓋率 100%，與 requirements.md 定義的資料結構完全一致，所有欄位都有清楚的 JSDoc 註解（繁體中文） | 完成後，請在 tasks.md 中將此任務標記為 [-] (in-progress → completed)，並使用 log-implementation 工具記錄實作細節（包含建立的型別清單與檔案統計）_
+
+- [ ] 2. 建立 RTK Query API Service
+  - File: src/features/booking/api/bookingHistoryApi.ts
+  - 使用 RTK Query createApi 建立 API service
+  - 定義 getBookingHistory query endpoint
+  - 配置 baseQuery 與錯誤處理
+  - Purpose: 提供統一的 API 呼叫介面，自動處理快取、重新驗證與錯誤狀態
+  - _Leverage: @reduxjs/toolkit/query/react, src/features/booking/types/booking-history.types.ts_
+  - _Requirements: Requirements 1.1, 2.1, 3.1, 3.2, 3.3_
+  - _Prompt: Implement the task for spec booking-history, first run spec-workflow-guide to get the workflow guide then implement the task: Role: Redux Toolkit 專家，專精於 RTK Query API 整合與狀態管理 | Task: 建立 RTK Query API service src/features/booking/api/bookingHistoryApi.ts，使用 createApi 定義 bookingHistoryApi，包含 getBookingHistory query endpoint（接受 BookingHistoryFilterParams 參數，回傳 BookingHistoryResponse），配置 fetchBaseQuery 使用 '/api' 作為 baseUrl，export useGetBookingHistoryQuery hook 供元件使用，參考 design.md 中 Component 5 的設計規範 | Restrictions: 必須使用 RTK Query 的 createApi，不得直接使用 fetch 或 axios，baseQuery 必須自動附加認證 token（若專案有既有 baseQuery configuration 則重用），endpoint 必須定義完整的 TypeScript 型別，錯誤處理必須遵循專案既有模式 | _Leverage: @reduxjs/toolkit/query/react, src/features/booking/types/booking-history.types.ts_ | _Requirements: Requirements 1.1, 2.1, 3.1, 3.2, 3.3_ | Success: API service 編譯無錯誤，useGetBookingHistoryQuery hook 可正確呼叫，回傳 { data, isLoading, error } 狀態，與後端 API 格式相容，快取機制正常運作 | 完成後，請在 tasks.md 中將此任務標記為 [-] (in-progress → completed)，並使用 log-implementation 工具記錄實作細節（包含 API endpoints、建立的 hooks、檔案統計）_
+
+- [ ] 3. 建立狀態標籤元件（BookingStatusTag 與 OverlapStatusTag）
+  - Files: src/features/booking/components/BookingStatusTag.tsx, src/features/booking/components/OverlapStatusTag.tsx
+  - 建立 BookingStatusTag 元件（4 種狀態：pending, running, paused, terminated）
+  - 建立 OverlapStatusTag 元件（2 種狀態：allowed, not-allowed）
+  - 使用 Ant Design Tag 與 @ant-design/icons
+  - Purpose: 提供可重用的狀態標籤元件，確保整個應用的視覺一致性
+  - _Leverage: antd Tag 元件, @ant-design/icons (HourglassOutlined, PlayCircleOutlined, PauseCircleOutlined, StopOutlined, CheckCircleOutlined, CloseCircleOutlined)_
+  - _Requirements: Requirements 7.1-7.6_
+  - _Prompt: Implement the task for spec booking-history, first run spec-workflow-guide to get the workflow guide then implement the task: Role: React 元件開發專家，專精於 Ant Design 整合與元件設計 | Task: 建立兩個獨立的狀態標籤元件：(1) BookingStatusTag.tsx 根據 status prop (BookingHistoryStatus) 渲染對應的 Tag（pending=warning+HourglassOutlined, running=processing+PlayCircleOutlined, paused=default+PauseCircleOutlined, terminated=default+StopOutlined），(2) OverlapStatusTag.tsx 根據 overlapStatus prop (OverlapStatus) 渲染 Tag（allowed=success+CheckCircleOutlined+"No", not-allowed=error+CloseCircleOutlined+"Not Allowed"），參考 design.md Component 3 & 4 的設計 | Restrictions: 必須使用 Ant Design Tag 元件，禁止 inline style，必須使用 AntD 的 color 與 icon props，元件必須是純函式型元件（React.FC），所有 props 必須定義 TypeScript 介面，所有註解使用台灣繁體中文 | _Leverage: antd Tag, @ant-design/icons_ | _Requirements: Requirements 7.1-7.6_ | Success: 兩個元件編譯無錯誤，4+2 種狀態都能正確渲染，顏色與 icon 符合 design.md 規範，元件可重用於其他頁面，TypeScript 型別完整 | 完成後，請在 tasks.md 中將此任務標記為 [-] (in-progress → completed)，並使用 log-implementation 工具記錄實作細節（包含建立的元件清單、props 介面、檔案統計）_
+
+- [ ] 4. 建立主頁面元件（BookingHistory）
+  - File: src/features/booking/pages/BookingHistory.tsx
+  - 建立 BookingHistory 主頁面元件，整合 SidebarLayout、篩選列、Table、Pagination
+  - 使用 useGetBookingHistoryQuery hook 取得資料
+  - 實作篩選邏輯（日期範圍、節點、群組、狀態、關鍵字）與重置功能
+  - 實作分頁功能與 handleTableChange
+  - Purpose: 提供完整的預訂歷史查詢介面，整合所有子元件與業務邏輯
+  - _Leverage: SidebarLayout (@shared/layouts/SidebarLayout), Ant Design (Table, DatePicker, Select, Input, Button, Card, Breadcrumb, Empty, message), useGetBookingHistoryQuery (src/features/booking/api/bookingHistoryApi), BookingStatusTag, OverlapStatusTag, Day.js_
+  - _Requirements: Requirements 1.1-9.3, 所有功能性需求_
+  - _Prompt: Implement the task for spec booking-history, first run spec-workflow-guide to get the workflow guide then implement the task: Role: Senior React 開發者，專精於複雜頁面整合與狀態管理 | Task: 建立主頁面元件 src/features/booking/pages/BookingHistory.tsx，整合所有功能：(1) 使用 SidebarLayout 包裝並傳入 activeId="history"，(2) 使用 useState 管理 filterParams (BookingHistoryFilterParams) 與 dateRange，(3) 使用 useGetBookingHistoryQuery(filterParams) 取得資料，(4) 實作篩選邏輯：handleDateRangeChange (RangePicker)、handleNodeChange、handleGroupChange、handleStatusChange、handleSearch、handleReset，(5) 實作分頁邏輯 handleTableChange，(6) 實作表格 columns 定義（9 個欄位，使用 BookingStatusTag 與 OverlapStatusTag 渲染狀態欄位），(7) 實作 handleViewDetail 導航至詳情頁或開啟 Modal，(8) 處理 loading 與 error 狀態，參考 design.md Component 1 與已實作的 BookingHistory.tsx | Restrictions: 嚴格禁止 inline style，必須使用 Ant Design 元件（不得自己用 div 造輪子），Tailwind 僅用於版面排版與間距（bg-*, p-*, m-*, flex, gap 等），所有文字內容需支援 i18n（暫時硬寫繁體中文，TODO 標註需國際化），必須處理 TypeScript 型別檢查（dates 可能為 null），所有 useEffect 依賴必須正確宣告，所有註解使用台灣繁體中文 | _Leverage: SidebarLayout, Ant Design, useGetBookingHistoryQuery, BookingStatusTag, OverlapStatusTag, Day.js_ | _Requirements: 所有功能性需求 1.1-9.3_ | Success: 頁面編譯無錯誤，無 TypeScript 警告，所有篩選功能正常運作，分頁切換正常，狀態標籤正確顯示，載入與錯誤狀態處理完善，符合 design.md 的架構設計，已修復之前的 TypeScript 錯誤（params unused, dates possibly null） | 完成後，請在 tasks.md 中將此任務標記為 [-] (in-progress → completed)，並使用 log-implementation 工具記錄實作細節（包含元件功能清單、整合的子元件、檔案統計）_
+
+- [ ] 5. 註冊 API Service 至 Redux Store
+  - File: src/store/index.ts (或專案既有的 store 配置檔)
+  - 將 bookingHistoryApi.reducer 註冊至 Redux store
+  - 將 bookingHistoryApi.middleware 加入 middleware 配置
+  - Purpose: 啟用 RTK Query 的快取與自動重新驗證機制
+  - _Leverage: @reduxjs/toolkit, src/features/booking/api/bookingHistoryApi_
+  - _Requirements: Requirements 2.1, 3.1_
+  - _Prompt: Implement the task for spec booking-history, first run spec-workflow-guide to get the workflow guide then implement the task: Role: Redux 架構專家，專精於 store 配置與 middleware 整合 | Task: 將 bookingHistoryApi 整合至 Redux store，步驟：(1) import { bookingHistoryApi } from '@features/booking/api/bookingHistoryApi'，(2) 在 configureStore 的 reducer 中加入 [bookingHistoryApi.reducerPath]: bookingHistoryApi.reducer，(3) 在 middleware 中加入 .concat(bookingHistoryApi.middleware)，參考專案既有的 store 配置模式（若有其他 RTK Query API 已註冊則遵循相同模式） | Restrictions: 不得破壞既有的 store 配置，middleware 順序必須正確（RTK Query middleware 通常放在最後），必須遵循專案既有的 store 組織結構 | _Leverage: @reduxjs/toolkit, src/features/booking/api/bookingHistoryApi_ | _Requirements: Requirements 2.1, 3.1_ | Success: Store 配置無錯誤，bookingHistoryApi 的 reducer 與 middleware 正確註冊，useGetBookingHistoryQuery 可在元件中正常使用，快取機制正常運作 | 完成後，請在 tasks.md 中將此任務標記為 [-] (in-progress → completed)，並使用 log-implementation 工具記錄實作細節（包含修改的檔案、新增的 reducer 與 middleware）_
+
+- [ ] 6. 整合路由配置
+  - File: src/routes.tsx
+  - 將 BookingHistory 頁面加入路由配置
+  - 配置路由路徑為 /booking/history
+  - Purpose: 啟用頁面導航，使用者可透過 URL 存取預訂歷史頁面
+  - _Leverage: react-router-dom, src/features/booking/pages/BookingHistory_
+  - _Requirements: Requirements 9.1-9.3_
+  - _Prompt: Implement the task for spec booking-history, first run spec-workflow-guide to get the workflow guide then implement the task: Role: React Router 專家，專精於路由配置與導航設計 | Task: 將 BookingHistory 頁面加入 src/routes.tsx，步驟：(1) import BookingHistory from '@features/booking/pages/BookingHistory'，(2) 在路由配置陣列中加入 { path: '/booking/history', element: <BookingHistory /> }，(3) 確保路由配置符合專案既有的結構（若使用 nested routes 則放在正確的 parent route 下），參考專案既有的路由配置模式 | Restrictions: 必須遵循專案既有的路由結構（是否使用 nested routes、是否需要認證保護等），路由路徑必須為 /booking/history，不得破壞既有路由配置 | _Leverage: react-router-dom, src/features/booking/pages/BookingHistory_ | _Requirements: Requirements 9.1-9.3_ | Success: 路由配置無錯誤，可透過 /booking/history URL 存取頁面，頁面正常渲染，導航功能正常（若有認證保護則需通過認證才能存取） | 完成後，請在 tasks.md 中將此任務標記為 [-] (in-progress → completed)，並使用 log-implementation 工具記錄實作細節（包含新增的路由配置、路由路徑）_
+
+- [ ] 7. 更新 Sidebar 導航項目
+  - File: src/shared/layouts/SidebarLayout.tsx (或專案既有的 sidebar 配置)
+  - 在 sampleSidebarItems 中加入 "Booking History" 導航項
+  - 配置導航項目：id="history", label="Booking History", icon, href="/booking/history"
+  - Purpose: 提供側邊欄導航入口，使用者可從側邊欄快速進入預訂歷史頁面
+  - _Leverage: src/shared/layouts/SidebarLayout, @ant-design/icons_
+  - _Requirements: Requirements 9.1-9.3_
+  - _Prompt: Implement the task for spec booking-history, first run spec-workflow-guide to get the workflow guide then implement the task: Role: UI/UX 整合專家，專精於導航設計與使用者體驗 | Task: 更新 Sidebar 導航配置，在 src/shared/layouts/SidebarLayout.tsx 的 sampleSidebarItems 陣列中加入 "Booking History" 項目，配置：{ id: "history", label: "Booking History", icon: <HistoryOutlined />, href: "/booking/history" }，建議放置於 "Booking" 項目之後，參考既有的導航項目配置格式 | Restrictions: 必須遵循既有的 SidebarItem 介面定義，icon 必須從 @ant-design/icons 引入，導航項目順序應符合使用者操作流程（建議放在 Booking 相關功能附近），label 需與頁面標題一致 | _Leverage: src/shared/layouts/SidebarLayout, @ant-design/icons (HistoryOutlined)_ | _Requirements: Requirements 9.1-9.3_ | Success: 側邊欄顯示 "Booking History" 導航項，點擊後可導航至 /booking/history 頁面，當前頁面高亮顯示（activeId="history" 生效），icon 正確顯示 | 完成後，請在 tasks.md 中將此任務標記為 [-] (in-progress → completed)，並使用 log-implementation 工具記錄實作細節（包含新增的導航項配置）_
+
+- [ ] 8. 建立 Playwright MCP 視覺回歸測試腳本
+  - File: src/features/booking/tests/visual/booking-history-visual-tests.md (測試場景定義文件)
+  - 定義 6 個視覺測試場景（一般、空、載入、篩選、分頁、狀態標籤）
+  - 記錄每個場景的測試步驟、預期結果與 Playwright MCP 工具使用方式
+  - Purpose: 建立視覺回歸測試文件，作為使用 Playwright MCP 進行測試的指南
+  - _Leverage: Playwright MCP 工具 (browser_navigate, browser_resize, browser_wait_for, browser_take_screenshot)_
+  - _Requirements: Requirements 中的視覺回歸測試範圍_
+  - _Prompt: Implement the task for spec booking-history, first run spec-workflow-guide to get the workflow guide then implement the task: Role: QA 測試專家，專精於視覺回歸測試與 Playwright MCP 工具使用 | Task: 建立視覺測試場景定義文件 src/features/booking/tests/visual/booking-history-visual-tests.md，包含 6 個測試場景：(1) 一般狀態 - 顯示完整預訂記錄列表，(2) 空狀態 - 無預訂記錄，(3) 載入狀態 - Skeleton 呈現，(4) 篩選狀態 - 應用篩選條件，(5) 分頁狀態 - 第 2 頁，(6) 狀態標籤 - 視覺一致性。每個場景定義：測試目標、前置條件、使用的 Playwright MCP 工具（browser_resize 設為 1512x1003、browser_navigate 至 /booking/history、browser_wait_for 等待元件、browser_take_screenshot 截圖）、預期結果、baseline 管理策略，參考 design.md Visual Regression Testing 章節與 requirements.md 的測試範圍 | Restrictions: 必須使用 Playwright MCP 工具而非 @playwright/test 套件，Viewport 必須設為 1512x1003（Figma Frame 尺寸），測試場景必須覆蓋 requirements.md 定義的所有視覺狀態，測試步驟必須清晰可執行，所有文字使用台灣繁體中文 | _Leverage: Playwright MCP 工具_ | _Requirements: Visual regression testing requirements_ | Success: 測試場景文件完整且可執行，涵蓋所有視覺狀態，Playwright MCP 工具使用正確，測試步驟清晰，可作為實際執行視覺測試的指南 | 完成後，請在 tasks.md 中將此任務標記為 [-] (in-progress → completed)，並使用 log-implementation 工具記錄實作細節（包含定義的測試場景清單、使用的 MCP 工具）_
+
+- [ ] 9. （可選）抽取篩選列元件（BookingHistoryFilterBar）
+  - File: src/features/booking/components/BookingHistoryFilterBar.tsx
+  - 將 BookingHistory 頁面中的篩選邏輯抽取為獨立元件
+  - 定義 BookingHistoryFilterBarProps 介面（onFilterChange, nodeOptions, groupOptions, currentFilters）
+  - Purpose: 提高程式碼可維護性與可重用性，降低主頁面複雜度
+  - _Leverage: Ant Design (RangePicker, Select, Input.Search, Button), Day.js_
+  - _Requirements: Requirements 2.1-5.3（篩選功能）_
+  - _Prompt: Implement the task for spec booking-history, first run spec-workflow-guide to get the workflow guide then implement the task: Role: React 重構專家，專精於元件抽取與介面設計 | Task: 將 BookingHistory 頁面中的篩選列邏輯抽取為獨立元件 src/features/booking/components/BookingHistoryFilterBar.tsx，步驟：(1) 定義 BookingHistoryFilterBarProps 介面（包含 onFilterChange, nodeOptions, groupOptions, currentFilters），(2) 將篩選相關的 JSX（RangePicker, Select, Input.Search, Button）移至新元件，(3) 將篩選邏輯（handleDateRangeChange, handleNodeChange 等）封裝於元件內部，透過 onFilterChange callback 通知父元件，(4) 更新 BookingHistory 頁面使用新元件，參考 design.md Component 2 的設計 | Restrictions: 必須定義清楚的 props 介面（TypeScript），元件必須是受控元件（currentFilters 從 props 傳入），所有篩選變更必須透過 onFilterChange 回調通知父元件，禁止 inline style，所有註解使用台灣繁體中文 | _Leverage: Ant Design, Day.js_ | _Requirements: Requirements 2.1-5.3_ | Success: 篩選列元件獨立且可重用，props 介面清晰，所有篩選功能正常運作，主頁面複雜度降低，元件可用於其他需要相同篩選條件的頁面 | 完成後，請在 tasks.md 中將此任務標記為 [-] (in-progress → completed)，並使用 log-implementation 工具記錄實作細節（包含元件 props 介面、抽取的功能、檔案統計）_
+
+- [ ] 10. （可選）國際化（i18n）整合
+  - Files: src/i18n/locales/zh-TW.json, src/i18n/locales/en.json
+  - 將 BookingHistory 頁面中的硬寫文字抽取至翻譯檔
+  - 更新頁面使用 useTranslation hook
+  - Purpose: 支援多語言切換，提升國際化能力
+  - _Leverage: react-i18next, 專案既有的 i18n 配置_
+  - _Requirements: Non-functional requirements - Usability (國際化支援)_
+  - _Prompt: Implement the task for spec booking-history, first run spec-workflow-guide to get the workflow guide then implement the task: Role: 國際化專家，專精於 i18next 整合與多語言支援 | Task: 將 BookingHistory 頁面國際化，步驟：(1) 在 src/i18n/locales/zh-TW.json 與 en.json 中加入 booking.history namespace 的翻譯鍵值（title, filterPlaceholder, buttons, emptyText, columns 等），(2) 在 BookingHistory.tsx 中 import { useTranslation } from 'react-i18next'，(3) 使用 const { t } = useTranslation('booking') 取得翻譯函數，(4) 將所有硬寫文字替換為 t('history.xxx')，參考專案既有的 i18n 使用模式 | Restrictions: 必須遵循專案既有的 i18n namespace 結構，翻譯鍵必須語義化（避免 text1, text2 等無意義命名），繁體中文翻譯必須準確，英文翻譯需符合 UI 習慣，不得破壞既有翻譯結構 | _Leverage: react-i18next, 專案既有 i18n 配置_ | _Requirements: Non-functional requirements - Usability_ | Success: 所有使用者可見文字已國際化，可透過語言切換正確顯示繁體中文與英文，翻譯鍵命名清晰，頁面功能不受影響 | 完成後，請在 tasks.md 中將此任務標記為 [-] (in-progress → completed)，並使用 log-implementation 工具記錄實作細節（包含新增的翻譯鍵、翻譯的文字數量）_
