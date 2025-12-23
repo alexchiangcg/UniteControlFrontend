@@ -4,6 +4,7 @@ import userListApi from '@shared/services/userListServices';
 import userReducer from '@shared/slices/userSlice';
 import { userManagementApi } from '@features/maintainer-manager/services/userManagementServices';
 import { bookingCalendarApi } from '@features/booking/services/bookingCalendarServices';
+import { bookingHistoryApi } from '@features/booking/api/bookingHistoryApi';
 
 export const store = configureStore({
     reducer: {
@@ -14,6 +15,7 @@ export const store = configureStore({
         [passwordEmailApi.reducerPath]: passwordEmailApi.reducer,
         [userManagementApi.reducerPath]: userManagementApi.reducer,
         [bookingCalendarApi.reducerPath]: bookingCalendarApi.reducer,
+        [bookingHistoryApi.reducerPath]: bookingHistoryApi.reducer,
         userReducer: userReducer,
     },
     middleware: (getDefaultMiddleware) =>
@@ -24,7 +26,8 @@ export const store = configureStore({
             logoutApi.middleware,
             passwordEmailApi.middleware,
             userManagementApi.middleware,
-            bookingCalendarApi.middleware),
+            bookingCalendarApi.middleware,
+            bookingHistoryApi.middleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;
