@@ -84,6 +84,81 @@
 }
 
 /* ============================================================================
+   Button 樣式覆寫
+   ============================================================================ */
+
+/* Primary Button 使用專案主藍色 */
+.ant-btn-primary {
+  background-color: var(--color-blue-400) !important;
+  border-color: var(--color-blue-400) !important;
+}
+
+.ant-btn-primary:hover {
+  background-color: var(--color-blue-500) !important;
+  border-color: var(--color-blue-500) !important;
+}
+
+.ant-btn-primary:active {
+  background-color: var(--color-blue-600) !important;
+  border-color: var(--color-blue-600) !important;
+}
+
+/* ============================================================================
+   Status Tag 樣式 (自訂標籤)
+   ============================================================================ */
+
+/* 基礎 Status Tag 樣式 */
+.status-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 14px;
+  line-height: 18px;
+  font-weight: 400;
+}
+
+/* BookingStatusTag 狀態樣式 */
+.status-tag-pending {
+  background-color: var(--color-warning-light);
+  color: var(--color-gray-500);
+}
+
+.status-tag-running {
+  background-color: var(--color-blue-100);
+  color: var(--color-gray-500);
+}
+
+.status-tag-running .anticon {
+  color: var(--color-blue-400);
+}
+
+.status-tag-paused {
+  background-color: var(--color-notice-light);
+  color: var(--color-gray-500);
+}
+
+.status-tag-terminated {
+  background-color: var(--color-gray-200);
+  color: var(--color-gray-400);
+}
+
+/* OverlapStatusTag 樣式 */
+.status-tag-allowed {
+  background-color: var(--color-success-light);
+  color: var(--color-success);
+  border: 1px solid var(--color-success);
+}
+
+.status-tag-not-allowed {
+  background-color: var(--color-error-light);
+  color: var(--color-error);
+  border: 1px solid var(--color-error);
+  white-space: nowrap;
+}
+
+/* ============================================================================
    其他 Ant Design 元件樣式覆寫
    ============================================================================ */
 
