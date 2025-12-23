@@ -34,7 +34,9 @@
       "mcp__figma-dev-mode__get_metadata",
       "mcp__playwright__browser_resize",
       "Bash(lsof:*)",
-      "mcp__playwright__browser_evaluate"
+      "mcp__playwright__browser_evaluate",
+      "Bash(grep:*)",
+      "mcp__playwright__browser_network_requests"
     ],
     "deny": [],
     "ask": []
