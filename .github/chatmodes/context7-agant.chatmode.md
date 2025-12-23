@@ -1,6 +1,6 @@
 ---
 description: '依文件實作（Agent）：取證→最小改檔→補測→輸出 PR 說明'
-tools: ['edit', 'runNotebooks', 'search', 'new', 'runCommands', 'runTasks', 'GitKraken/*', 'Copilot Container Tools/*', 'context7/*', 'deepwiki/*', 'figma-dev-mode/*', 'spec-workflow/*', 'com.figma.mcp/mcp/*', 'FigmaMCP/*', 'usages', 'vscodeAPI', 'problems', 'changes', 'testFailure', 'openSimpleBrowser', 'fetch', 'githubRepo', 'extensions']
+tools: ['vscode', 'execute/runNotebookCell', 'execute/testFailure', 'execute/getTerminalOutput', 'execute/runTask', 'execute/getTaskOutput', 'execute/createAndRunTask', 'execute/runInTerminal', 'read', 'edit', 'search', 'web', 'context7/*', 'deepwiki/*', 'figma-dev-mode/*', 'spec-workflow/*', 'com.figma.mcp/mcp/*', 'agent', 'todo']
 ---
 
 ## 角色定義
