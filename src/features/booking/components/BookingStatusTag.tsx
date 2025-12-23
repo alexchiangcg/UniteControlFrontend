@@ -15,7 +15,7 @@ import {
   HourglassOutlined,
   Loading3QuartersOutlined,
   PauseOutlined,
-  StopOutlined,
+  StopFilled,
 } from "@ant-design/icons";
 import type { BookingHistoryStatus } from "../types/booking-history.types";
 
@@ -57,7 +57,7 @@ const STATUS_CONFIG: Record<
   },
   terminated: {
     className: "status-tag status-tag-terminated",
-    icon: <StopOutlined />,
+    icon: <StopFilled />,
     text: "Terminated",
   },
 };
