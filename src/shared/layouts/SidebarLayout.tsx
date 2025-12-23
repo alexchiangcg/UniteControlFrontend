@@ -34,9 +34,9 @@ const sampleSidebarItems: SidebarItem[] = [
   },
   {
     id: "history",
-    label: "History",
+    label: "Booking History",
     icon: <HistoryOutlined />,
-    href: "/history",
+    href: "/booking/history",
   },
   {
     id: "resources",
