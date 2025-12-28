@@ -25,6 +25,7 @@ import type { Dayjs } from "dayjs";
 import SidebarLayout from "@shared/layouts/SidebarLayout";
 import { useCreateBookingMutation } from "../services/bookingCalendarServices";
 import type { CreateBookingRequest } from "../services/bookingCalendarServices";
+import { useGetUserConfigQuery } from "@features/users";
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -43,7 +44,7 @@ interface BookingFormValues {
   image: string;
   allowOverlap: "yes" | "no";
   extraCommand?: string;
-  forwardPorts?: Array<{ host: string; container: string }>;
+  forwardPorts?: Array<{ host_port: string; container_port: string }>;
   volumes?: Array<{ group: string; path: string }>;
   changeDefaultConfig?: boolean;
 }
@@ -56,6 +57,10 @@ export default function BookingCreate(): JSX.Element {
   const navigate = useNavigate();
   const [form] = Form.useForm<BookingFormValues>();
   const [createBooking, { isLoading }] = useCreateBookingMutation();
+  const { data: userConfigData, isLoading: isLoadingConfig } = useGetUserConfigQuery();
+
+  // 從 API 取得的配置列表
+  const configOptions = userConfigData?.configs ?? [];
 
   /**
    * 將表單值轉換為 API 請求格式
@@ -65,10 +70,10 @@ export default function BookingCreate(): JSX.Element {
     const forwardPorts: Array<Record<string, number | string>> = [];
     if (values.forwardPorts) {
       values.forwardPorts.forEach((port) => {
-        if (port.host && port.container) {
+        if (port.host_port && port.container_port) {
           forwardPorts.push({
-            host: parseInt(port.host, 10) || port.host,
-            container: parseInt(port.container, 10) || port.container,
+            host_port: parseInt(port.host_port, 10) || port.host_port,
+            container_port: parseInt(port.container_port, 10) || port.container_port,
           });
         }
       });
@@ -294,8 +299,14 @@ export default function BookingCreate(): JSX.Element {
                     <Select
                       placeholder="Select Group Config"
                       suffixIcon={<DownOutlined className="text-gray-500" />}
+                      loading={isLoadingConfig}
+                      notFoundContent={isLoadingConfig ? "Loading..." : "No config available"}
                     >
-                      <Option value="config1">Config 1</Option>
+                      {configOptions.map((config) => (
+                        <Option key={config.id} value={config.id}>
+                          {config.name}
+                        </Option>
+                      ))}
                     </Select>
                   </Form.Item>
                   <Button className="bg-blue-400 text-white border-blue-400 hover:bg-blue-500 shrink-0">
@@ -395,14 +406,14 @@ export default function BookingCreate(): JSX.Element {
                 Forward Ports
               </label>
 
-              <Form.List name="forwardPorts" initialValue={[{ host: "", container: "" }]}>
+              <Form.List name="forwardPorts" initialValue={[{ host_port: "", container_port: "" }]}>
                 {(fields, { add, remove }) => (
                   <>
                     {fields.map(({ key, name, ...restField }) => (
                       <div key={key} className="flex items-center gap-2">
                         <Form.Item
                           {...restField}
-                          name={[name, "host"]}
+                          name={[name, "host_port"]}
                           className="mb-0"
                           rules={[{ required: true, message: "請輸入 Host Port" }]}
                         >
@@ -411,7 +422,7 @@ export default function BookingCreate(): JSX.Element {
                         <span className="text-base text-gray-500">:</span>
                         <Form.Item
                           {...restField}
-                          name={[name, "container"]}
+                          name={[name, "container_port"]}
                           className="mb-0 flex-1"
                           rules={[{ required: true, message: "請輸入 Container Port" }]}
                         >
@@ -432,7 +443,7 @@ export default function BookingCreate(): JSX.Element {
                         )}
                         <button
                           type="button"
-                          onClick={() => add({ host: "", container: "" })}
+                          onClick={() => add({ host_port: "", container_port: "" })}
                           className="w-6 h-6 flex items-center justify-center text-blue-400 hover:text-blue-500"
                           aria-label="新增埠對應"
                         >

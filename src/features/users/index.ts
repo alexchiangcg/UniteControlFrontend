@@ -15,4 +15,7 @@ export {
   userConfigApi,
   useGetUserConfigQuery,
 } from "./services/userConfigServices";
-export type { UserConfigResponse } from "./services/userConfigServices";
+export type {
+  UserConfigItem,
+  UserConfigResponse,
+} from "./services/userConfigServices";
