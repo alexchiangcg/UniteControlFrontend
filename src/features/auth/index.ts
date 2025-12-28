@@ -15,6 +15,7 @@ export { loginApi, useLoginUserMutation } from './services/loginServices';
 export { registerApi, useRegisterUserMutation } from './services/registerServices';
 export { logoutApi, useLogoutUserMutation } from './services/logoutServices';
 export { passwordEmailApi, useSendPasswordEmailMutation } from './services/passwordEmailServices';
+export { resetPasswordApi, useResetPasswordMutation } from './services/resetPasswordServices';
 
 // Utils
 export { validationRules } from './utils/validationRules';

@@ -11,19 +11,42 @@
  */
 
 import { useNavigate } from "react-router-dom";
-import { Button, Input, Select, Radio, Checkbox, Form, DatePicker } from "antd";
+import { Button, Input, Select, Radio, Checkbox, Form, DatePicker, message } from "antd";
 import {
   ArrowLeftOutlined,
   CalendarOutlined,
   ExclamationCircleOutlined,
   PlusCircleOutlined,
+  MinusCircleOutlined,
   HomeOutlined,
   DownOutlined,
 } from "@ant-design/icons";
+import type { Dayjs } from "dayjs";
 import SidebarLayout from "@shared/layouts/SidebarLayout";
+import { useCreateBookingMutation } from "../services/bookingCalendarServices";
+import type { CreateBookingRequest } from "../services/bookingCalendarServices";
 
 const { TextArea } = Input;
 const { Option } = Select;
+
+/**
+ * 表單值介面
+ */
+interface BookingFormValues {
+  node: string;
+  startTime: Dayjs;
+  endTime: Dayjs;
+  groupConfig?: string;
+  cpu: string;
+  mem: string;
+  gpus: string;
+  image: string;
+  allowOverlap: "yes" | "no";
+  extraCommand?: string;
+  forwardPorts?: Array<{ host: string; container: string }>;
+  volumes?: Array<{ group: string; path: string }>;
+  changeDefaultConfig?: boolean;
+}
 
 // ============================================================================
 // BookingCreate 元件
@@ -31,10 +54,60 @@ const { Option } = Select;
 
 export default function BookingCreate(): JSX.Element {
   const navigate = useNavigate();
-  const [form] = Form.useForm();
+  const [form] = Form.useForm<BookingFormValues>();
+  const [createBooking, { isLoading }] = useCreateBookingMutation();
 
-  const handleSubmit = (values: any) => {
-    console.log("表單數值:", values);
+  /**
+   * 將表單值轉換為 API 請求格式
+   */
+  const transformFormToRequest = (values: BookingFormValues): CreateBookingRequest => {
+    // 轉換 forward_ports
+    const forwardPorts: Array<Record<string, number | string>> = [];
+    if (values.forwardPorts) {
+      values.forwardPorts.forEach((port) => {
+        if (port.host && port.container) {
+          forwardPorts.push({
+            host: parseInt(port.host, 10) || port.host,
+            container: parseInt(port.container, 10) || port.container,
+          });
+        }
+      });
+    }
+
+    // 轉換 volumes
+    const volumes: Array<[string, string]> | null =
+      values.volumes && values.volumes.length > 0
+        ? values.volumes
+            .filter((v) => v.group && v.path)
+            .map((v) => [v.group, v.path])
+        : null;
+
+    return {
+      start_time: values.startTime.toISOString(),
+      end_time: values.endTime.toISOString(),
+      node_id: values.node,
+      image: values.image,
+      cpus: parseFloat(values.cpu) || 0,
+      memory: parseInt(values.mem, 10) || 0,
+      gpus: parseInt(values.gpus, 10) || 0,
+      allow_overlap: values.allowOverlap === "yes" ? true : false,
+      forward_ports: forwardPorts,
+      volumes: volumes,
+    };
+  };
+
+  const handleSubmit = async (values: BookingFormValues) => {
+    console.log('handleSubmit values = ',values);
+    
+    try {
+      const request = transformFormToRequest(values);
+      await createBooking(request).unwrap();
+      message.success("預約建立成功！");
+      navigate(-1);
+    } catch (error) {
+      console.error("建立預約失敗:", error);
+      message.error("建立預約失敗，請稍後再試");
+    }
   };
 
   const handleCancel = () => {
@@ -319,24 +392,57 @@ export default function BookingCreate(): JSX.Element {
             <div className="flex flex-col gap-4">
               <label className="text-base text-gray-500">
                 <span className="text-error mr-1">*</span>
-                Forwardports
+                Forward Ports
               </label>
 
-              <div className="flex items-center gap-2">
-                <Input placeholder="Host" className="w-44" />
-                <span className="text-base text-gray-500">:</span>
-                <Input
-                  placeholder="Container"
-                  className="flex-1 max-w-[296px]"
-                />
-                <button
-                  type="button"
-                  className="w-6 h-6 flex items-center justify-center text-blue-400 hover:text-blue-500"
-                  aria-label="新增埠對應"
-                >
-                  <PlusCircleOutlined className="text-xl" />
-                </button>
-              </div>
+              <Form.List name="forwardPorts" initialValue={[{ host: "", container: "" }]}>
+                {(fields, { add, remove }) => (
+                  <>
+                    {fields.map(({ key, name, ...restField }) => (
+                      <div key={key} className="flex items-center gap-2">
+                        <Form.Item
+                          {...restField}
+                          name={[name, "host"]}
+                          className="mb-0"
+                          rules={[{ required: true, message: "請輸入 Host Port" }]}
+                        >
+                          <Input placeholder="Host" className="w-44" />
+                        </Form.Item>
+                        <span className="text-base text-gray-500">:</span>
+                        <Form.Item
+                          {...restField}
+                          name={[name, "container"]}
+                          className="mb-0 flex-1"
+                          rules={[{ required: true, message: "請輸入 Container Port" }]}
+                        >
+                          <Input
+                            placeholder="Container"
+                            className="max-w-[296px]"
+                          />
+                        </Form.Item>
+                        {fields.length > 1 && (
+                          <button
+                            type="button"
+                            onClick={() => remove(name)}
+                            className="w-6 h-6 flex items-center justify-center text-red-400 hover:text-red-500"
+                            aria-label="移除埠對應"
+                          >
+                            <MinusCircleOutlined className="text-xl" />
+                          </button>
+                        )}
+                        <button
+                          type="button"
+                          onClick={() => add({ host: "", container: "" })}
+                          className="w-6 h-6 flex items-center justify-center text-blue-400 hover:text-blue-500"
+                          aria-label="新增埠對應"
+                        >
+                          <PlusCircleOutlined className="text-xl" />
+                        </button>
+                      </div>
+                    ))}
+                  </>
+                )}
+              </Form.List>
             </div>
           </section>
 
@@ -349,26 +455,55 @@ export default function BookingCreate(): JSX.Element {
             <div className="flex flex-col gap-4">
               <label className="text-base text-gray-500">Volumes</label>
 
-              <div className="flex items-center gap-2">
-                <Select
-                  placeholder="Group"
-                  className="w-40"
-                  suffixIcon={<DownOutlined className="text-gray-500" />}
-                >
-                  <Option value="group1">Group 1</Option>
-                </Select>
-                <Input
-                  placeholder="root/g/...."
-                  className="flex-1 max-w-[338px]"
-                />
-                <button
-                  type="button"
-                  className="w-6 h-6 flex items-center justify-center text-blue-400 hover:text-blue-500"
-                  aria-label="新增磁碟區對應"
-                >
-                  <PlusCircleOutlined className="text-xl" />
-                </button>
-              </div>
+              <Form.List name="volumes" initialValue={[]}>
+                {(fields, { add, remove }) => (
+                  <>
+                    {fields.map(({ key, name, ...restField }) => (
+                      <div key={key} className="flex items-center gap-2">
+                        <Form.Item
+                          {...restField}
+                          name={[name, "group"]}
+                          className="mb-0"
+                        >
+                          <Select
+                            placeholder="Group"
+                            className="w-40"
+                            suffixIcon={<DownOutlined className="text-gray-500" />}
+                          >
+                            <Option value="group1">Group 1</Option>
+                          </Select>
+                        </Form.Item>
+                        <Form.Item
+                          {...restField}
+                          name={[name, "path"]}
+                          className="mb-0 flex-1"
+                        >
+                          <Input
+                            placeholder="root/g/...."
+                            className="max-w-[338px]"
+                          />
+                        </Form.Item>
+                        <button
+                          type="button"
+                          onClick={() => remove(name)}
+                          className="w-6 h-6 flex items-center justify-center text-red-400 hover:text-red-500"
+                          aria-label="移除磁碟區對應"
+                        >
+                          <MinusCircleOutlined className="text-xl" />
+                        </button>
+                      </div>
+                    ))}
+                    <button
+                      type="button"
+                      onClick={() => add({ group: "", path: "" })}
+                      className="flex items-center gap-1 text-blue-400 hover:text-blue-500"
+                    >
+                      <PlusCircleOutlined className="text-xl" />
+                      <span>Add Volume</span>
+                    </button>
+                  </>
+                )}
+              </Form.List>
             </div>
           </section>
 
@@ -392,6 +527,7 @@ export default function BookingCreate(): JSX.Element {
             <Button
               type="primary"
               htmlType="submit"
+              loading={isLoading}
               className="w-full md:w-44 h-12 bg-blue-400 text-white border-blue-400 hover:bg-blue-500"
             >
               Confirm & Book

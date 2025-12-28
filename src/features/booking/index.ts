@@ -6,8 +6,17 @@ export { default as BookingCreate } from './components/BookingCreate';
 export { BookingCalendar } from './components/BookingCalendar';
 export { default as BookingHistory } from './pages/BookingHistory';
 
-// Services - 未來可擴展
-// export * from './services/bookingServices';
+// Services
+export {
+  bookingCalendarApi,
+  useGetCalendarQuery,
+  useCreateBookingMutation,
+  useGetBookingsQuery,
+} from './services/bookingCalendarServices';
+export type {
+  CalendarQueryParams,
+  CreateBookingRequest,
+} from './services/bookingCalendarServices';
 
-// Types - 未來可擴展
-// export * from './types';
+// Types
+export type { BookingTask, BookingStatus, FilterState } from './types/booking.types';
