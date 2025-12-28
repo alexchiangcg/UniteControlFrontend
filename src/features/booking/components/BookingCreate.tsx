@@ -11,7 +11,16 @@
  */
 
 import { useNavigate } from "react-router-dom";
-import { Button, Input, Select, Radio, Checkbox, Form, DatePicker, message } from "antd";
+import {
+  Button,
+  Input,
+  Select,
+  Radio,
+  Checkbox,
+  Form,
+  DatePicker,
+  message,
+} from "antd";
 import {
   ArrowLeftOutlined,
   CalendarOutlined,
@@ -57,7 +66,8 @@ export default function BookingCreate(): JSX.Element {
   const navigate = useNavigate();
   const [form] = Form.useForm<BookingFormValues>();
   const [createBooking, { isLoading }] = useCreateBookingMutation();
-  const { data: userConfigData, isLoading: isLoadingConfig } = useGetUserConfigQuery();
+  const { data: userConfigData, isLoading: isLoadingConfig } =
+    useGetUserConfigQuery();
 
   // 從 API 取得的配置列表
   const configOptions = userConfigData?.configs ?? [];
@@ -65,7 +75,9 @@ export default function BookingCreate(): JSX.Element {
   /**
    * 將表單值轉換為 API 請求格式
    */
-  const transformFormToRequest = (values: BookingFormValues): CreateBookingRequest => {
+  const transformFormToRequest = (
+    values: BookingFormValues
+  ): CreateBookingRequest => {
     // 轉換 forward_ports
     const forwardPorts: Array<Record<string, number | string>> = [];
     if (values.forwardPorts) {
@@ -73,7 +85,8 @@ export default function BookingCreate(): JSX.Element {
         if (port.host_port && port.container_port) {
           forwardPorts.push({
             host_port: parseInt(port.host_port, 10) || port.host_port,
-            container_port: parseInt(port.container_port, 10) || port.container_port,
+            container_port:
+              parseInt(port.container_port, 10) || port.container_port,
           });
         }
       });
@@ -102,8 +115,8 @@ export default function BookingCreate(): JSX.Element {
   };
 
   const handleSubmit = async (values: BookingFormValues) => {
-    console.log('handleSubmit values = ',values);
-    
+    console.log("handleSubmit values = ", values);
+
     try {
       const request = transformFormToRequest(values);
       await createBooking(request).unwrap();
@@ -247,13 +260,13 @@ export default function BookingCreate(): JSX.Element {
                 <div className="flex items-start gap-2">
                   <Form.Item
                     name="startTime"
-                    rules={[{ required: true, message: "請選擇開始時間" }]}
+                    rules={[{ required: true, message: "Please select start time" }]}
                     className="flex-1 mb-0"
                   >
                     <DatePicker
                       showTime
                       format="YYYY-MM-DD HH:mm"
-                      placeholder="開始時間"
+                      placeholder="Start Time"
                       className="w-full"
                       disabledDate={disabledDate}
                       suffixIcon={
@@ -264,13 +277,13 @@ export default function BookingCreate(): JSX.Element {
                   <span className="text-base text-gray-500 leading-8">-</span>
                   <Form.Item
                     name="endTime"
-                    rules={[{ required: true, message: "請選擇結束時間" }]}
+                    rules={[{ required: true, message: "Please select end time" }]}
                     className="flex-1 mb-0"
                   >
                     <DatePicker
                       showTime
                       format="YYYY-MM-DD HH:mm"
-                      placeholder="結束時間"
+                      placeholder="End Time"
                       className="w-full"
                       disabledDate={disabledEndDate}
                       disabledTime={disabledEndTime}
@@ -300,7 +313,9 @@ export default function BookingCreate(): JSX.Element {
                       placeholder="Select Group Config"
                       suffixIcon={<DownOutlined className="text-gray-500" />}
                       loading={isLoadingConfig}
-                      notFoundContent={isLoadingConfig ? "Loading..." : "No config available"}
+                      notFoundContent={
+                        isLoadingConfig ? "Loading..." : "No config available"
+                      }
                     >
                       {configOptions.map((config) => (
                         <Option key={config.id} value={config.id}>
@@ -406,7 +421,10 @@ export default function BookingCreate(): JSX.Element {
                 Forward Ports
               </label>
 
-              <Form.List name="forwardPorts" initialValue={[{ host_port: "", container_port: "" }]}>
+              <Form.List
+                name="forwardPorts"
+                initialValue={[{ host_port: "", container_port: "" }]}
+              >
                 {(fields, { add, remove }) => (
                   <>
                     {fields.map(({ key, name, ...restField }) => (
@@ -415,7 +433,9 @@ export default function BookingCreate(): JSX.Element {
                           {...restField}
                           name={[name, "host_port"]}
                           className="mb-0"
-                          rules={[{ required: true, message: "請輸入 Host Port" }]}
+                          rules={[
+                            { required: true, message: "Please Enter Host Port" },
+                          ]}
                         >
                           <Input placeholder="Host" className="w-44" />
                         </Form.Item>
@@ -424,7 +444,12 @@ export default function BookingCreate(): JSX.Element {
                           {...restField}
                           name={[name, "container_port"]}
                           className="mb-0 flex-1"
-                          rules={[{ required: true, message: "請輸入 Container Port" }]}
+                          rules={[
+                            {
+                              required: true,
+                              message: "Please Enter Container Port",
+                            },
+                          ]}
                         >
                           <Input
                             placeholder="Container"
@@ -443,9 +468,11 @@ export default function BookingCreate(): JSX.Element {
                         )}
                         <button
                           type="button"
-                          onClick={() => add({ host_port: "", container_port: "" })}
+                          onClick={() =>
+                            add({ host_port: "", container_port: "" })
+                          }
                           className="w-6 h-6 flex items-center justify-center text-blue-400 hover:text-blue-500"
-                          aria-label="新增埠對應"
+                          aria-label="Add Port Mapping"
                         >
                           <PlusCircleOutlined className="text-xl" />
                         </button>
@@ -479,7 +506,9 @@ export default function BookingCreate(): JSX.Element {
                           <Select
                             placeholder="Group"
                             className="w-40"
-                            suffixIcon={<DownOutlined className="text-gray-500" />}
+                            suffixIcon={
+                              <DownOutlined className="text-gray-500" />
+                            }
                           >
                             <Option value="group1">Group 1</Option>
                           </Select>
@@ -498,7 +527,7 @@ export default function BookingCreate(): JSX.Element {
                           type="button"
                           onClick={() => remove(name)}
                           className="w-6 h-6 flex items-center justify-center text-red-400 hover:text-red-500"
-                          aria-label="移除磁碟區對應"
+                          aria-label="Remove Volume Mapping"
                         >
                           <MinusCircleOutlined className="text-xl" />
                         </button>
