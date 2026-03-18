@@ -10,6 +10,7 @@
  */
 
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Table,
   DatePicker,
@@ -18,7 +19,6 @@ import {
   Button,
   Card,
   Empty,
-  message,
 } from "antd";
 import {
   SearchOutlined,
@@ -42,6 +42,8 @@ import OverlapStatusTag from "../components/OverlapStatusTag";
  * BookingHistory 主元件
  */
 const BookingHistory: React.FC = () => {
+  const navigate = useNavigate();
+
   // ============================================================================
   // State 狀態管理
   // ============================================================================
@@ -188,9 +190,7 @@ const BookingHistory: React.FC = () => {
    * 處理查看詳細資訊
    */
   const handleViewDetail = (record: BookingHistoryRecord) => {
-    // TODO: 導航至詳細頁面或開啟 Modal
-    message.info(`查看預訂詳情：${record.bookingId}`);
-    console.log("View detail:", record);
+    navigate(`/booking/history/${record.id}`);
   };
 
   // ============================================================================
