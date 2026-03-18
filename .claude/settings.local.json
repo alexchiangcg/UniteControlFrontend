@@ -36,7 +36,9 @@
       "Bash(lsof:*)",
       "mcp__playwright__browser_evaluate",
       "Bash(grep:*)",
-      "mcp__playwright__browser_network_requests"
+      "mcp__playwright__browser_network_requests",
+      "Bash(npx vitest:*)",
+      "Bash(git:*)"
     ],
     "deny": [],
     "ask": []

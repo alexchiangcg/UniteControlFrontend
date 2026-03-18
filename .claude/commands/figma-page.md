@@ -31,14 +31,14 @@
 
 ## 檔名與路徑規範（必須遵守）
 
-- `<feature>` 優先取 **Figma 的 Page 名稱**；若 Page 不適合，取節點名以「/」分段後的 **第一段**。  
+- `<feature>` 優先取 **Figma 的 Page 名稱**；若 Page 不適合，取節點名以「/」分段後的 **第一段**。
   若仍無法判定，暫用 `samples`，並在檔案頂部以「台灣繁體中文」註解標明需人工調整。
 - 頁面檔名 **遵照 Figma 節點名稱**：
   - 移除非法字元
   - 空白轉 `-`
-  - 保持大小寫  
+  - 保持大小寫
   例如：`Member Home` → `Member-Home.tsx`
-- **落檔路徑**：  
+- **落檔路徑**：
   - 頁面元件：`src/pages/(<feature>)/<FigmaName>.tsx`
   - 若有拆出子元件：建議放於 `src/features/<feature>/components/` 底下（或專案既有的 feature-based 結構）。
 
@@ -51,13 +51,13 @@
   - JSX 內一律使用 `className` 而不是 `class`。
 - **AntD 使用優先順序（非常重要）：**
   1. **能用 AntD 就一定要用 AntD**
-     - 只要 Figma 元件對得上 AntD 類型，就必須使用對應的 AntD 元件，例如（不限於）：  
-       - Button, Input, InputNumber, Select, DatePicker, TimePicker, RangePicker, Checkbox, Radio, Switch  
-       - Form, Form.Item  
-       - Table, List, Descriptions  
-       - Modal, Drawer, Popover, Tooltip  
-       - Tabs, Steps, Pagination  
-       - Layout（Header, Sider, Content, Footer）  
+     - 只要 Figma 元件對得上 AntD 類型，就必須使用對應的 AntD 元件，例如（不限於）：
+       - Button, Input, InputNumber, Select, DatePicker, TimePicker, RangePicker, Checkbox, Radio, Switch
+       - Form, Form.Item
+       - Table, List, Descriptions
+       - Modal, Drawer, Popover, Tooltip
+       - Tabs, Steps, Pagination
+       - Layout（Header, Sider, Content, Footer）
        - Menu, Breadcrumb, Dropdown, Tag, Badge, Avatar, Card, Skeleton, Empty, Alert, Result 等。
   2. **沒有完全對應的，也要用 AntD 去組合**
      - 例如：用 `Card + Typography + Button + Space` 組出資訊卡；用 `Form + Form.Item + Input` 組出表單區塊。
@@ -78,7 +78,7 @@
      - 元件內請優先使用抽象名稱：
        - `<AppLayout>` / `<MainLayout>` / `<DashboardLayout>`
        - `<SidebarLayout>` / `<MainSidebar>` / `<SiderMenu>` 等
-     - 並在檔案頂部撰寫台灣繁體中文註解，例如：  
+     - 並在檔案頂部撰寫台灣繁體中文註解，例如：
        「此處建議改用專案既有 AppLayout/SidebarLayout 元件，請依實際專案命名調整。」
 2. **若專案合理推測已有共用 UI 元件（例如 PageHeader / FilterBar / DataTable 等）**
    - 優先使用語義化元件名稱，如 `<PageHeader />`, `<FilterBar />`, `<DataTable />`，而非重新命名新的變形。
