@@ -13,6 +13,11 @@ import type {
   BookingHistoryFilterParams,
   BookingHistoryResponse,
 } from "../types/booking-history.types";
+import type {
+  BookingDetailRecord,
+  ContainerLogResponse,
+  ContainerStatusResponse,
+} from "../types/booking-detail.types";
 
 /**
  * Booking History API
@@ -63,12 +68,30 @@ export const bookingHistoryApi = createApi({
             ]
           : [{ type: "BookingHistory", id: "LIST" }],
     }),
+
+    getBookingDetail: builder.query<BookingDetailRecord, string>({
+      query: (id) => `/booking/history/${id}`,
+      providesTags: (_result, _error, id) => [{ type: "BookingHistory", id }],
+    }),
+
+    getContainerStatus: builder.query<ContainerStatusResponse, string>({
+      query: (bookingId) => `/bookings/${bookingId}/container_status`,
+    }),
+
+    getContainerLog: builder.query<ContainerLogResponse, string>({
+      query: (bookingId) => `/bookings/${bookingId}/log`,
+    }),
   }),
 });
 
 /**
  * Export hooks for usage in components
  */
-export const { useGetBookingHistoryQuery } = bookingHistoryApi;
+export const {
+  useGetBookingHistoryQuery,
+  useGetBookingDetailQuery,
+  useGetContainerStatusQuery,
+  useGetContainerLogQuery,
+} = bookingHistoryApi;
 
 export default bookingHistoryApi;

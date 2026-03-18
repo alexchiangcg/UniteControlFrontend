@@ -7,6 +7,8 @@ import {
   BookingCreate,
   BookingCalendar,
   BookingHistory,
+  BookingDetails,
+  BookingDetailLog,
 } from "@features/booking";
 import BookingListItemTestPage from "@features/booking/test/BookingListItem.test-page";
 import { UserManagement, CreateUser } from "@features/maintainer-manager";
@@ -52,6 +54,16 @@ const routes: RouteObject[] = [
   {
     path: "/booking/history",
     element: <BookingHistory />,
+    children: [],
+  },
+  {
+    path: "/booking/history/:id",
+    element: <BookingDetails />,
+    children: [],
+  },
+  {
+    path: "/booking/history/:id/log",
+    element: <BookingDetailLog />,
     children: [],
   },
   {

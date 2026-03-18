@@ -5,6 +5,8 @@
 export { default as BookingCreate } from './components/BookingCreate';
 export { BookingCalendar } from './components/BookingCalendar';
 export { default as BookingHistory } from './pages/BookingHistory';
+export { default as BookingDetails } from './pages/BookingDetails';
+export { default as BookingDetailLog } from './pages/BookingDetailLog';
 
 // Services
 export {
@@ -20,3 +22,7 @@ export type {
 
 // Types
 export type { BookingTask, BookingStatus, FilterState } from './types/booking.types';
+export type { BookingDetailRecord } from './types/booking-detail.types';
+
+// Booking History API
+export { useGetBookingDetailQuery } from './api/bookingHistoryApi';
