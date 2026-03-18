@@ -31,7 +31,7 @@ const sampleSidebarItems: SidebarItem[] = [
     id: "booking",
     label: "Booking",
     icon: <CalendarOutlined />,
-    href: "/booking/create",
+    href: "/booking",
   },
   {
     id: "history",
