@@ -32,7 +32,7 @@ export const bookingHistoryApi = createApi({
     /**
      * 查詢預訂歷史記錄
      *
-     * @param {BookingHistoryFilterParams} params - 篩選參數
+     * @param {BookingHistoryFilterParams} params - 篩選參數（對齊後端 BookingHistoryQuery）
      * @returns {BookingHistoryResponse} 分頁資料回應
      */
     getBookingHistory: builder.query<
@@ -40,24 +40,23 @@ export const bookingHistoryApi = createApi({
       BookingHistoryFilterParams
     >({
       query: (params) => {
-        // 建立 query parameters（過濾掉 undefined 的值）
         const queryParams = new URLSearchParams();
 
-        if (params.startDate) queryParams.append("startDate", params.startDate);
-        if (params.endDate) queryParams.append("endDate", params.endDate);
-        if (params.node) queryParams.append("node", params.node);
-        if (params.group) queryParams.append("group", params.group);
-        if (params.image) queryParams.append("image", params.image);
-        if (params.keyword) queryParams.append("keyword", params.keyword);
-        queryParams.append("page", params.page.toString());
-        queryParams.append("pageSize", params.pageSize.toString());
+        queryParams.append("start_time", params.start_time);
+        queryParams.append("end_time", params.end_time);
+        if (params.image_id) queryParams.append("image_id", params.image_id);
+        if (params.user_id) queryParams.append("user_id", params.user_id);
+        if (params.offset != null)
+          queryParams.append("offset", params.offset.toString());
+        if (params.limit != null)
+          queryParams.append("limit", params.limit.toString());
 
         return {
           url: `/booking/history?${queryParams.toString()}`,
           method: "GET",
         };
       },
-      providesTags: (result, error, arg) =>
+      providesTags: (result) =>
         result
           ? [
               ...result.records.map(({ id }) => ({
@@ -69,8 +68,11 @@ export const bookingHistoryApi = createApi({
           : [{ type: "BookingHistory", id: "LIST" }],
     }),
 
+    /**
+     * 查詢單筆預約詳細資料（對齊後端 GET /bookings/{booking_id}）
+     */
     getBookingDetail: builder.query<BookingDetailRecord, string>({
-      query: (id) => `/booking/history/${id}`,
+      query: (id) => `/bookings/${id}`,
       providesTags: (_result, _error, id) => [{ type: "BookingHistory", id }],
     }),
 

@@ -148,25 +148,23 @@ const mockBookingHistory: BookingHistoryRecord[] = [
 ];
 
 export const handlers = [
-  // GET /booking/history - 取得預訂歷史記錄
+  // GET /booking/history - 取得預訂歷史記錄（對齊後端 BookingHistoryQuery params）
   http.get('http://140.118.49.22:30000/booking/history', ({ request }) => {
     const url = new URL(request.url);
-    const page = parseInt(url.searchParams.get('page') || '1');
-    const pageSize = parseInt(url.searchParams.get('pageSize') || '10');
+    const offset = parseInt(url.searchParams.get('offset') || '0');
+    const limit = parseInt(url.searchParams.get('limit') || '10');
 
     // 簡單的分頁邏輯
-    const startIndex = (page - 1) * pageSize;
-    const endIndex = startIndex + pageSize;
-    const paginatedRecords = mockBookingHistory.slice(startIndex, endIndex);
+    const paginatedRecords = mockBookingHistory.slice(offset, offset + limit);
 
     return HttpResponse.json({
       error_code: '00000',
       data: {
         records: paginatedRecords,
         total: mockBookingHistory.length,
-        page,
-        pageSize,
-        totalPages: Math.ceil(mockBookingHistory.length / pageSize),
+        page: Math.floor(offset / limit) + 1,
+        pageSize: limit,
+        totalPages: Math.ceil(mockBookingHistory.length / limit),
       }
     })
   }),

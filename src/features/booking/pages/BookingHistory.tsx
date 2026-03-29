@@ -2,7 +2,7 @@
  * BookingHistory 頁面元件
  *
  * 預訂歷史記錄查詢與管理頁面
- * - 支援多維度篩選（時間範圍、節點、群組、狀態、關鍵字）
+ * - 支援多維度篩選（時間範圍、映像檔、使用者）
  * - 分頁展示預訂記錄列表
  * - 提供詳細資訊查看功能
  *
@@ -38,6 +38,8 @@ import { useGetBookingHistoryQuery } from "../api/bookingHistoryApi";
 import BookingStatusTag from "../components/BookingStatusTag";
 import OverlapStatusTag from "../components/OverlapStatusTag";
 
+const DEFAULT_LIMIT = 10;
+
 /**
  * BookingHistory 主元件
  */
@@ -48,31 +50,21 @@ const BookingHistory: React.FC = () => {
   // State 狀態管理
   // ============================================================================
 
-  /** 篩選參數 */
+  /** 篩選參數（對齊後端 BookingHistoryQuery） */
   const [filterParams, setFilterParams] = useState<BookingHistoryFilterParams>({
-    page: 1,
-    pageSize: 10,
+    start_time: dayjs().subtract(30, "day").toISOString(),
+    end_time: dayjs().toISOString(),
+    offset: 0,
+    limit: DEFAULT_LIMIT,
   });
 
   /** 開始時間 */
-  const [startTime, setStartTime] = useState<Dayjs | null>(null);
+  const [startTime, setStartTime] = useState<Dayjs | null>(
+    dayjs().subtract(30, "day"),
+  );
 
   /** 結束時間 */
-  const [endTime, setEndTime] = useState<Dayjs | null>(null);
-
-  /** 節點選項（實際專案中應從 API 取得） */
-  const [nodeOptions] = useState<SelectOption[]>([
-    { value: "10.0.1.11", label: "10.0.1.11" },
-    { value: "10.0.1.12", label: "10.0.1.12" },
-    { value: "10.0.1.13", label: "10.0.1.13" },
-  ]);
-
-  /** 群組選項（實際專案中應從 API 取得） */
-  const [groupOptions] = useState<SelectOption[]>([
-    { value: "analytics", label: "analytics" },
-    { value: "development", label: "development" },
-    { value: "production", label: "production" },
-  ]);
+  const [endTime, setEndTime] = useState<Dayjs | null>(dayjs());
 
   /** 映像檔選項（實際專案中應從 API 取得） */
   const [imageOptions] = useState<SelectOption[]>([
@@ -90,6 +82,13 @@ const BookingHistory: React.FC = () => {
   const { data, isLoading, error } = useGetBookingHistoryQuery(filterParams);
 
   // ============================================================================
+  // 分頁計算（offset/limit → page/pageSize）
+  // ============================================================================
+
+  const currentPage = Math.floor((filterParams.offset ?? 0) / (filterParams.limit ?? DEFAULT_LIMIT)) + 1;
+  const currentPageSize = filterParams.limit ?? DEFAULT_LIMIT;
+
+  // ============================================================================
   // 事件處理
   // ============================================================================
 
@@ -101,14 +100,9 @@ const BookingHistory: React.FC = () => {
     if (date) {
       setFilterParams((prev) => ({
         ...prev,
-        startDate: date.format("YYYY-MM-DD"),
-        page: 1,
+        start_time: date.toISOString(),
+        offset: 0,
       }));
-    } else {
-      setFilterParams((prev) => {
-        const { startDate, ...rest } = prev;
-        return { ...rest, page: 1 };
-      });
     }
   };
 
@@ -120,37 +114,10 @@ const BookingHistory: React.FC = () => {
     if (date) {
       setFilterParams((prev) => ({
         ...prev,
-        endDate: date.format("YYYY-MM-DD"),
-        page: 1,
+        end_time: date.toISOString(),
+        offset: 0,
       }));
-    } else {
-      setFilterParams((prev) => {
-        const { endDate, ...rest } = prev;
-        return { ...rest, page: 1 };
-      });
     }
-  };
-
-  /**
-   * 處理節點篩選變更
-   */
-  const handleNodeChange = (value: string) => {
-    setFilterParams((prev) => ({
-      ...prev,
-      node: value || undefined,
-      page: 1,
-    }));
-  };
-
-  /**
-   * 處理群組篩選變更
-   */
-  const handleGroupChange = (value: string) => {
-    setFilterParams((prev) => ({
-      ...prev,
-      group: value || undefined,
-      page: 1,
-    }));
   };
 
   /**
@@ -159,30 +126,32 @@ const BookingHistory: React.FC = () => {
   const handleImageChange = (value: string) => {
     setFilterParams((prev) => ({
       ...prev,
-      image: value || undefined,
-      page: 1,
+      image_id: value || undefined,
+      offset: 0,
     }));
   };
 
   /**
-   * 處理關鍵字搜尋
+   * 處理使用者 ID 搜尋
    */
-  const handleSearch = (value: string) => {
+  const handleUserIdSearch = (value: string) => {
     setFilterParams((prev) => ({
       ...prev,
-      keyword: value || undefined,
-      page: 1,
+      user_id: value || undefined,
+      offset: 0,
     }));
   };
 
   /**
-   * 處理分頁變更
+   * 處理分頁變更（將 page/pageSize 轉換為 offset/limit）
    */
   const handleTableChange = (pagination: TablePaginationConfig) => {
+    const page = pagination.current || 1;
+    const pageSize = pagination.pageSize || DEFAULT_LIMIT;
     setFilterParams((prev) => ({
       ...prev,
-      page: pagination.current || 1,
-      pageSize: pagination.pageSize || 10,
+      offset: (page - 1) * pageSize,
+      limit: pageSize,
     }));
   };
 
@@ -321,9 +290,9 @@ const BookingHistory: React.FC = () => {
 
         {/* 主內容卡片 */}
         <Card className="shadow-sm">
-          {/* 篩選列 filter - 按照 Figma 設計 */}
+          {/* 篩選列 filter */}
           <div className="mb-6 space-y-3">
-            {/* 第一行：Start Time - End Time | Group | Search account id */}
+            {/* 第一行：Start Time - End Time | Image | Search user id */}
             <div className="flex items-center gap-3">
               <DatePicker
                 value={startTime}
@@ -341,45 +310,23 @@ const BookingHistory: React.FC = () => {
                 className="w-[200px]"
               />
               <Select
-                placeholder="Group"
-                allowClear
-                className="w-[200px]"
-                onChange={handleGroupChange}
-                value={filterParams.group}
-                options={groupOptions}
-              />
-              <Input
-                placeholder="Search account id..."
-                allowClear
-                className="flex-1"
-                onChange={(e) => handleSearch(e.target.value)}
-                value={filterParams.keyword}
-              />
-            </div>
-
-            {/* 第二行：Node | Image | [空白] | Search 按鈕 */}
-            <div className="flex items-center gap-3">
-              <Select
-                placeholder="Node"
-                allowClear
-                className="w-[200px]"
-                onChange={handleNodeChange}
-                value={filterParams.node}
-                options={nodeOptions}
-              />
-              <Select
                 placeholder="Image"
                 allowClear
-                className="w-full"
+                className="w-[200px]"
                 onChange={handleImageChange}
-                value={filterParams.image}
+                value={filterParams.image_id}
                 options={imageOptions}
               />
-              <div className="flex-1" />
+              <Input
+                placeholder="Search user id..."
+                allowClear
+                className="flex-1"
+                onChange={(e) => handleUserIdSearch(e.target.value)}
+                value={filterParams.user_id}
+              />
               <Button
                 type="primary"
                 icon={<SearchOutlined />}
-                onClick={() => handleSearch(filterParams.keyword || "")}
               >
                 Search
               </Button>
@@ -393,8 +340,8 @@ const BookingHistory: React.FC = () => {
             rowKey="id"
             loading={isLoading}
             pagination={{
-              current: filterParams.page,
-              pageSize: filterParams.pageSize,
+              current: currentPage,
+              pageSize: currentPageSize,
               total: data?.total || 0,
               showSizeChanger: true,
               showQuickJumper: true,

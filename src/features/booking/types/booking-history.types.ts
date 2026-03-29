@@ -54,32 +54,26 @@ export interface BookingHistoryRecord {
 /**
  * 預訂歷史篩選參數
  *
- * 用於 API 請求的篩選條件
+ * 用於 API 請求的篩選條件（對齊後端 BookingHistoryQuery）
  */
 export interface BookingHistoryFilterParams {
-  /** 開始日期（YYYY-MM-DD 格式，可選） */
-  startDate?: string;
+  /** 開始時間（ISO 8601 格式） */
+  start_time: string;
 
-  /** 結束日期（YYYY-MM-DD 格式，可選） */
-  endDate?: string;
+  /** 結束時間（ISO 8601 格式） */
+  end_time: string;
 
-  /** 節點篩選（可選） */
-  node?: string;
+  /** 映像檔 ID 篩選（可選） */
+  image_id?: string;
 
-  /** 群組篩選（可選） */
-  group?: string;
+  /** 使用者 ID 篩選（可選） */
+  user_id?: string;
 
-  /** 映像檔篩選（可選） */
-  image?: string;
+  /** 分頁偏移量（可選） */
+  offset?: number;
 
-  /** 關鍵字搜尋（可選，搜尋 bookingId, node, image, group, account） */
-  keyword?: string;
-
-  /** 當前頁碼（從 1 開始） */
-  page: number;
-
-  /** 每頁顯示數量 */
-  pageSize: number;
+  /** 每頁數量（可選） */
+  limit?: number;
 }
 
 /**

@@ -1,10 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Form, Input, Select, Radio, DatePicker, Button, Spin } from "antd";
+import { Form, Input, Select, DatePicker, Button, Spin } from "antd";
 import {
   ArrowLeftOutlined,
   CalendarOutlined,
-  ExclamationCircleOutlined,
   FileTextOutlined,
   DownOutlined,
   HourglassOutlined,
@@ -92,28 +91,25 @@ export default function BookingDetails(): JSX.Element {
   const elapsed = useElapsedTime(resolvedContainerStatus.start_at);
 
   // 容器即時狀態（優先使用 container_status API）
-  const liveStatus = resolvedContainerStatus.status ?? data?.status;
+  const liveStatus = resolvedContainerStatus.status;
 
   useEffect(() => {
     if (!data) return;
 
     form.setFieldsValue({
-      node: data.node,
-      startTime: dayjs(data.startTime),
-      endTime: dayjs(data.endTime),
-      groupConfig: data.groupConfig,
+      startTime: dayjs(data.start),
+      endTime: dayjs(data.end),
+      userId: data.user_id,
       cpu: String(data.cpus),
       mem: String(data.memory),
-      gpus: String(data.gpus),
+      gpus: data.gpus?.join(", ") ?? "",
       image: data.image,
-      allowOverlap: data.allowOverlap ? "yes" : "no",
-      extraCommand: data.extraCommand ?? "",
+      extraCommand: data.extra_command ?? "",
       forwardPorts:
-        data.forwardPorts?.map((p) => ({
+        data.forward_ports?.map((p) => ({
           host_port: String(p.host_port),
           container_port: String(p.container_port),
         })) ?? [],
-      volumes: data.volumes ?? [],
     });
   }, [data, form]);
 
@@ -151,8 +147,8 @@ export default function BookingDetails(): JSX.Element {
                 <ArrowLeftOutlined className="text-xl" />
               </button>
               <h1 className="text-2xl font-bold text-gray-500 leading-6">
-                {data?.bookingId
-                  ? `${data.bookingId} Booking Details`
+                {data?.booking_id
+                  ? `${data.booking_id} Booking Details`
                   : "Booking Details"}
               </h1>
 
@@ -201,19 +197,16 @@ export default function BookingDetails(): JSX.Element {
                 </h2>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6">
-                  {/* Node */}
+                  {/* User ID */}
                   <Form.Item
                     label={
                       <span>
-                        <span className="text-error mr-1">*</span>Node
+                        <span className="text-error mr-1">*</span>User ID
                       </span>
                     }
-                    name="node"
+                    name="userId"
                   >
-                    <Select
-                      placeholder="Select Server"
-                      suffixIcon={<DownOutlined className="text-gray-500" />}
-                    />
+                    <Input />
                   </Form.Item>
 
                   {/* Time Slot */}
@@ -249,21 +242,7 @@ export default function BookingDetails(): JSX.Element {
                     </div>
                   </div>
 
-                  {/* Group Config (left) + CPU/Mem/GPUs (right) — same row */}
-                  <Form.Item
-                    label={
-                      <span>
-                        <span className="text-error mr-1">*</span>Group Config
-                      </span>
-                    }
-                    name="groupConfig"
-                  >
-                    <Select
-                      placeholder="Select Group Config"
-                      suffixIcon={<DownOutlined className="text-gray-500" />}
-                    />
-                  </Form.Item>
-
+                  {/* CPU/Mem/GPUs */}
                   <div className="grid grid-cols-3 gap-4">
                     <Form.Item
                       label={
@@ -272,7 +251,6 @@ export default function BookingDetails(): JSX.Element {
                         </span>
                       }
                       name="cpu"
-                      help="CPU max 32"
                     >
                       <Input className="w-full" />
                     </Form.Item>
@@ -283,7 +261,6 @@ export default function BookingDetails(): JSX.Element {
                         </span>
                       }
                       name="mem"
-                      help="Mem max 64"
                     >
                       <Input suffix="GB" className="w-full" />
                     </Form.Item>
@@ -294,7 +271,6 @@ export default function BookingDetails(): JSX.Element {
                         </span>
                       }
                       name="gpus"
-                      help="GPUs max 4"
                     >
                       <Input className="w-full" />
                     </Form.Item>
@@ -313,23 +289,6 @@ export default function BookingDetails(): JSX.Element {
                       placeholder="Select Image"
                       suffixIcon={<DownOutlined className="text-gray-500" />}
                     />
-                  </Form.Item>
-
-                  {/* Allow overlap */}
-                  <Form.Item
-                    label={
-                      <span className="flex items-center gap-1">
-                        <span className="text-error mr-1">*</span>
-                        Allow overlap ?
-                        <ExclamationCircleOutlined className="text-error ml-1" />
-                      </span>
-                    }
-                    name="allowOverlap"
-                  >
-                    <Radio.Group>
-                      <Radio value="no">No</Radio>
-                      <Radio value="yes">Yes</Radio>
-                    </Radio.Group>
                   </Form.Item>
 
                   {/* Extra command — full width */}
@@ -388,56 +347,6 @@ export default function BookingDetails(): JSX.Element {
                         {fields.length === 0 && (
                           <span className="text-gray-400">
                             No forward ports configured
-                          </span>
-                        )}
-                      </>
-                    )}
-                  </Form.List>
-                </div>
-              </section>
-
-              {/* Volumes Settings */}
-              <section className="bg-white rounded-lg p-6 mb-6">
-                <h2 className="text-xl font-medium text-second-blue-400 leading-5 mb-6">
-                  Volumes Settings
-                </h2>
-
-                <div className="flex flex-col gap-4">
-                  <label className="text-base text-gray-500">Volumes</label>
-
-                  <Form.List name="volumes">
-                    {(fields) => (
-                      <>
-                        {fields.map(({ key, name, ...restField }) => (
-                          <div key={key} className="flex items-center gap-2">
-                            <Form.Item
-                              {...restField}
-                              name={[name, "group"]}
-                              className="mb-0"
-                            >
-                              <Select
-                                placeholder="Group"
-                                className="w-40"
-                                suffixIcon={
-                                  <DownOutlined className="text-gray-500" />
-                                }
-                              />
-                            </Form.Item>
-                            <Form.Item
-                              {...restField}
-                              name={[name, "path"]}
-                              className="mb-0 flex-1"
-                            >
-                              <Input
-                                placeholder="root/g/...."
-                                className="max-w-[338px]"
-                              />
-                            </Form.Item>
-                          </div>
-                        ))}
-                        {fields.length === 0 && (
-                          <span className="text-gray-400">
-                            No volumes configured
                           </span>
                         )}
                       </>
