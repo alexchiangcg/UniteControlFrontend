@@ -26,5 +26,8 @@ dist-ssr
 # Claude Code
 .claude/settings.local.json
 
+# Athena Plugin
+.athena/
+
 # 測試截圖
 .playwright-mcp
