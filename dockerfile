@@ -1,28 +1,28 @@
-# 1️⃣ 使用 Node.js 建立 React 應用
+# 第一階段：建置前端靜態檔案
 FROM node:20-alpine AS builder
 
-# Install pnpm
 RUN npm install -g pnpm@9.4.0
 
 ENV PNPM_HOME=/app/.pnpm
 ENV PATH=$PNPM_HOME:$PATH
-# Set working directory
 WORKDIR /app
 
-# Increase Node.js memory limit
 ENV NODE_OPTIONS="--max-old-space-size=8192"
 
-# 複製 package.json 並安裝依賴
+# 先複製套件設定檔，利用 Docker 快取加速重複建置
 COPY package.json pnpm-lock.yaml ./
-
-# Install dependencies
 RUN pnpm install --frozen-lockfile
 
-# 複製專案所有程式碼並執行 build
+# 複製所有原始碼並執行建置
 COPY . .
 RUN pnpm run build
 
-# 在 build 階段結束後清理開發依賴，減少映像檔大小
-RUN rm -rf node_modules && \
-    rm -rf $PNPM_HOME && \
-    npm rm -g pnpm
+# 第二階段：使用 nginx 提供靜態檔案服務
+FROM nginx:alpine
+COPY nginx/nginx.conf /etc/nginx/conf.d/default.conf
+COPY docker-entrypoint.sh /docker-entrypoint.sh
+RUN chmod +x /docker-entrypoint.sh
+COPY --from=builder /app/dist /usr/share/nginx/html
+
+# 容器啟動時先執行 entrypoint 替換環境變數，再啟動 nginx
+ENTRYPOINT ["/docker-entrypoint.sh"]
