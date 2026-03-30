@@ -157,9 +157,10 @@ const BookingHistory: React.FC = () => {
   /**
    * 處理查看詳細資訊
    */
-  const handleViewDetail = (_record: BookingHistoryRecord) => {
-    // TODO: 後端 booking history 回傳沒有 booking_id，待後端補上後啟用
-    // navigate(`/booking/history/${record.booking_id}`);
+  const handleViewDetail = (record: BookingHistoryRecord) => {
+    if (record.booking_id) {
+      navigate(`/booking/history/${record.booking_id}`);
+    }
   };
 
   // ============================================================================

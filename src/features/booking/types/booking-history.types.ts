@@ -13,6 +13,9 @@ export type BookingHistoryStatus = 'Pending' | 'Running' | 'Terminated';
  * 預訂歷史記錄（對齊後端回傳欄位）
  */
 export interface BookingHistoryRecord {
+  /** 預約 ID（待後端補上） */
+  booking_id?: string;
+
   /** 開始時間 */
   start: string;
 
