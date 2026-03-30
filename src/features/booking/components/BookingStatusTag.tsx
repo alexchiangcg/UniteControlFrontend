@@ -14,7 +14,6 @@ import React from "react";
 import {
   HourglassOutlined,
   Loading3QuartersOutlined,
-  PauseOutlined,
   StopFilled,
 } from "@ant-design/icons";
 import type { BookingHistoryStatus } from "../types/booking-history.types";
@@ -40,22 +39,17 @@ const STATUS_CONFIG: Record<
     text: string;
   }
 > = {
-  pending: {
+  Pending: {
     className: "status-tag status-tag-pending",
     icon: <HourglassOutlined />,
     text: "Pending",
   },
-  running: {
+  Running: {
     className: "status-tag status-tag-running",
     icon: <Loading3QuartersOutlined />,
     text: "Running",
   },
-  paused: {
-    className: "status-tag status-tag-paused",
-    icon: <PauseOutlined />,
-    text: "Paused",
-  },
-  terminated: {
+  Terminated: {
     className: "status-tag status-tag-terminated",
     icon: <StopFilled />,
     text: "Terminated",

@@ -9,31 +9,26 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 import baseQueryWithErrorHandler from "@shared/services/baseQueryWithErrorHandler";
 
 /**
- * 單一配置項目
+ * Forward Port 設定
  */
-export interface UserConfigItem {
-  /** 配置 ID */
-  id: string;
-  /** 配置名稱 */
-  name: string;
-  /** CPU 數量 */
-  cpus?: number;
-  /** 記憶體大小 (MB) */
-  memory?: number;
-  /** GPU 數量 */
-  gpus?: number;
-  /** Docker Image */
-  image?: string;
-  /** 是否為預設配置 */
-  is_default?: boolean;
+export interface ForwardPort {
+  host_port: number | string;
+  container_port: number | string;
 }
 
 /**
- * 使用者配置回應
+ * 使用者配置回應（對齊後端 UserConfigResponse）
  */
 export interface UserConfigResponse {
-  /** 配置列表 */
-  configs: UserConfigItem[];
+  user_id: string;
+  unix_id: number;
+  password?: string | null;
+  forward_ports: ForwardPort[];
+  image: string;
+  extra_command: string;
+  volume_work_dir: string;
+  volume_dataset_dir: string;
+  volume_backup_dir: string;
 }
 
 /**

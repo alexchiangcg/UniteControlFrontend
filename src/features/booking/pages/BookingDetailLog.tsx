@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Alert, Button, Spin } from "antd";
 import {
@@ -17,6 +17,7 @@ import {
   useGetContainerLogQuery,
   useGetContainerStatusQuery,
 } from "../api/bookingHistoryApi";
+import { useElapsedTime } from "@shared/hooks/useElapsedTime";
 
 const STATUS_ICON: Record<string, React.ReactNode> = {
   pending: <HourglassOutlined className="text-sm text-gray-500" />,
@@ -25,38 +26,6 @@ const STATUS_ICON: Record<string, React.ReactNode> = {
   stopped: <StopFilled className="text-sm text-gray-500" />,
   terminated: <StopFilled className="text-sm text-gray-500" />,
 };
-
-function formatElapsed(totalSeconds: number): string {
-  if (totalSeconds < 0) return "0:00:00";
-  const hours = Math.floor(totalSeconds / 3600);
-  const mins = Math.floor((totalSeconds % 3600) / 60);
-  const secs = totalSeconds % 60;
-  const pad = (n: number) => String(n).padStart(2, "0");
-  return `${hours}:${pad(mins)}:${pad(secs)}`;
-}
-
-function useElapsedTime(startAt: string | undefined): string {
-  const [elapsed, setElapsed] = useState("");
-
-  useEffect(() => {
-    if (!startAt) {
-      setElapsed("");
-      return;
-    }
-
-    const calculate = () => {
-      const diffSec = dayjs().diff(dayjs(startAt), "second");
-      setElapsed(formatElapsed(diffSec));
-    };
-
-    calculate();
-    const timer = setInterval(calculate, 1000);
-
-    return () => clearInterval(timer);
-  }, [startAt]);
-
-  return elapsed;
-}
 
 export default function BookingDetailLog(): JSX.Element {
   const navigate = useNavigate();
@@ -73,7 +42,7 @@ export default function BookingDetailLog(): JSX.Element {
     refetch,
   } = useGetContainerLogQuery(id!, { skip: !id });
 
-  // TODO: 移除 fallback — 等 container_status API 就緒後刪除下方 FALLBACK 區塊
+  // TODO: 移除 fallback — 等後端 container_status API 補上 start_at 後刪除此區塊
   // --- FALLBACK START ---
   const fallbackStartAt = useMemo(
     () => dayjs().subtract(2, "hour").subtract(37, "minute").toISOString(),
@@ -87,7 +56,7 @@ export default function BookingDetailLog(): JSX.Element {
   const liveStatus = resolvedContainerStatus.status;
 
   const handleExport = () => {
-    const content = logData?.log ?? "";
+    const content = logData?.logs ?? "";
     const blob = new Blob([content], { type: "text/plain" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
@@ -192,7 +161,7 @@ export default function BookingDetailLog(): JSX.Element {
               </div>
             ) : (
               <pre className="bg-gray-900 text-green-400 text-sm font-mono p-4 rounded min-h-[24rem] max-h-[36rem] overflow-auto whitespace-pre-wrap break-all">
-                {logData?.log || "No log available."}
+                {logData?.logs || "No log available."}
               </pre>
             )}
           </section>

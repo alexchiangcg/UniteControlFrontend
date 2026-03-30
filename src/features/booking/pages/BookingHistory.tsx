@@ -36,7 +36,6 @@ import type {
 } from "../types/booking-history.types";
 import { useGetBookingHistoryQuery } from "../api/bookingHistoryApi";
 import BookingStatusTag from "../components/BookingStatusTag";
-import OverlapStatusTag from "../components/OverlapStatusTag";
 
 const DEFAULT_LIMIT = 10;
 
@@ -159,7 +158,9 @@ const BookingHistory: React.FC = () => {
    * 處理查看詳細資訊
    */
   const handleViewDetail = (record: BookingHistoryRecord) => {
-    navigate(`/booking/history/${record.id}`);
+    if (record.booking_id) {
+      navigate(`/booking/history/${record.booking_id}`);
+    }
   };
 
   // ============================================================================
@@ -168,17 +169,11 @@ const BookingHistory: React.FC = () => {
 
   const columns: ColumnsType<BookingHistoryRecord> = [
     {
-      title: "Booking ID",
-      dataIndex: "bookingId",
-      key: "bookingId",
+      title: "User ID",
+      dataIndex: "user_id",
+      key: "user_id",
       width: 150,
       fixed: "left",
-    },
-    {
-      title: "Node",
-      dataIndex: "node",
-      key: "node",
-      width: 120,
     },
     {
       title: "Image",
@@ -187,39 +182,16 @@ const BookingHistory: React.FC = () => {
       width: 150,
     },
     {
-      title: "Group",
-      dataIndex: "group",
-      key: "group",
-      width: 120,
-    },
-    {
-      title: "Account",
-      dataIndex: "account",
-      key: "account",
-      width: 120,
-    },
-    {
-      title: "Overlap",
-      dataIndex: "overlapStatus",
-      key: "overlapStatus",
-      width: 130,
-      render: (overlapStatus) => (
-        <OverlapStatusTag overlapStatus={overlapStatus} />
-      ),
-    },
-    {
       title: "Start Time",
-      dataIndex: "startTime",
-      key: "startTime",
+      dataIndex: "start",
+      key: "start",
       width: 180,
-      render: (time: string) => dayjs(time).format("YYYY-MM-DD HH:mm:ss"),
     },
     {
       title: "End Time",
-      dataIndex: "endTime",
-      key: "endTime",
+      dataIndex: "end",
+      key: "end",
       width: 180,
-      render: (time: string) => dayjs(time).format("YYYY-MM-DD HH:mm:ss"),
     },
     {
       title: "Status",
@@ -336,13 +308,13 @@ const BookingHistory: React.FC = () => {
           {/* 資料表格 */}
           <Table<BookingHistoryRecord>
             columns={columns}
-            dataSource={data?.records || []}
-            rowKey="id"
+            dataSource={data?.booking_histories || []}
+            rowKey={(record) => `${record.user_id}-${record.start}`}
             loading={isLoading}
             pagination={{
               current: currentPage,
               pageSize: currentPageSize,
-              total: data?.total || 0,
+              total: data?.booking_histories?.length || 0,
               showSizeChanger: true,
               showQuickJumper: true,
               showTotal: (total) => `Total ${total} items`,

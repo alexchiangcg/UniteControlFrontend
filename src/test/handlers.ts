@@ -86,85 +86,55 @@ const mockBookings: BookingTask[] = [
 // Mock Booking History Data - 用於測試預訂歷史頁面
 const mockBookingHistory: BookingHistoryRecord[] = [
   {
-    id: '1',
-    bookingId: '#20250810001',
-    node: '10.0.1.11',
+    start: '2025-08-09 09:00',
+    end: '2025-08-14 09:00',
+    user_id: 'Robert0808',
     image: 'worker-jobs',
-    group: 'analytics',
-    account: 'Robert0808',
-    startTime: '2025-08-09T09:00:00Z',
-    endTime: '2025-08-14T09:00:00Z',
-    overlapStatus: 'not-allowed',
-    status: 'running',
+    status: 'Running',
   },
   {
-    id: '2',
-    bookingId: '#20250810002',
-    node: '10.0.1.11',
+    start: '2025-08-29 09:00',
+    end: '2025-08-30 18:00',
+    user_id: 'Robert',
     image: 'app-backend',
-    group: 'analytics',
-    account: 'Robert',
-    startTime: '2025-08-29T09:00:00Z',
-    endTime: '2025-08-30T24:00:00Z',
-    overlapStatus: 'allowed',
-    status: 'pending',
+    status: 'Pending',
   },
   {
-    id: '3',
-    bookingId: '#20250810003',
-    node: '10.0.1.12',
+    start: '2025-09-01 10:00',
+    end: '2025-09-05 18:00',
+    user_id: 'Alice2024',
     image: 'data-processor',
-    group: 'development',
-    account: 'Alice2024',
-    startTime: '2025-09-01T10:00:00Z',
-    endTime: '2025-09-05T18:00:00Z',
-    overlapStatus: 'allowed',
-    status: 'terminated',
+    status: 'Terminated',
   },
   {
-    id: '4',
-    bookingId: '#20250810004',
-    node: '10.0.1.13',
+    start: '2025-09-10 08:00',
+    end: '2025-09-15 20:00',
+    user_id: 'Bob123',
     image: 'ml-training',
-    group: 'production',
-    account: 'Bob123',
-    startTime: '2025-09-10T08:00:00Z',
-    endTime: '2025-09-15T20:00:00Z',
-    overlapStatus: 'not-allowed',
-    status: 'paused',
+    status: 'Pending',
   },
   {
-    id: '5',
-    bookingId: '#20250810005',
-    node: '10.0.1.11',
+    start: '2025-09-20 06:00',
+    end: '2025-09-25 22:00',
+    user_id: 'Charlie999',
     image: 'api-server',
-    group: 'production',
-    account: 'Charlie999',
-    startTime: '2025-09-20T06:00:00Z',
-    endTime: '2025-09-25T22:00:00Z',
-    overlapStatus: 'allowed',
-    status: 'running',
+    status: 'Running',
   },
 ];
 
 export const handlers = [
-  // GET /booking/history - 取得預訂歷史記錄（對齊後端 BookingHistoryQuery params）
-  http.get('http://140.118.49.22:30000/booking/history', ({ request }) => {
+  // GET /bookings/history - 取得預訂歷史記錄（對齊後端 BookingHistoryQuery）
+  http.get('http://140.118.49.22:30000/bookings/history', ({ request }) => {
     const url = new URL(request.url);
     const offset = parseInt(url.searchParams.get('offset') || '0');
     const limit = parseInt(url.searchParams.get('limit') || '10');
 
-    // 簡單的分頁邏輯
     const paginatedRecords = mockBookingHistory.slice(offset, offset + limit);
 
     return HttpResponse.json({
       error_code: '00000',
       data: {
-        records: paginatedRecords,
-        total: mockBookingHistory.length,
-        page: Math.floor(offset / limit) + 1,
-        pageSize: limit,
-        totalPages: Math.ceil(mockBookingHistory.length / limit),
+        booking_histories: paginatedRecords,
       }
     })
   }),
