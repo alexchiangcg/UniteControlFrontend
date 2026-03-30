@@ -16,6 +16,6 @@ export {
   useGetUserConfigQuery,
 } from "./services/userConfigServices";
 export type {
-  UserConfigItem,
+  ForwardPort,
   UserConfigResponse,
 } from "./services/userConfigServices";
