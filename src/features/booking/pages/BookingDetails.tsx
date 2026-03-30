@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Form, Input, Select, DatePicker, Button, Spin } from "antd";
 import {
@@ -17,6 +17,7 @@ import {
   useGetBookingDetailQuery,
   useGetContainerStatusQuery,
 } from "../api/bookingHistoryApi";
+import { useElapsedTime } from "@shared/hooks/useElapsedTime";
 
 const STATUS_ICON: Record<string, React.ReactNode> = {
   pending: <HourglassOutlined className="text-sm text-gray-500" />,
@@ -25,44 +26,6 @@ const STATUS_ICON: Record<string, React.ReactNode> = {
   stopped: <StopFilled className="text-sm text-gray-500" />,
   terminated: <StopFilled className="text-sm text-gray-500" />,
 };
-
-/**
- * 格式化已過時間（秒數 → Xhr Ymins）
- */
-function formatElapsed(totalSeconds: number): string {
-  if (totalSeconds < 0) return "0:00:00";
-  const hours = Math.floor(totalSeconds / 3600);
-  const mins = Math.floor((totalSeconds % 3600) / 60);
-  const secs = totalSeconds % 60;
-  const pad = (n: number) => String(n).padStart(2, "0");
-  return `${hours}:${pad(mins)}:${pad(secs)}`;
-}
-
-/**
- * 即時計時 hook：根據 start_at 每秒更新已過時間
- */
-function useElapsedTime(startAt: string | undefined): string {
-  const [elapsed, setElapsed] = useState("");
-
-  useEffect(() => {
-    if (!startAt) {
-      setElapsed("");
-      return;
-    }
-
-    const calculate = () => {
-      const diffSec = dayjs().diff(dayjs(startAt), "second");
-      setElapsed(formatElapsed(diffSec));
-    };
-
-    calculate();
-    const timer = setInterval(calculate, 1000);
-
-    return () => clearInterval(timer);
-  }, [startAt]);
-
-  return elapsed;
-}
 
 const { TextArea } = Input;
 
