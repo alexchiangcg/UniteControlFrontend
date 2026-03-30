@@ -14,7 +14,7 @@ export interface ContainerStatusResponse {
 }
 
 export interface ContainerLogResponse {
-  log: string;
+  logs: string;
 }
 
 /**

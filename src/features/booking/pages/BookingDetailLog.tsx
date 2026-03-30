@@ -73,7 +73,7 @@ export default function BookingDetailLog(): JSX.Element {
     refetch,
   } = useGetContainerLogQuery(id!, { skip: !id });
 
-  // TODO: 移除 fallback — 等 container_status API 就緒後刪除下方 FALLBACK 區塊
+  // TODO: 移除 fallback — 等後端 container_status API 補上 start_at 後刪除此區塊
   // --- FALLBACK START ---
   const fallbackStartAt = useMemo(
     () => dayjs().subtract(2, "hour").subtract(37, "minute").toISOString(),
@@ -87,7 +87,7 @@ export default function BookingDetailLog(): JSX.Element {
   const liveStatus = resolvedContainerStatus.status;
 
   const handleExport = () => {
-    const content = logData?.log ?? "";
+    const content = logData?.logs ?? "";
     const blob = new Blob([content], { type: "text/plain" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
@@ -192,7 +192,7 @@ export default function BookingDetailLog(): JSX.Element {
               </div>
             ) : (
               <pre className="bg-gray-900 text-green-400 text-sm font-mono p-4 rounded min-h-[24rem] max-h-[36rem] overflow-auto whitespace-pre-wrap break-all">
-                {logData?.log || "No log available."}
+                {logData?.logs || "No log available."}
               </pre>
             )}
           </section>

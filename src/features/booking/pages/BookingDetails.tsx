@@ -55,7 +55,7 @@ function useElapsedTime(startAt: string | undefined): string {
       setElapsed(formatElapsed(diffSec));
     };
 
-    calculate(); // 立即計算一次
+    calculate();
     const timer = setInterval(calculate, 1000);
 
     return () => clearInterval(timer);
@@ -77,7 +77,7 @@ export default function BookingDetails(): JSX.Element {
     pollingInterval: 30000, // 每 30 秒輪詢最新狀態
   });
 
-  // TODO: 移除 fallback — 等 container_status API 就緒後刪除下方 FALLBACK 區塊
+  // TODO: 移除 fallback — 等後端 container_status API 補上 start_at 後刪除此區塊
   // --- FALLBACK START ---
   const fallbackStartAt = useMemo(
     () => dayjs().subtract(2, "hour").subtract(37, "minute").toISOString(),
@@ -87,10 +87,7 @@ export default function BookingDetails(): JSX.Element {
   const resolvedContainerStatus = containerStatus ?? fallbackStatus;
   // --- FALLBACK END ---
 
-  // 即時計時：當前時間 - start_at
   const elapsed = useElapsedTime(resolvedContainerStatus.start_at);
-
-  // 容器即時狀態（優先使用 container_status API）
   const liveStatus = resolvedContainerStatus.status;
 
   useEffect(() => {
