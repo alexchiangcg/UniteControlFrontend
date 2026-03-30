@@ -87,6 +87,31 @@ docker-compose up -d
 
 > **運作原理**：同一個 Docker Image 可部署到不同客戶環境。Build 時前端程式碼包含佔位符，容器啟動時 entrypoint 腳本自動將佔位符替換為 `VITE_API_URL` 環境變數的值，再啟動 nginx。
 
+##### Kubernetes 部署
+
+使用 ConfigMap 注入環境變數，不同客戶各自一份 ConfigMap，Image 不需重新建置：
+
+```yaml
+# configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: unite-control-frontend-config
+data:
+  VITE_API_URL: "http://客戶的API位址:8111/"
+```
+
+```yaml
+# deployment.yaml（片段）
+spec:
+  containers:
+    - name: unite-control-frontend
+      image: unite-control-frontend
+      envFrom:
+        - configMapRef:
+            name: unite-control-frontend-config
+```
+
 #### 7. 訪問網頁
 
 瀏覽 `http://localhost:8080`
