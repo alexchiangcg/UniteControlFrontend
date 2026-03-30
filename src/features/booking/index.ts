@@ -13,7 +13,6 @@ export {
   bookingCalendarApi,
   useGetCalendarQuery,
   useCreateBookingMutation,
-  useGetBookingsQuery,
 } from './services/bookingCalendarServices';
 export type {
   CalendarQueryParams,
@@ -21,7 +20,7 @@ export type {
 } from './services/bookingCalendarServices';
 
 // Types
-export type { BookingTask, BookingStatus, FilterState } from './types/booking.types';
+export type { BookingTask, BookingStatus, CalendarRecord, FilterState } from './types/booking.types';
 export type { BookingDetailRecord } from './types/booking-detail.types';
 
 // Booking History API

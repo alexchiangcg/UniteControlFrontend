@@ -81,8 +81,24 @@ export interface CustomTimeRange {
 }
 
 /**
+ * 後端 GET /calendar 回傳的單筆記錄（對齊後端 ScheduleColumnNames）
+ */
+export interface CalendarRecord {
+  booking_id: string;
+  start: string;
+  end: string;
+  user_id: string;
+  cpus: number;
+  memory: number;
+  gpus: number[];
+  forward_ports: Array<Record<string, number | string>>;
+  image: string;
+  extra_command: string | null;
+}
+
+/**
  * 篩選狀態
- * 
+ *
  * 管理 Booking Calendar 的所有篩選條件
  */
 export interface FilterState {

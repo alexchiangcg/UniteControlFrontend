@@ -7,7 +7,7 @@
 
 import { createApi } from "@reduxjs/toolkit/query/react";
 import baseQueryWithErrorHandler from "@shared/services/baseQueryWithErrorHandler";
-import type { BookingTask } from "../types/booking.types";
+import type { CalendarRecord } from "../types/booking.types";
 
 /**
  * 行事曆查詢參數
@@ -63,7 +63,7 @@ export const bookingCalendarApi = createApi({
      * 獲取行事曆資料
      * GET /calendar
      */
-    getCalendar: builder.query<BookingTask[], CalendarQueryParams>({
+    getCalendar: builder.query<CalendarRecord[], CalendarQueryParams>({
       query: (params) => {
         const queryParams = new URLSearchParams();
         queryParams.append("start_time", params.start_time);
@@ -77,7 +77,8 @@ export const bookingCalendarApi = createApi({
         };
       },
       providesTags: ["Calendar"],
-      transformResponse: (response: BookingTask[]) => response || [],
+      transformResponse: (response: { calendar: CalendarRecord[] }) =>
+        response?.calendar || [],
     }),
 
     /**
@@ -93,15 +94,6 @@ export const bookingCalendarApi = createApi({
       invalidatesTags: ["Booking", "Calendar"],
     }),
 
-    /**
-     * 獲取所有預約資料 (舊版 API，保留相容性)
-     * @deprecated 請使用 getCalendar
-     */
-    getBookings: builder.query<BookingTask[], void>({
-      query: () => "/api/bookings",
-      providesTags: ["Booking"],
-      transformResponse: (response: BookingTask[]) => response || [],
-    }),
   }),
 });
 
@@ -111,5 +103,4 @@ export const bookingCalendarApi = createApi({
 export const {
   useGetCalendarQuery,
   useCreateBookingMutation,
-  useGetBookingsQuery,
 } = bookingCalendarApi;
