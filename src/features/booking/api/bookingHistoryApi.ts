@@ -52,20 +52,11 @@ export const bookingHistoryApi = createApi({
           queryParams.append("limit", params.limit.toString());
 
         return {
-          url: `/booking/history?${queryParams.toString()}`,
+          url: `/bookings/history?${queryParams.toString()}`,
           method: "GET",
         };
       },
-      providesTags: (result) =>
-        result
-          ? [
-              ...result.records.map(({ id }) => ({
-                type: "BookingHistory" as const,
-                id,
-              })),
-              { type: "BookingHistory", id: "LIST" },
-            ]
-          : [{ type: "BookingHistory", id: "LIST" }],
+      providesTags: [{ type: "BookingHistory", id: "LIST" }],
     }),
 
     /**
