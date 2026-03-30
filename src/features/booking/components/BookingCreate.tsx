@@ -69,8 +69,8 @@ export default function BookingCreate(): JSX.Element {
   const { data: userConfigData, isLoading: isLoadingConfig } =
     useGetUserConfigQuery();
 
-  // 從 API 取得的配置列表
-  const configOptions = userConfigData?.configs ?? [];
+  // 後端回傳的使用者預設設定（用於預填表單）
+  const userConfig = userConfigData ?? null;
 
   /**
    * 將表單值轉換為 API 請求格式
@@ -304,25 +304,13 @@ export default function BookingCreate(): JSX.Element {
                 <div className="flex items-start gap-2">
                   <Form.Item
                     name="groupConfig"
-                    rules={[
-                      { required: true, message: "Please select group config" },
-                    ]}
                     className="flex-1 mb-0"
                   >
-                    <Select
-                      placeholder="Select Group Config"
-                      suffixIcon={<DownOutlined className="text-gray-500" />}
-                      loading={isLoadingConfig}
-                      notFoundContent={
-                        isLoadingConfig ? "Loading..." : "No config available"
-                      }
-                    >
-                      {configOptions.map((config) => (
-                        <Option key={config.id} value={config.id}>
-                          {config.name}
-                        </Option>
-                      ))}
-                    </Select>
+                    <Input
+                      placeholder={isLoadingConfig ? "Loading..." : "User Config"}
+                      disabled
+                      value={userConfig?.image ?? ""}
+                    />
                   </Form.Item>
                   <Button className="bg-blue-400 text-white border-blue-400 hover:bg-blue-500 shrink-0">
                     Own config
