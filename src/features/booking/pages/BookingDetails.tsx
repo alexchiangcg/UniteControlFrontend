@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from "react";
+import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Form, Input, Select, DatePicker, Button, Spin } from "antd";
 import {
@@ -40,18 +40,8 @@ export default function BookingDetails(): JSX.Element {
     pollingInterval: 30000, // 每 30 秒輪詢最新狀態
   });
 
-  // TODO: 移除 fallback — 等後端 container_status API 補上 start_at 後刪除此區塊
-  // --- FALLBACK START ---
-  const fallbackStartAt = useMemo(
-    () => dayjs().subtract(2, "hour").subtract(37, "minute").toISOString(),
-    [],
-  );
-  const fallbackStatus = { status: "running", start_at: fallbackStartAt };
-  const resolvedContainerStatus = containerStatus ?? fallbackStatus;
-  // --- FALLBACK END ---
-
-  const elapsed = useElapsedTime(resolvedContainerStatus.start_at);
-  const liveStatus = resolvedContainerStatus.status;
+  const elapsed = useElapsedTime(containerStatus?.start_at ?? undefined);
+  const liveStatus = containerStatus?.status ?? "pending";
 
   useEffect(() => {
     if (!data) return;

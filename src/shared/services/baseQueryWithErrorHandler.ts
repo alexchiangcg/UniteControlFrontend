@@ -12,7 +12,12 @@ interface ApiResponse<T = any> {
 
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: import.meta.env.VITE_API_URL,
+  // Docker 執行時期環境變數注入：
+  // 佔位符未被替換（本地開發）→ 使用 .env 的值
+  // 佔位符已被 entrypoint.sh 替換（Docker 部署）→ 使用替換後的真實值
+  baseUrl: "__VITE_API_URL_PLACEHOLDER__".startsWith("__")
+    ? import.meta.env.VITE_API_URL
+    : "__VITE_API_URL_PLACEHOLDER__",
   prepareHeaders: (headers) => {
     const token = localStorage.getItem("token");
     if (token) {
