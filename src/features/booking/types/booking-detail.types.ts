@@ -10,7 +10,7 @@ export interface Volume {
 
 export interface ContainerStatusResponse {
   status: string;
-  start_at: string;
+  start_at: string | null;
 }
 
 export interface ContainerLogResponse {

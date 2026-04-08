@@ -1,4 +1,3 @@
-import { useMemo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Alert, Button, Spin } from "antd";
 import {
@@ -11,7 +10,6 @@ import {
   ReloadOutlined,
   StopFilled,
 } from "@ant-design/icons";
-import dayjs from "dayjs";
 import SidebarLayout from "@shared/layouts/SidebarLayout";
 import {
   useGetContainerLogQuery,
@@ -42,18 +40,8 @@ export default function BookingDetailLog(): JSX.Element {
     refetch,
   } = useGetContainerLogQuery(id!, { skip: !id });
 
-  // TODO: 移除 fallback — 等後端 container_status API 補上 start_at 後刪除此區塊
-  // --- FALLBACK START ---
-  const fallbackStartAt = useMemo(
-    () => dayjs().subtract(2, "hour").subtract(37, "minute").toISOString(),
-    [],
-  );
-  const fallbackStatus = { status: "running", start_at: fallbackStartAt };
-  const resolvedContainerStatus = containerStatus ?? fallbackStatus;
-  // --- FALLBACK END ---
-
-  const elapsed = useElapsedTime(resolvedContainerStatus.start_at);
-  const liveStatus = resolvedContainerStatus.status;
+  const elapsed = useElapsedTime(containerStatus?.start_at ?? undefined);
+  const liveStatus = containerStatus?.status ?? "pending";
 
   const handleExport = () => {
     const content = logData?.logs ?? "";
